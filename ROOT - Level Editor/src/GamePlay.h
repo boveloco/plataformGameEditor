@@ -12,9 +12,6 @@ private:
 	SDL_Event m_event;
 	static bool m_quit;
 
-	Texture *t;
-	Texture *t2;
-
 public:
 	GamePlay();
 	~GamePlay();

@@ -93,15 +93,6 @@ void GamePlay::Initialize()
 		m_quit = true;
 		return;
 	}
-
-	t = new Texture("1.png");
-	t2 = new Texture("2.png");
-
-	t->SetWidth(1725);
-	t->SetHeight(2166);
-
-	t2->SetWidth(617);
-	t2->SetHeight(773);
 }
 
 void GamePlay::Update()
@@ -113,9 +104,6 @@ void GamePlay::Draw()
 {
 	SDL_SetRenderDrawColor(m_renderer, 0, 0, 0, 0);
 	SDL_RenderClear(m_renderer);
-
-	t2->Draw(new Vector2D(20, 20));
-	t->Draw(new Vector2D(10, 10));
 }
 
 void GamePlay::End()
@@ -130,9 +118,6 @@ void GamePlay::End()
 		SDL_DestroyRenderer(m_renderer);
 		m_renderer = nullptr;
 	}
-
-	delete t;
-	delete t2;
 
 	IMG_Quit();
 	SDL_Quit();
