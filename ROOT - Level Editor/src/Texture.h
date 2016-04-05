@@ -15,7 +15,7 @@ private:
 	
 public:
 	Texture();
-	Texture(std::string);
+	Texture(std::string, SDL_Renderer *);
 	~Texture();
 
 	int GetWidth() const;
@@ -23,13 +23,13 @@ public:
 	void SetWidth(int p_width);
 	void SetHeight(int p_height);
 	
-	bool UploadImage(std::string);
+	bool UploadImage(std::string, SDL_Renderer *);
 	void Destroy();
 
-	void Draw(Vector2D *);
-	void Draw(Vector2D *, int, int);
-	void Draw( int, int);
-	void DrawRotation(Vector2D *, double);
-	void DrawRotation(Vector2D *, double, int, int);
+	void Draw(SDL_Renderer *, Vector2D *);
+	void Draw(SDL_Renderer *, Vector2D *, int, int);
+	void Draw(SDL_Renderer *, int, int);
+	void DrawRotation(SDL_Renderer *, Vector2D *, double);
+	void DrawRotation(SDL_Renderer *, Vector2D *, double, int, int);
 };
 
