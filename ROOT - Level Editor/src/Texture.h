@@ -27,6 +27,7 @@ public:
 	void Destroy();
 
 	void Draw(SDL_Renderer *, Vector2D *);
+	//         renderer, posição na tela, x matriz e y matriz
 	void Draw(SDL_Renderer *, Vector2D *, int, int);
 	void Draw(SDL_Renderer *, int, int);
 	void DrawRotation(SDL_Renderer *, Vector2D *, double);

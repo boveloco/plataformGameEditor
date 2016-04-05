@@ -2,6 +2,8 @@
 #include<SDL.h>
 #include<SDL_image.h>
 
+class Texture;
+
 class GamePlay
 {
 private:
@@ -10,6 +12,7 @@ private:
 	SDL_Event m_event;
 	static bool m_quit;
 
+	Texture *t;
 public:
 	GamePlay();
 	~GamePlay();

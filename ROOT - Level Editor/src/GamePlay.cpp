@@ -2,6 +2,7 @@
 #include<iostream>
 #include"Texture.h"
 #include"Vector2D.h"
+#include"Texture.h"
 
 SDL_Window *GamePlay::m_window = nullptr;
 SDL_Renderer *GamePlay::m_renderer = nullptr;
@@ -93,6 +94,10 @@ void GamePlay::Initialize()
 		m_quit = true;
 		return;
 	}
+
+	t = new Texture("1.png", m_renderer);
+	t->SetHeight(85);
+	t->SetWidth(116);
 }
 
 void GamePlay::Update()
@@ -104,6 +109,8 @@ void GamePlay::Draw()
 {
 	SDL_SetRenderDrawColor(m_renderer, 0, 0, 0, 0);
 	SDL_RenderClear(m_renderer);
+
+	t->Draw(m_renderer, new Vector2D(100, 100));
 }
 
 void GamePlay::End()
@@ -121,6 +128,9 @@ void GamePlay::End()
 
 	IMG_Quit();
 	SDL_Quit();
+
+	delete t;
+	t = nullptr;
 }
 
 void GamePlay::Run()
