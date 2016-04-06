@@ -8,21 +8,30 @@
 class SpriteSet
 {
 public:
-	SpriteSet(std::string p_address, SDL_Renderer *p_renderer, int, int, int, int);
+	//isntancia um novo spriteset (x1[x imagem], y1[y imagem], x2[tamanho em x de cada sprite], y2[tamanho em y de cada sprite])
+	//SEMPRE NESSA ORDEM
+	SpriteSet(int, int, int, int);
 
 	~SpriteSet();
-	SDL_Texture* loadTexture(std::string p_address, SDL_Renderer *p_renderer);
-	void addSprite(SDL_Texture*);
-	bool loadSize(std::string p_address, SDL_Renderer *p_renderer, int,int,int,int);
-	bool loadSprites(std::string p_address, SDL_Renderer *p_renderer, int, int, int, int);
-	SDL_Texture* getSprite(int);
+	//adiciona um sprite no vetor
+	void addSprite(int*);
+	//descobre a quantidade de sprites que haverá no spriteset
+	bool loadSize(int, int, int, int);
+	//adiciona os sprites nos vetores
+	bool loadSprites(int, int, int, int);
+	//retorna sprite no indicie n
+	int* getSprite(int);
+	//retorna o spriteset
+	std::vector<int*> getSpriteset();
+	//retorna quantos sprites total tem
 	int getCount();
 
+	//get && set do tamanho x e y de cada sprite [inherit no spriteset]
 	int getYSize();
 	int getXSize();
 
 private:
-	std::vector<SDL_Texture *> spriteSet;
+	std::vector<int*> spriteSet;
 	int countAllSprites;
 	int xSize;
 	int ySize;
