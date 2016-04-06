@@ -5,8 +5,26 @@
 Texture::Texture()
 {}
 
+
+Texture::Texture(std::string p_address, int width, int  height, SpriteSet* sSet, int posSet)
+{
+	this->m_src = p_address;
+	this->m_height = height;
+	this->m_width = width;
+	//this->UploadImage(sSet->getSprite(posSet));
+}
+
+Texture::Texture(std::string p_address, SDL_Renderer *p_renderer, int width,int  height)
+{
+	this->m_src = p_address;
+	this->UploadImage(p_address, p_renderer);
+	this->m_width	= width;
+	this->m_height	= height;
+}
+
 Texture::Texture(std::string p_address, SDL_Renderer *p_renderer)
 {
+	this->m_src = p_address;
 	UploadImage(p_address, p_renderer);
 }
 
@@ -36,6 +54,11 @@ void Texture::SetHeight(int p_height)
 	m_height = p_height;
 }
 
+std::string Texture::getSrc()
+{
+	return this->m_src;
+}
+
 bool Texture::UploadImage(std::string p_address, SDL_Renderer *p_renderer)
 {
 	SDL_Surface *newSurface = IMG_Load(p_address.c_str());
@@ -58,8 +81,8 @@ bool Texture::UploadImage(std::string p_address, SDL_Renderer *p_renderer)
 
 	/*if (true)
 	{
-		m_height = newSurface->h;
-		m_width = newSurface->w;
+	m_height = newSurface->h;
+	m_width = newSurface->w;
 	}*/
 
 	SDL_FreeSurface(newSurface);
