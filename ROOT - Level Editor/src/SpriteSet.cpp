@@ -1,3 +1,4 @@
+#include <iostream>
 #include "SpriteSet.h"
 
 SpriteSet::SpriteSet(int x1, int y1, int x2, int y2)
@@ -6,7 +7,7 @@ SpriteSet::SpriteSet(int x1, int y1, int x2, int y2)
 	this->ySize = y2;
 	this->countAllSprites = 0;
 	this->loadSize(x1, y1, x2, y2);
-	//this->loadSprites(x1, y1, x2, y2);
+	this->loadSprites(x1, y1, x2, y2);
 }
 
 SpriteSet::~SpriteSet()
@@ -63,26 +64,30 @@ bool SpriteSet::loadSize(int x1, int y1, int x2, int y2) {
 
 }
 
-bool SpriteSet::loadSprites(int x1, int x2, int y1, int y2)
+bool SpriteSet::loadSprites(int x1, int y1, int x2, int y2)
 {
-	for (int i = 0; i < x1; (i + x2)) {
-		for (int j = 0; j < y1; (j + y2)) {
+	for (int i = 0; i < x1;) {
+		for (int j = 0; j < y1;) {
 			
 			if (x2 + i > x1)
-				continue;
+				break;
 			if (y2 + j > y1)
-				continue;
-			int x[2];
+				break;
+			int *x = new int(2);
 			x[0] = i;
 			x[1] = j;
 			this->addSprite(x);
+			j += y2;
 		}
+		i += x2;
 	}
 	return true;
 }
 
 int * SpriteSet::getSprite(int n)
 {
+	if (n > this->getCount())
+		return nullptr;
 	return this->spriteSet[n];
 }
 

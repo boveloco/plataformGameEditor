@@ -7,8 +7,8 @@ int main(int argc, char** argv)
 	//game.Run();
 	
 	//testando spriteset
-	SpriteSet* spriteS = new SpriteSet(323, 747, 77, 33);
+	SpriteSet* spriteS = new SpriteSet(10, 10, 1, 5);
 	std::cout << spriteS->getCount() << std::endl;
-
+	std::cout << spriteS->getSprite(4)[0] << " && " << spriteS->getSprite(4)[1] << std::endl;
 	return 0;
 }
