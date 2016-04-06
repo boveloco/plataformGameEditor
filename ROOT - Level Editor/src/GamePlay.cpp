@@ -95,7 +95,7 @@ void GamePlay::Initialize()
 		return;
 	}
 
-	t = new Texture("1.png", m_renderer);
+	t = new Texture("img/1.png", m_renderer);
 	t->SetHeight(85);
 	t->SetWidth(116);
 }
