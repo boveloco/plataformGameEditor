@@ -9,12 +9,6 @@ Map::Map(int x, int y)
 	for (size_t i = 0; i < x; i++)
 	{
 		this->matriz[i] = (int*) calloc(y, sizeof(int)*y);
-
-		for (size_t j = 0; j < y; j++)
-		{
-			std::cout << this->matriz[i][j] << " | ";
-		}
-		std::cout << std::endl;
 	}
 
 }
