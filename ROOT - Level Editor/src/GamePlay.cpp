@@ -112,8 +112,8 @@ void GamePlay::Draw()
 	SDL_RenderClear(m_renderer);
 
 	std::cout << ss->getSprite(0)[0] << " y " << ss->getSprite(0)[1] << std::endl;
-	t->Draw(m_renderer, new Vector2D(100, 100),ss->getSprite(0)[0],ss->getSprite(0)[1]);
-
+	t->Draw(m_renderer, new Vector2D(100, 100), ss->getSprite(0)[0], ss->getSprite(0)[1]);
+	t->Draw(m_renderer, new Vector2D(200, 200), ss->getSprite(3)[0], ss->getSprite(3)[1]);
 
 
 }
