@@ -20,7 +20,7 @@ public:
 	//sprites no spriteset carregado
 	Texture();
 	//da load em um spriteset definindo o tamanho do spriteset(x,y) e definindo o tamanho de cada sprite(x,y) respectivamente
-	Texture(std::string, int, int, SpriteSet *, int);
+	Texture(SpriteSet* , SDL_Renderer *);
 	
 	//da load com o x e y automaticamente e respectivamente
 	Texture(std::string, SDL_Renderer *, int, int);

@@ -3,6 +3,7 @@
 #include<SDL_image.h>
 
 class Texture;
+class SpriteSet;
 
 class GamePlay
 {
@@ -11,7 +12,7 @@ private:
 	static SDL_Renderer *m_renderer;
 	SDL_Event m_event;
 	static bool m_quit;
-
+	SpriteSet* ss;
 	Texture *t;
 public:
 	GamePlay();

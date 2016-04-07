@@ -1,4 +1,5 @@
 #include "Texture.h"
+#include "SpriteSet.h"
 #include"Vector2D.h"
 #include"GamePlay.h"
 
@@ -6,13 +7,7 @@ Texture::Texture()
 {}
 
 
-Texture::Texture(std::string p_address, int width, int  height, SpriteSet* sSet, int posSet)
-{
-	this->m_src = p_address;
-	this->m_height = height;
-	this->m_width = width;
-	//this->UploadImage(sSet->getSprite(posSet));
-}
+
 
 Texture::Texture(std::string p_address, SDL_Renderer *p_renderer, int width,int  height)
 {
@@ -26,6 +21,13 @@ Texture::Texture(std::string p_address, SDL_Renderer *p_renderer)
 {
 	this->m_src = p_address;
 	UploadImage(p_address, p_renderer);
+}
+Texture::Texture(SpriteSet* p_sSet, SDL_Renderer *p_renderer)
+{
+	this->m_height	= p_sSet->getYSize();
+	this->m_width	= p_sSet->getXSize();
+	this->m_src		= p_sSet->getSrc();
+	UploadImage(m_src, p_renderer);
 }
 
 
@@ -108,7 +110,9 @@ void Texture::Draw(SDL_Renderer *p_renderer, Vector2D *p_position)
 	m_rect.w = m_width;
 	m_rect.x = p_position->GetX();
 	m_rect.y = p_position->GetY();
-
+	
+	//renderer, SDL_Texture, (OFFSET EM UM VECTOR2D[posx, posty, widht, heigth]),
+	//(POSICAO NA TELA VECTOR2D[posx, posy, width, height]) 
 	SDL_RenderCopy(p_renderer, m_texture, NULL, &m_rect);
 }
 
@@ -122,6 +126,9 @@ void Texture::Draw(SDL_Renderer *p_renderer, Vector2D *p_position,
 	m_rect.w = m_width;
 	m_rect.h = m_height;
 
+	//renderer, SDL_Texture, (OFFSET EM UM VECTOR2D[posx, posty, widht, heigth]),
+	//(POSICAO NA TELA VECTOR2D[posx, posy, width, height]) 
+	//USAR ESSE COM SPITESET
 	SDL_RenderCopy(p_renderer, m_texture, &newRect, &m_rect);
 }
 

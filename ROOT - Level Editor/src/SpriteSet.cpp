@@ -9,9 +9,24 @@ SpriteSet::SpriteSet(int x1, int y1, int x2, int y2)
 	this->loadSize(x1, y1, x2, y2);
 	this->loadSprites(x1, y1, x2, y2);
 }
+SpriteSet::SpriteSet(std::string address, int x1, int y1, int x2, int y2)
+{
+	this->src = address;
+	this->xSize = x2;
+	this->ySize = y2;
+	this->countAllSprites = 0;
+	this->loadSize(x1, y1, x2, y2);
+	this->loadSprites(x1, y1, x2, y2);
+}
+
 
 SpriteSet::~SpriteSet()
 {
+	for (size_t i = 0; i < this->spriteSet.size(); i++)
+	{
+		delete this->spriteSet[i];
+		this->spriteSet.erase(spriteSet.begin());
+	}
 }
 
 void SpriteSet::addSprite(int* x)
@@ -35,12 +50,18 @@ int SpriteSet::getXSize()
 	return this->xSize;
 }
 
+std::string SpriteSet::getSrc()
+{
+	return this->src;
+}
+
 bool SpriteSet::loadSize(int x1, int y1, int x2, int y2) {
 	if (x2 > x1)
 		return false;
 	if (y2 > y1)
 		return false;
 	
+	//TODO: refazer os carculo
 	int n = 0;
 	if (x1 / x2) {
 		if (y1 / y2) {

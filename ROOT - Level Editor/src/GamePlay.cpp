@@ -3,6 +3,7 @@
 #include"Texture.h"
 #include"Vector2D.h"
 #include"Texture.h"
+#include "SpriteSet.h"
 
 SDL_Window *GamePlay::m_window = nullptr;
 SDL_Renderer *GamePlay::m_renderer = nullptr;
@@ -95,9 +96,9 @@ void GamePlay::Initialize()
 		return;
 	}
 
-	t = new Texture("img/1.png", m_renderer);
-	t->SetHeight(85);
-	t->SetWidth(116);
+	this->ss = new SpriteSet("img/spriteset.png", 288, 256, 24, 32);
+	this->t = new Texture(ss, this->m_renderer);
+	
 }
 
 void GamePlay::Update()
@@ -110,7 +111,11 @@ void GamePlay::Draw()
 	SDL_SetRenderDrawColor(m_renderer, 0, 0, 0, 0);
 	SDL_RenderClear(m_renderer);
 
-	t->Draw(m_renderer, new Vector2D(100, 100));
+	std::cout << ss->getSprite(0)[0] << " y " << ss->getSprite(0)[1] << std::endl;
+	t->Draw(m_renderer, new Vector2D(100, 100),ss->getSprite(0)[0],ss->getSprite(0)[1]);
+
+
+
 }
 
 void GamePlay::End()
