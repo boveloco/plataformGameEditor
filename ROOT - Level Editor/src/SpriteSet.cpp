@@ -107,9 +107,12 @@ bool SpriteSet::loadSprites(int x1, int y1, int x2, int y2)
 
 int * SpriteSet::getSprite(int n)
 {
+	int m = -1;
 	if (n > this->getCount())
 		return nullptr;
-	return this->spriteSet[n];
+	if (n == 0)
+		return &m;
+	return this->spriteSet[n - 1];
 }
 
 std::vector<int*> SpriteSet::getSpriteset()

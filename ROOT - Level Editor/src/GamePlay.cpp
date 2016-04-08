@@ -98,7 +98,16 @@ void GamePlay::Initialize()
 	}
 
 	this->map = new Map(10, 10);
-	this->ss = new SpriteSet("img/spriteset.png", 288, 256, 24, 32);
+	int * c = new int(2);
+	c[0] = 0;
+	c[1] = 4;
+	for (size_t i = 0; i < 10; i++)
+	{
+		c[0] = i;
+		this->map->setSprite(c, 3);
+	}
+
+	this->ss = new SpriteSet("img/tileset.png", 512, 512, 64, 64);
 	this->t = new Texture(ss, this->m_renderer);
 	
 }
@@ -117,8 +126,10 @@ void GamePlay::Draw()
 	{
 		for (size_t j = 0; j < map->getXSize(); j++)
 		{
-			//acho que esta com leak de memoria aqui...no vector2d
-			t->Draw(m_renderer, new Vector2D(j*ss->getXSize(), i*ss->getYSize()), ss->getSprite(map->getSprite(j, i))[0], ss->getSprite(map->getSprite(j, i))[1]);
+			Vector2D* v = new Vector2D(j*ss->getXSize(), i*ss->getYSize());
+			t->Draw(m_renderer, v, ss->getSprite(map->getSprite(j, i))[0], ss->getSprite(map->getSprite(j, i))[1]);
+			delete(v);
+
 		}
 	}
 	

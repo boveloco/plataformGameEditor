@@ -120,7 +120,7 @@ void Texture::Draw(SDL_Renderer *p_renderer, Vector2D *p_position,
 	               int p_xIMG, int p_yIMG)
 {
 	SDL_Rect newRect = { p_xIMG, p_yIMG, m_width, m_height};
-
+	
 	m_rect.x = p_position->GetX();
 	m_rect.y = p_position->GetY();
 	m_rect.w = m_width;
@@ -129,6 +129,7 @@ void Texture::Draw(SDL_Renderer *p_renderer, Vector2D *p_position,
 	//renderer, SDL_Texture, (OFFSET EM UM VECTOR2D[posx, posty, widht, heigth]),
 	//(POSICAO NA TELA VECTOR2D[posx, posy, width, height]) 
 	//USAR ESSE COM SPITESET
+	
 	SDL_RenderCopy(p_renderer, m_texture, &newRect, &m_rect);
 }
 
