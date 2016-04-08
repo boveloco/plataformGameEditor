@@ -95,8 +95,8 @@ bool SpriteSet::loadSprites(int x1, int y1, int x2, int y2)
 			if (y2 + j > y1)
 				break;
 			int *x = new int(2);
-			x[0] = i;
-			x[1] = j;
+			x[0] = j;
+			x[1] = i;
 			this->addSprite(x);
 			j += y2;
 		}
