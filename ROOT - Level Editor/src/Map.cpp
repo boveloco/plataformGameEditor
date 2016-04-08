@@ -3,7 +3,6 @@
 #include <fstream>
 #include "Map.h"
 
-
 Map::Map(){}
 
 Map::Map(char* path)
@@ -40,6 +39,9 @@ Map::~Map()
 			delete this->matriz[i];
 	}
 	delete matriz;
+
+	//deleta arquivo mapa
+	delete map;
 }
 
 int Map::getXSize()
@@ -56,27 +58,32 @@ int Map::writeMap(char *path)
 {
 	try
 	{
-		FILE* f = fopen( path ,"w");
-		fwrite((Map*) this, sizeof(Map), sizeof(this), f);
-		return fclose(f);
+		this->map = fopen( path ,"w");
+		fwrite((Map*) this, sizeof(Map), sizeof(this), this->map);
+		return fclose(this->map);
 	}
 	catch (const std::exception&)
 	{
-
+		return NULL;
 	}
-
+	return NULL;
 }
 
 Map * Map::readMap(char * path)
 {
+	if (!path)
+		return nullptr;
 	try
 	{
-		FILE* f = fopen(path, "r");
-		fread((Map*) this, sizeof(Map), sizeof(this), f);
+		this->map = fopen(path, "r");
+		if (this->map == nullptr)
+			return nullptr;
+		fread((Map*) this, sizeof(Map), sizeof(this), this->map);
+		fclose(this->map);
 	}
 	catch (const std::exception&)
 	{
-
+		return nullptr;
 	}
 	return this;
 }

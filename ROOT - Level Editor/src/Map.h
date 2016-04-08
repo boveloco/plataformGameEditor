@@ -38,5 +38,6 @@ private:
 	int ** matriz;
 	int xSize;
 	int ySize;
+	FILE* map = nullptr;
 	
 };
