@@ -1,5 +1,15 @@
-#include<iostream>
+#pragma warning(disable:4996)
+#include <iostream>
+#include <fstream>
 #include "Map.h"
+
+
+Map::Map(){}
+
+Map::Map(char* path)
+{
+	this->readMap(path);
+}
 
 Map::Map(int x, int y)
 {
@@ -40,6 +50,35 @@ int Map::getXSize()
 int Map::getYSize()
 {
 	return this->ySize;
+}
+
+int Map::writeMap(char *path)
+{
+	try
+	{
+		FILE* f = fopen( path ,"w");
+		fwrite((Map*) this, sizeof(Map), sizeof(this), f);
+		return fclose(f);
+	}
+	catch (const std::exception&)
+	{
+
+	}
+
+}
+
+Map * Map::readMap(char * path)
+{
+	try
+	{
+		FILE* f = fopen(path, "r");
+		fread((Map*) this, sizeof(Map), sizeof(this), f);
+	}
+	catch (const std::exception&)
+	{
+
+	}
+	return this;
 }
 
 void Map::print() {

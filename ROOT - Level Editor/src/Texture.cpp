@@ -1,7 +1,7 @@
 #include "Texture.h"
 #include "SpriteSet.h"
-#include"Vector2D.h"
-#include"GamePlay.h"
+#include "Vector2D.h"
+#include "GamePlay.h"
 
 Texture::Texture()
 {}
