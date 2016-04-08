@@ -5,10 +5,10 @@ Map::Map(int x, int y)
 {
 	this->xSize = x;
 	this->ySize = y;
-	this->matriz = (int**) calloc(x, sizeof(int)*x);
+	this->matriz = (int**) calloc(y, sizeof(int)*y);
 	for (size_t i = 0; i < x; i++)
 	{
-		this->matriz[i] = (int*) calloc(y, sizeof(int)*y);
+		this->matriz[i] = (int*) calloc(x, sizeof(int)*x);
 	}
 
 }
@@ -34,7 +34,7 @@ Map::~Map()
 
 int Map::getXSize()
 {
-	return this->ySize;
+	return this->xSize;
 }
 
 int Map::getYSize()
@@ -43,12 +43,11 @@ int Map::getYSize()
 }
 
 void Map::print() {
-	for (size_t i = 0; i < this->getXSize(); i++)
+	for (size_t i = 0; i < this->ySize; i++)
 	{
-
-		for (size_t j = 0; j < this->getYSize(); j++)
+		for (size_t j = 0; j < this->xSize; j++)
 		{
-			std::cout << this->matriz[i][j] << " | ";
+			std::cout << this->matriz[j][i] << " | ";
 		}
 		std::cout << std::endl;
 	}

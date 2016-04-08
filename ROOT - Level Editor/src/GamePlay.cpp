@@ -9,6 +9,7 @@
 SDL_Window *GamePlay::m_window = nullptr;
 SDL_Renderer *GamePlay::m_renderer = nullptr;
 bool GamePlay::m_quit = false;
+int teste;
 
 GamePlay::GamePlay()
 {}
@@ -97,11 +98,11 @@ void GamePlay::Initialize()
 		return;
 	}
 
-	this->map = new Map(10, 10);
+	this->map = new Map(30, 10);
 	int * c = new int(2);
 	c[0] = 0;
 	c[1] = 4;
-	for (size_t i = 0; i < 10; i++)
+	for (size_t i = 0; i < map->getXSize(); i++)
 	{
 		c[0] = i;
 		this->map->setSprite(c, 3);
@@ -109,7 +110,7 @@ void GamePlay::Initialize()
 
 	this->ss = new SpriteSet("img/tileset.png", 512, 512, 64, 64);
 	this->t = new Texture(ss, this->m_renderer);
-	
+	teste = 1;
 }
 
 void GamePlay::Update()
@@ -121,7 +122,6 @@ void GamePlay::Draw()
 {
 	SDL_SetRenderDrawColor(m_renderer, 0, 0, 0, 0);
 	SDL_RenderClear(m_renderer);
-
 	for (size_t i = 0; i < map->getYSize(); i++)
 	{
 		for (size_t j = 0; j < map->getXSize(); j++)
@@ -129,12 +129,10 @@ void GamePlay::Draw()
 			Vector2D* v = new Vector2D(j*ss->getXSize(), i*ss->getYSize());
 			t->Draw(m_renderer, v, ss->getSprite(map->getSprite(j, i))[0], ss->getSprite(map->getSprite(j, i))[1]);
 			delete(v);
-
 		}
 	}
 	
 	//t->Draw(m_renderer, new Vector2D(200, 200), ss->getSprite(3)[0], ss->getSprite(3)[1]);
-
 
 }
 
