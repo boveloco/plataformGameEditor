@@ -4,6 +4,7 @@
 
 class Texture;
 class SpriteSet;
+class Map;
 
 class GamePlay
 {
@@ -14,6 +15,7 @@ private:
 	static bool m_quit;
 	SpriteSet* ss;
 	Texture *t;
+	Map* map;
 public:
 	GamePlay();
 	~GamePlay();

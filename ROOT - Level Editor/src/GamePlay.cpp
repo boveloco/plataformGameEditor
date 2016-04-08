@@ -1,9 +1,10 @@
+#include <iostream>
+
 #include "GamePlay.h"
-#include<iostream>
-#include"Texture.h"
-#include"Vector2D.h"
-#include"Texture.h"
+#include "Texture.h"
+#include "Vector2D.h"
 #include "SpriteSet.h"
+#include "Map.h"
 
 SDL_Window *GamePlay::m_window = nullptr;
 SDL_Renderer *GamePlay::m_renderer = nullptr;
@@ -96,6 +97,7 @@ void GamePlay::Initialize()
 		return;
 	}
 
+	this->map = new Map(10, 10);
 	this->ss = new SpriteSet("img/spriteset.png", 288, 256, 24, 32);
 	this->t = new Texture(ss, this->m_renderer);
 	
@@ -111,9 +113,16 @@ void GamePlay::Draw()
 	SDL_SetRenderDrawColor(m_renderer, 0, 0, 0, 0);
 	SDL_RenderClear(m_renderer);
 
-	std::cout << ss->getSprite(0)[0] << " y " << ss->getSprite(0)[1] << std::endl;
-	t->Draw(m_renderer, new Vector2D(100, 100), ss->getSprite(0)[0], ss->getSprite(0)[1]);
-	t->Draw(m_renderer, new Vector2D(200, 200), ss->getSprite(3)[0], ss->getSprite(3)[1]);
+	for (size_t i = 0; i < map->getYSize(); i++)
+	{
+		for (size_t j = 0; j < map->getXSize(); j++)
+		{
+			//acho que esta com leak de memoria aqui...no vector2d
+			t->Draw(m_renderer, new Vector2D(j*ss->getXSize(), i*ss->getYSize()), ss->getSprite(map->getSprite(j, i))[0], ss->getSprite(map->getSprite(j, i))[1]);
+		}
+	}
+	
+	//t->Draw(m_renderer, new Vector2D(200, 200), ss->getSprite(3)[0], ss->getSprite(3)[1]);
 
 
 }
