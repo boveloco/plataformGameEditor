@@ -98,7 +98,7 @@ void GamePlay::Initialize()
 		return;
 	}
 
-	this->map = new Map(30, 10);
+	this->map = new Map(10, 5);
 	int * c = new int(2);
 	c[0] = 0;
 	c[1] = 4;

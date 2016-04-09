@@ -2,35 +2,14 @@
 #include "GamePlay.h"
 #include "SpriteSet.h"
 #include "Map.h"
+#include "Camera.h"
+
 int main(int argc, char** argv) 
 {
-	/*GamePlay game;
-	game.Run();*/
+	GamePlay game;
+	game.Run();
 	
-	//testando spriteset
-	//SpriteSet* spriteS = new SpriteSet(10, 10, 1, 5);
-	//std::cout << spriteS->getCount() << std::endl;
-	//std::cout << spriteS->getSprite(4)[0] << " && " << spriteS->getSprite(4)[1] << std::endl;
-	
-	//testando mapa
-	/*Map* m = new Map(15, 200);
-	int * p = new int(2);
-	for (size_t i = 0; i < 15; i++)
-	{
-		for (size_t j = 0; j < 200; j++)
-		{
-			p[0] = i;
-			p[1] = j;
-			m->setSprite(p, i + j);
-		}
-	}
-
-	m->print();
-	m->writeMap("map.dat");*/
-
-	Map* n = new Map();
-	n = n->readMap("map.dat");
-	n->print();
+	Camera c(CAMERA_Y, 1, CAMERA_X, 1);
 	system("PAUSE");
 	return 0;
 }
