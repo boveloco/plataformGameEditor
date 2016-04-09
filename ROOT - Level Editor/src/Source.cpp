@@ -13,7 +13,7 @@ int main(int argc, char** argv)
 	//std::cout << spriteS->getSprite(4)[0] << " && " << spriteS->getSprite(4)[1] << std::endl;
 	
 	//testando mapa
-	Map* m = new Map(10, 10);
+	/*Map* m = new Map(10, 10);
 	int * p = new int(2);
 	for (size_t i = 0; i < 10; i++)
 	{
@@ -27,9 +27,9 @@ int main(int argc, char** argv)
 
 	m->print();
 	m->writeMap("map.dat");
-
+*/
 	Map* n = new Map();
-	n = m->readMap("map.dat");
+	n = n->readMap("map.dat");
 	n->print();
 	system("PAUSE");
 	return 0;

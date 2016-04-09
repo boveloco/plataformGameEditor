@@ -96,7 +96,7 @@ Map * Map::readMap(char * path)
 		if (count == 0)
 			this->xSize = std::stoi(line, &sz);
 		if (count == 1) {
-			this->xSize = std::stoi(line, &sz);
+			this->ySize = std::stoi(line, &sz);
 			break;
 		}
 		count++;
