@@ -14,12 +14,15 @@ Map::Map(int x, int y)
 {
 	this->xSize = x;
 	this->ySize = y;
-	this->matriz = (int**) calloc(y, sizeof(int)*y);
+	this->createMatriz(x, y);
+}
+int** Map::createMatriz(int x, int y) {
+	this->matriz = (int**)calloc(y, sizeof(int)*y);
 	for (size_t i = 0; i < x; i++)
 	{
-		this->matriz[i] = (int*) calloc(x, sizeof(int)*x);
+		this->matriz[i] = (int*)calloc(x, sizeof(int)*x);
 	}
-
+	return this->matriz;
 }
 
 int Map::getSprite(int x, int y)
@@ -39,9 +42,6 @@ Map::~Map()
 			delete this->matriz[i];
 	}
 	delete matriz;
-
-	//deleta arquivo mapa
-	delete map;
 }
 
 int Map::getXSize()
@@ -56,42 +56,70 @@ int Map::getYSize()
 
 int Map::writeMap(char *path)
 {
+	std::ofstream map(path);
 	try
 	{
-		this->map = fopen( path ,"w");
-		fwrite((Map*) this, sizeof(Map), sizeof(this), this->map);
-		return fclose(this->map);
+		//fwrite((Map*) this, sizeof(Map), sizeof(this), this->map);
+		//fclose(this->map);
+		map << this->getXSize();
+		map << "\n";
+		map << this->getYSize();
+		map << "\n";
+		for (size_t i = 0; i < this->xSize; i++)
+		{
+			for (size_t j = 0; j < this->ySize; j++)
+			{
+				map << this->matriz[i][j] << " ";
+			}
+			map << "\n";
+		}
+
 	}
 	catch (const std::exception&)
 	{
 		return NULL;
 	}
-	return NULL;
+	map.close();
+	return 1;
 }
 
 Map * Map::readMap(char * path)
 {
-	if (!path)
-		return nullptr;
-	try
+	std::string line;
+	int count = 0;
+	std::ifstream map(path);
+	std::string::size_type sz;
+	//faz a leitura das primeiras duas linha (tamanho em x e em y respectivamente)
+	while (std::getline(map, line))
 	{
-		this->map = fopen(path, "r");
-		if (this->map == nullptr)
-			return nullptr;
-		fread((Map*) this, sizeof(Map), sizeof(this), this->map);
-		fclose(this->map);
+		std::cout << line << std::endl;
+		if (count == 0)
+			this->xSize = std::stoi(line, &sz);
+		if (count == 1) {
+			this->xSize = std::stoi(line, &sz);
+			break;
+		}
+		count++;
 	}
-	catch (const std::exception&)
-	{
-		return nullptr;
+	
+	//cria a matriz
+	this->createMatriz(this->xSize, this->ySize);	
+
+	//pega os valores da matriz
+	int x, y;
+	for (y = 0; y < this->ySize; y++) {
+		for (x = 0; x < this->xSize; x++) {
+			 map >> this->matriz[y][x];
+		}
 	}
+	map.close();
 	return this;
 }
 
 void Map::print() {
-	for (size_t i = 0; i < this->ySize; i++)
+	for (size_t i = 0; i < this->xSize; i++)
 	{
-		for (size_t j = 0; j < this->xSize; j++)
+		for (size_t j = 0; j < this->ySize; j++)
 		{
 			std::cout << this->matriz[j][i] << " | ";
 		}

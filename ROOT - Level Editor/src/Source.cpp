@@ -15,9 +15,15 @@ int main(int argc, char** argv)
 	//testando mapa
 	Map* m = new Map(10, 10);
 	int * p = new int(2);
-	p[0] = 1;
-	p[1] = 3;
-	m->setSprite(p, 2);
+	for (size_t i = 0; i < 10; i++)
+	{
+		for (size_t j = 0; j < 10; j++)
+		{
+			p[0] = i;
+			p[1] = j;
+			m->setSprite(p, i + j);
+		}
+	}
 
 	m->print();
 	m->writeMap("map.dat");

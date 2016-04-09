@@ -34,10 +34,11 @@ public:
 	int writeMap(char*);
 	Map* readMap(char*);
 
+	//cria a matriz
+	int** createMatriz(int, int);
+
 private:
 	int ** matriz;
 	int xSize;
 	int ySize;
-	FILE* map = nullptr;
-	
 };
