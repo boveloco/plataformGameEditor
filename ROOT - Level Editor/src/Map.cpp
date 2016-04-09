@@ -109,7 +109,7 @@ Map * Map::readMap(char * path)
 	int x, y;
 	for (y = 0; y < this->ySize; y++) {
 		for (x = 0; x < this->xSize; x++) {
-			 map >> this->matriz[y][x];
+			 map >> this->matriz[x][y];
 		}
 	}
 	map.close();
@@ -121,7 +121,7 @@ void Map::print() {
 	{
 		for (size_t j = 0; j < this->ySize; j++)
 		{
-			std::cout << this->matriz[j][i] << " | ";
+			std::cout << this->matriz[i][j] << " | ";
 		}
 		std::cout << std::endl;
 	}
