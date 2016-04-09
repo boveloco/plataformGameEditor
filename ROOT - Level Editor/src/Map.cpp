@@ -1,4 +1,3 @@
-#pragma warning(disable:4996)
 #include <iostream>
 #include <fstream>
 #include "Map.h"
@@ -56,7 +55,7 @@ int Map::getYSize()
 
 int Map::writeMap(char *path)
 {
-	std::ofstream map(path);
+	std::ofstream map(path, std::ifstream::binary);
 	try
 	{
 		//fwrite((Map*) this, sizeof(Map), sizeof(this), this->map);
@@ -87,7 +86,7 @@ Map * Map::readMap(char * path)
 {
 	std::string line;
 	int count = 0;
-	std::ifstream map(path);
+	std::ifstream map(path, std::ifstream::binary);
 	std::string::size_type sz;
 	//faz a leitura das primeiras duas linha (tamanho em x e em y respectivamente)
 	while (std::getline(map, line))
