@@ -1,12 +1,13 @@
 #include <iostream>
 
-#include "GamePlay.h"
-#include "Texture.h"
-#include "Vector2D.h"
-#include "SpriteSet.h"
-#include "Map.h"
+#include"GamePlay.h"
+#include"Texture.h"
+#include"Vector2D.h"
+#include"SpriteSet.h"
+#include"Map.h"
 #include"Camera2.h"
 #include"Scene.h"
+#include"Mouse.h"
 
 SDL_Window *GamePlay::m_window = nullptr;
 SDL_Renderer *GamePlay::m_renderer = nullptr;
@@ -54,6 +55,11 @@ void GamePlay::SetEvent()
 			default:
 				break;
 			}
+		}
+		if (m_event.type == SDL_MOUSEMOTION)
+		{
+			m_mouse->SetPosition(m_event.motion.x, m_event.motion.y);
+			SDL_MouseIsHaptic();
 		}
 
 		m_scene->SetEvent(m_event);
@@ -104,6 +110,9 @@ void GamePlay::Initialize()
 	}
 
 	/*this->m_camera = new Camera2(new Vector2D(0, 0), 1024, 768);*/
+	SDL_ShowCursor(SDL_DISABLE);
+
+	m_mouse = new Mouse(new Texture("img/cursores.png", m_renderer, 26, 26), new Vector2D(0, 0));
 	m_scene = new Scene();
 	m_scene->Initialize();
 }
@@ -121,7 +130,7 @@ void GamePlay::Draw()
 	SDL_RenderClear(m_renderer);
 
 	m_scene->DrawOnCamera();
-
+	m_mouse->Draw();
 }
 
 void GamePlay::End()
@@ -144,6 +153,9 @@ void GamePlay::End()
 
 	delete m_scene;
 	m_scene = nullptr;
+
+	delete m_mouse;
+	m_mouse = nullptr;
 }
 
 void GamePlay::Run()

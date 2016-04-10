@@ -4,6 +4,7 @@
 
 class Camera2;
 class Scene;
+class Mouse;
 
 class GamePlay
 {
@@ -15,6 +16,7 @@ private:
 
 	//Camera2 *m_camera;
 	Scene *m_scene;
+	Mouse *m_mouse;
 
 public:
 	GamePlay();

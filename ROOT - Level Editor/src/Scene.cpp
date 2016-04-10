@@ -41,6 +41,7 @@ void Scene::SetEvent(SDL_Event &p_event)
 			break;
 		}
 	}
+
 }
 
 void Scene::Initialize()
@@ -50,7 +51,7 @@ void Scene::Initialize()
 	this->map = new Map(10, 10);
 	int * c = new int(2);
 	c[0] = 0;
-	c[1] = 4;
+	c[1] = 9;
 	for (size_t i = 0; i < 10; i++)
 	{
 		c[0] = i;

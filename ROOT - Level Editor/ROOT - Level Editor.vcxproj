@@ -130,6 +130,7 @@
     <ClCompile Include="src\GameObject.cpp" />
     <ClCompile Include="src\GamePlay.cpp" />
     <ClCompile Include="src\Map.cpp" />
+    <ClCompile Include="src\Mouse.cpp" />
     <ClCompile Include="src\Scene.cpp" />
     <ClCompile Include="src\Source.cpp" />
     <ClCompile Include="src\SpriteSet.cpp" />
@@ -142,6 +143,7 @@
     <ClInclude Include="src\GameObject.h" />
     <ClInclude Include="src\GamePlay.h" />
     <ClInclude Include="src\Map.h" />
+    <ClInclude Include="src\Mouse.h" />
     <ClInclude Include="src\Scene.h" />
     <ClInclude Include="src\SpriteSet.h" />
     <ClInclude Include="src\Text.h" />
