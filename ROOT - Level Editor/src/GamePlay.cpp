@@ -58,10 +58,10 @@ void GamePlay::SetEvent()
 				m_quit = true;
 				break;
 			case SDLK_LEFT:
-				m_camera->UpDate(t->GetWidth(), 0);
+				m_camera->UpDate(-t->GetWidth(), 0);
 				break;
 			case SDLK_RIGHT:
-				m_camera->UpDate(-t->GetWidth(), 0);
+				m_camera->UpDate(t->GetWidth(), 0);
 				break;
 			default:
 				break;
@@ -164,7 +164,7 @@ void GamePlay::DrawOnCamera()
 		for (size_t j = 0; j < map->getXSize(); j++)
 		{
 			//vector recebe a posição menos o x e y da camera
-			Vector2D* v = new Vector2D(j*ss->getXSize() - m_camera->GetxPosition(), i*ss->getYSize() - m_camera->GetyPosition());
+			Vector2D* v = new Vector2D((j*ss->getXSize()) - m_camera->GetxPosition(), (i*ss->getYSize() - m_camera->GetyPosition()));
 			t->Draw(m_renderer, v, ss->getSprite(map->getSprite(j, i))[0], ss->getSprite(map->getSprite(j, i))[1]);
 			delete(v);
 
