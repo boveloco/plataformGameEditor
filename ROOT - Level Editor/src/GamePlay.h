@@ -2,6 +2,7 @@
 #include<SDL.h>
 #include<SDL_image.h>
 
+class Camera2;
 class Texture;
 class SpriteSet;
 class Map;
@@ -16,6 +17,7 @@ private:
 	SpriteSet* ss;
 	Texture *t;
 	Map* map;
+	Camera2 *m_camera;
 public:
 	GamePlay();
 	~GamePlay();
@@ -29,6 +31,9 @@ public:
 	void Initialize();
 	void Update();
 	void Draw();
+	//Desenha apenas o que a camera
+	//está vendo
+	void DrawOnCamera();
 	void End();
 
 	void Run();
