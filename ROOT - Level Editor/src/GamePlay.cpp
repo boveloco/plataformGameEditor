@@ -6,25 +6,19 @@
 #include "SpriteSet.h"
 #include "Map.h"
 #include"Camera2.h"
+#include"Scene.h"
 
 SDL_Window *GamePlay::m_window = nullptr;
 SDL_Renderer *GamePlay::m_renderer = nullptr;
 bool GamePlay::m_quit = false;
 
 GamePlay::GamePlay()
-{}
+{
+	m_scene = nullptr;
+}
 
 GamePlay::~GamePlay()
 {
-	/*delete m_camera;
-	delete ss;
-	delete t;
-	delete map;
-
-	m_camera = nullptr;
-	ss = nullptr;
-	t = nullptr;
-	map = nullptr*/;
 }
 
 SDL_Window *GamePlay::GetWindow()
@@ -57,16 +51,12 @@ void GamePlay::SetEvent()
 			case SDLK_ESCAPE:
 				m_quit = true;
 				break;
-			case SDLK_LEFT:
-				m_camera->UpDate(-t->GetWidth(), 0);
-				break;
-			case SDLK_RIGHT:
-				m_camera->UpDate(t->GetWidth(), 0);
-				break;
 			default:
 				break;
 			}
 		}
+
+		m_scene->SetEvent(m_event);
 	}
 }
 
@@ -79,8 +69,8 @@ void GamePlay::Initialize()
 		return;
 	}
 
-	m_window = SDL_CreateWindow("...", SDL_WINDOWPOS_UNDEFINED,
-		SDL_WINDOWPOS_UNDEFINED, 1024, 768, SDL_WINDOW_SHOWN);
+	m_window = SDL_CreateWindow("ROOT", SDL_WINDOWPOS_UNDEFINED,
+			   SDL_WINDOWPOS_UNDEFINED, 1024, 768, SDL_WINDOW_SHOWN);
 
 	if (!m_window)
 	{
@@ -113,26 +103,16 @@ void GamePlay::Initialize()
 		return;
 	}
 
-	this->m_camera = new Camera2(new Vector2D(0, 0), 1024, 768);
-
-	this->map = new Map(10, 10);
-	int * c = new int(2);
-	c[0] = 0;
-	c[1] = 4;
-	for (size_t i = 0; i < 10; i++)
-	{
-		c[0] = i;
-		this->map->setSprite(c, 3);
-	}
-
-	this->ss = new SpriteSet("img/tileset.png", 512, 512, 64, 64);
-	this->t = new Texture(ss, this->m_renderer);
-
+	/*this->m_camera = new Camera2(new Vector2D(0, 0), 1024, 768);*/
+	m_scene = new Scene();
+	m_scene->Initialize();
 }
 
 void GamePlay::Update()
 {
 	SetEvent();
+
+	m_scene->Update();
 }
 
 void GamePlay::Draw()
@@ -140,36 +120,8 @@ void GamePlay::Draw()
 	SDL_SetRenderDrawColor(m_renderer, 0, 0, 0, 0);
 	SDL_RenderClear(m_renderer);
 
-	DrawOnCamera();
-	/*for (size_t i = 0; i < map->getYSize(); i++)
-	{
-	for (size_t j = 0; j < map->getXSize(); j++)
-	{
-	Vector2D* v = new Vector2D(j*ss->getXSize(), i*ss->getYSize());
-	t->Draw(m_renderer, v, ss->getSprite(map->getSprite(j, i))[0], ss->getSprite(map->getSprite(j, i))[1]);
-	delete(v);
+	m_scene->DrawOnCamera();
 
-	}
-	}*/
-
-	//t->Draw(m_renderer, new Vector2D(200, 200), ss->getSprite(3)[0], ss->getSprite(3)[1]);
-
-
-}
-
-void GamePlay::DrawOnCamera()
-{
-	for (size_t i = 0; i < map->getYSize(); i++)
-	{
-		for (size_t j = 0; j < map->getXSize(); j++)
-		{
-			//vector recebe a posição menos o x e y da camera
-			Vector2D* v = new Vector2D((j*ss->getXSize()) - m_camera->GetxPosition(), (i*ss->getYSize() - m_camera->GetyPosition()));
-			t->Draw(m_renderer, v, ss->getSprite(map->getSprite(j, i))[0], ss->getSprite(map->getSprite(j, i))[1]);
-			delete(v);
-
-		}
-	}
 }
 
 void GamePlay::End()
@@ -188,8 +140,10 @@ void GamePlay::End()
 	IMG_Quit();
 	SDL_Quit();
 
-	delete t;
-	t = nullptr;
+	m_scene->End();
+
+	delete m_scene;
+	m_scene = nullptr;
 }
 
 void GamePlay::Run()
