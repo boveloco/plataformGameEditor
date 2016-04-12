@@ -106,8 +106,8 @@ Map * Map::readMap(char * path)
 
 	//pega os valores da matriz
 	int x, y;
-	for (y = 0; y < this->ySize; y++) {
-		for (x = 0; x < this->xSize; x++) {
+	for (x = 0; x < this->xSize; x++) {
+		for (y = 0; y < this->ySize; y++) {
 			 map >> this->matriz[x][y];
 		}
 	}
