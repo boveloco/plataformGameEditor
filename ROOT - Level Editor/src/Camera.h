@@ -1,4 +1,7 @@
 #pragma once
+#include<iostream>
+class Vector2D;
+
 
 enum Indice
 {
@@ -8,38 +11,40 @@ enum Indice
 
 class Camera
 {
-public:
-	//
-	Camera();
-	//set initial position with an array
-	Camera(int*, int*);
-	//set initial postion with 2 ints x,y
-	Camera(int, int, int, int);
-	//deleta os 2 ponteiros
-	~Camera();
-	
-	//get and setters
-	//os com (int) retorna um valor especifico, x ou y
-	//os sem retornam o ponteiro
-
-	int* getOfset();
-	int getOfset(int);
-	int* getPos();
-	int getPos(int);
-	int* getSize();
-	int getSize(int);
-
-	//os com (int,int) tem um int indice e um int value
-	//dai com o indice voce acessa obj[indice] = value
-	void setOfset(int*);
-	void setOfset(int, int);
-	void setPos(int*);
-	void setPos(int, int);
-	void setSize(int*);
-	void setSize(int, int);
-
 private:
-	int* ofset = new int(2);
-	int* pos = new int(2);
-	int* size = new int(2);
+	Vector2D *m_position;
+	int m_width;
+	int m_height;
+
+public:
+	//seta a posição, largura e altura
+	Camera(Vector2D *, int, int);
+	Camera();
+	~Camera();
+
+	int GetWidth() const;
+	int GetHeight() const;
+	Vector2D *GetPosition() const;
+	int getPosition(int) const;
+	int GetxPosition() const;
+	int GetyPosition() const;
+
+	//seta o limete em que o personagem
+	//pode se mover sem atualizar a 
+	//camera
+	int GetLimitLeft() const;
+	int GetLimitRight() const;
+	int GetUpperLimit() const;
+	int GetInferiorLimit() const;
+
+	void SetWidth(int);
+	void SetHeight(int);
+	void SetPosition(Vector2D *);
+	void SetPosition(int, int);
+	void SetxPosition(int);
+	void SetyPosition(int);
+
+	void UpDate(int, int);
+	void End();
 };
+
