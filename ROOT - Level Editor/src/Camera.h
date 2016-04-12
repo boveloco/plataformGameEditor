@@ -25,7 +25,7 @@ public:
 	int GetWidth() const;
 	int GetHeight() const;
 	Vector2D *GetPosition() const;
-	int getPosition(int) const;
+	int GetPosition(int);
 	int GetxPosition() const;
 	int GetyPosition() const;
 

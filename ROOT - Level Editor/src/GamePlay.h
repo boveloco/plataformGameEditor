@@ -2,7 +2,7 @@
 #include<SDL.h>
 #include<SDL_image.h>
 
-class Camera2;
+class Camera;
 class Scene;
 class Mouse;
 

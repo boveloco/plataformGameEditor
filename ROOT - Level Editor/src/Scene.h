@@ -4,7 +4,7 @@
 class SpriteSet;
 class Texture;
 class Map;
-class Camera2;
+class Camera;
 
 class Scene
 {
@@ -14,10 +14,10 @@ private:
 	SpriteSet* ss;
 	Texture *t;
 	Map* map;
-	Camera2 *m_camera;
+	Camera *m_camera;
 
 public:
-	Scene();
+	Scene(SpriteSet*, Map*);
 	~Scene();
 
 	bool Quit();

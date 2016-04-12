@@ -5,7 +5,7 @@
 #include"Vector2D.h"
 #include"SpriteSet.h"
 #include"Map.h"
-#include"Camera2.h"
+#include"Camera.h"
 #include"Scene.h"
 #include"Mouse.h"
 
@@ -15,7 +15,7 @@ bool GamePlay::m_quit = false;
 
 GamePlay::GamePlay()
 {
-	m_scene = nullptr;
+	this->m_scene = nullptr;
 }
 
 GamePlay::~GamePlay()
@@ -62,7 +62,7 @@ void GamePlay::SetEvent()
 			SDL_MouseIsHaptic();
 		}
 
-		m_scene->SetEvent(m_event);
+		this->m_scene->SetEvent(m_event);
 	}
 }
 
@@ -109,19 +109,26 @@ void GamePlay::Initialize()
 		return;
 	}
 
-	/*this->m_camera = new Camera2(new Vector2D(0, 0), 1024, 768);*/
 	SDL_ShowCursor(SDL_DISABLE);
+	Map* m = new Map(30,11);
+	int* n = new int(2);
+	n[1] = 9;
+	for (size_t i = 0; i < 30; i++)
+	{
+		n[0] = i;
+		m->setSprite(n, 3);
+	}
 
 	m_mouse = new Mouse(new Texture("img/cursores.png", m_renderer, 26, 26), new Vector2D(0, 0));
-	m_scene = new Scene();
-	m_scene->Initialize();
+	this->m_scene = new Scene(new SpriteSet("img/tileset.png",512,512,64,64), m);
+	this->m_scene->Initialize();
 }
 
 void GamePlay::Update()
 {
 	SetEvent();
 
-	m_scene->Update();
+	this->m_scene->Update();
 }
 
 void GamePlay::Draw()
@@ -129,7 +136,7 @@ void GamePlay::Draw()
 	SDL_SetRenderDrawColor(m_renderer, 0, 0, 0, 0);
 	SDL_RenderClear(m_renderer);
 
-	m_scene->DrawOnCamera();
+	this->m_scene->DrawOnCamera();
 	m_mouse->Draw();
 }
 
@@ -149,10 +156,10 @@ void GamePlay::End()
 	IMG_Quit();
 	SDL_Quit();
 
-	m_scene->End();
+	this->m_scene->End();
 
-	delete m_scene;
-	m_scene = nullptr;
+	delete this->m_scene;
+	this->m_scene = nullptr;
 
 	delete m_mouse;
 	m_mouse = nullptr;

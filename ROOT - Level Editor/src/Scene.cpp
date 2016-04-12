@@ -1,19 +1,21 @@
 #include "Scene.h"
-#include"Camera2.h"
+#include"Camera.h"
 #include"Map.h"
 #include"Texture.h"
 #include"SpriteSet.h"
 #include"Vector2D.h"
 #include"GamePlay.h"
 
-Scene::Scene()
+
+
+Scene::Scene(SpriteSet * spriteSet, Map* map)
 {
 	m_quit = false;
 
 	m_camera = nullptr;
 	t = nullptr;
-	map = nullptr;
-	ss = nullptr;
+	this->ss = spriteSet;
+	this->map = map;
 }
 
 Scene::~Scene()
@@ -46,24 +48,13 @@ void Scene::SetEvent(SDL_Event &p_event)
 
 void Scene::Initialize()
 {
-	this->m_camera = new Camera2(new Vector2D(0, 0), 1024, 768);
-
-	this->map = new Map(10, 10);
-	int * c = new int(2);
-	c[0] = 0;
-	c[1] = 9;
-	for (size_t i = 0; i < 10; i++)
-	{
-		c[0] = i;
-		this->map->setSprite(c, 3);
-	}
-
-	this->ss = new SpriteSet("img/tileset.png", 512, 512, 64, 64);
+	this->m_camera = new Camera(new Vector2D(0, 0), 1024, 768);
 	this->t = new Texture(ss, GamePlay::GetRenderer());
 }
 
 void Scene::Update()
 {
+	 
 }
 
 void Scene::Draw()
@@ -78,10 +69,9 @@ void Scene::DrawOnCamera()
 		for (size_t j = 0; j < map->getXSize(); j++)
 		{
 			//vector recebe a posição menos o x e y da camera
-			Vector2D* v = new Vector2D((j*ss->getXSize()) - m_camera->GetxPosition(), (i*ss->getYSize() - m_camera->GetyPosition()));
+			Vector2D* v = new Vector2D((j*ss->getXSize()) - m_camera->GetPosition(CAMERA_X), (i*ss->getYSize() - m_camera->GetPosition(CAMERA_Y)));
 			t->Draw(GamePlay::GetRenderer(), v, ss->getSprite(map->getSprite(j, i))[0], ss->getSprite(map->getSprite(j, i))[1]);
-			delete(v);
-
+			delete v;
 		}
 	}
 }
@@ -91,6 +81,7 @@ void Scene::End()
 	delete m_camera;
 	delete map;
 	delete t;
+	delete ss;
 
 	m_camera = nullptr;
 	map = nullptr;
