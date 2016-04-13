@@ -7,12 +7,7 @@
 class Map
 {
 public:
-	enum ERRORS
-	{
-		CANNOT_FIND_FILE,
-		CANNOT_READ_FILE,
-	};
-
+	
 	Map();
 	Map(char*);
 	//cria o mapa

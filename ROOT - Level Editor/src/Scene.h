@@ -5,19 +5,22 @@ class SpriteSet;
 class Texture;
 class Map;
 class Camera;
+class Mouse;
 
 class Scene
 {
 private:
 	bool m_quit;
 
-	SpriteSet* ss;
+	SpriteSet* spriteSet;
 	Texture *t;
 	Map* map;
 	Camera *m_camera;
+	Mouse* mouse;
 
 public:
 	Scene(SpriteSet*, Map*);
+	Scene(SpriteSet*, Map*, Mouse*);
 	~Scene();
 
 	bool Quit();

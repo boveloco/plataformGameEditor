@@ -8,6 +8,7 @@
 #include"Camera.h"
 #include"Scene.h"
 #include"Mouse.h"
+#include "Defines.h"
 
 SDL_Window *GamePlay::m_window = nullptr;
 SDL_Renderer *GamePlay::m_renderer = nullptr;
@@ -76,7 +77,7 @@ void GamePlay::Initialize()
 	}
 
 	m_window = SDL_CreateWindow("ROOT", SDL_WINDOWPOS_UNDEFINED,
-			   SDL_WINDOWPOS_UNDEFINED, 1024, 768, SDL_WINDOW_SHOWN);
+			   SDL_WINDOWPOS_UNDEFINED, SIZE_WINDOW_X, SIZE_WINDOW_Y, SDL_WINDOW_SHOWN);
 
 	if (!m_window)
 	{
@@ -110,17 +111,18 @@ void GamePlay::Initialize()
 	}
 
 	SDL_ShowCursor(SDL_DISABLE);
-	Map* m = new Map(30,11);
+	////////////////////
+	////////////////////
+	Map* map = new Map("map.dat");/*
 	int* n = new int(2);
 	n[1] = 9;
 	for (size_t i = 0; i < 30; i++)
 	{
 		n[0] = i;
-		m->setSprite(n, 3);
-	}
-
+		m->setSprite(n, 5);
+	}*/
 	m_mouse = new Mouse(new Texture("img/cursores.png", m_renderer, 26, 26), new Vector2D(0, 0));
-	this->m_scene = new Scene(new SpriteSet("img/tileset.png",512,512,64,64), m);
+	this->m_scene = new Scene(new SpriteSet("img/tileset.png",512,512,64,64), map);
 	this->m_scene->Initialize();
 }
 

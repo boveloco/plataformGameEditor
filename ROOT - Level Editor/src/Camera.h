@@ -1,7 +1,8 @@
 #pragma once
 #include<iostream>
 class Vector2D;
-
+class Map;
+class SpriteSet;
 
 enum Indice
 {
@@ -15,10 +16,11 @@ private:
 	Vector2D *m_position;
 	int m_width;
 	int m_height;
-
+	Map* map;
+	SpriteSet* spriteSet;
 public:
 	//seta a posição, largura e altura
-	Camera(Vector2D *, int, int);
+	Camera(Vector2D *, int, int, Map*, SpriteSet*);
 	Camera();
 	~Camera();
 

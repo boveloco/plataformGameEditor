@@ -1,8 +1,13 @@
 #include "Camera.h"
-#include"Vector2D.h"
+#include "Map.h"
+#include "Vector2D.h"
+#include "SpriteSet.h"
+#include "Defines.h"
 
-Camera::Camera(Vector2D *p_position, int p_width, int p_height)
+Camera::Camera(Vector2D *p_position, int p_width, int p_height, Map* map, SpriteSet* spriteSet)
 {
+	this->spriteSet = spriteSet;
+	this->map = map;
 	m_position = p_position;
 	m_width = p_width;
 	m_height = p_height;
@@ -15,6 +20,8 @@ Camera::Camera()
 
 Camera::~Camera()
 {
+	delete(spriteSet);
+	delete(map);
 	End();
 }
 
@@ -39,13 +46,23 @@ int Camera::GetPosition(int indice)
 		return EOF;
 	if (indice == CAMERA_X) {
 		int x = this->m_position->GetX();
-		if (x > 0)
-			return x;
-		}
+		int xMapSize = map->getXSize();
+		int xSpriteSize = spriteSet->getXSize();
+		if (x < 0)
+			return 0;
+		if (x  > xMapSize*xSpriteSize-SIZE_WINDOW_X)
+			return xMapSize*xSpriteSize-SIZE_WINDOW_X;
+		return x;
+	}
 	if (indice == CAMERA_Y) {
 		int y = this->m_position->GetY();
-		if (y > 0)
-			return y;
+		int yMapSize = map->getYSize();
+		int ySpriteSize = spriteSet->getYSize();
+		if (y < 0)
+			return 0;
+		if (y > yMapSize*ySpriteSize - SIZE_WINDOW_Y)
+			return yMapSize*ySpriteSize - SIZE_WINDOW_Y;
+		return y;
 	}
 }
 
@@ -87,6 +104,10 @@ void Camera::SetPosition(int indice, int value)
 		return;
 
 	value = value < 0 ? 0 : value;
+	int ssSizeX = this->spriteSet->getXSize();
+	int ssSizeY = this->spriteSet->getYSize();
+	int mapSizeX = this->map->getXSize();
+	int mapSizeY = this->map->getYSize();
 
 	if (indice == CAMERA_X) {
 		this->m_position->SetX(value);
@@ -94,6 +115,7 @@ void Camera::SetPosition(int indice, int value)
 	if (indice == CAMERA_Y) {
 		this->m_position->SetY(value);
 	}
+
 }
 
 void Camera::SetxPosition(int p_x)
