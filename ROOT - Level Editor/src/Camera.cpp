@@ -20,8 +20,6 @@ Camera::Camera()
 
 Camera::~Camera()
 {
-	delete(spriteSet);
-	delete(map);
 	End();
 }
 

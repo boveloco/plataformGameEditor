@@ -8,28 +8,28 @@
 #include "Mouse.h"
 
 
-Scene::Scene(SpriteSet* spriteSet, Map* map, Mouse* mouse) {
-	m_quit = false;
+//Scene::Scene(SpriteSet* spriteSet, Map* map) {
+//	m_quit = false;
+//
+//	m_camera = nullptr;
+//	m_texture = nullptr;
+//	this->spriteSet = spriteSet;
+//	this->map = map;
+//}
 
-	m_camera = nullptr;
-	t = nullptr;
-	this->spriteSet = spriteSet;
-	this->map = map;
-	this->mouse = mouse;
-}
 Scene::Scene(SpriteSet * spriteSet, Map* map)
 {
 	m_quit = false;
 
 	m_camera = nullptr;
-	t = nullptr;
+	m_texture = nullptr;
 	this->spriteSet = spriteSet;
 	this->map = map;
 }
 
 Scene::~Scene()
 {
-	this->End();
+	//this->End();
 }
 
 bool Scene::Quit()
@@ -44,10 +44,10 @@ void Scene::SetEvent(SDL_Event &p_event)
 		switch (p_event.key.keysym.sym)
 		{
 		case SDLK_LEFT:
-			m_camera->UpDate(-t->GetWidth(), 0);
+			m_camera->UpDate(-m_texture->GetWidth(), 0);
 			break;
 		case SDLK_RIGHT:
-			m_camera->UpDate(t->GetWidth(), 0);
+			m_camera->UpDate(m_texture->GetWidth(), 0);
 			break;
 		default:
 			break;
@@ -56,14 +56,14 @@ void Scene::SetEvent(SDL_Event &p_event)
 	if (p_event.type == SDL_MOUSEBUTTONDOWN) {
 		if (p_event.button.button == SDL_BUTTON_LEFT) {
 			int* n = new int(2);
-			n[CAMERA_X] = (this->mouse->GetX() + this->m_camera->GetPosition(CAMERA_X)) / this->spriteSet->getXSize();
-			n[CAMERA_Y] = (this->mouse->GetY() + this->m_camera->GetPosition(CAMERA_Y)) / this->spriteSet->getYSize();
+			n[CAMERA_X] = (Mouse::GetX() + this->m_camera->GetPosition(CAMERA_X)) / this->spriteSet->getXSize();
+			n[CAMERA_Y] = (Mouse::GetY() + this->m_camera->GetPosition(CAMERA_Y)) / this->spriteSet->getYSize();
 			this->map->setSprite(n, 3);
 		}
 		if (p_event.button.button == SDL_BUTTON_RIGHT) {
 			int* n = new int(2);
-			n[CAMERA_X] = (this->mouse->GetX() + this->m_camera->GetPosition(CAMERA_X)) / this->spriteSet->getXSize();
-			n[CAMERA_Y] = (this->mouse->GetY() + this->m_camera->GetPosition(CAMERA_Y)) / this->spriteSet->getYSize();
+			n[CAMERA_X] = (Mouse::GetX() + this->m_camera->GetPosition(CAMERA_X)) / this->spriteSet->getXSize();
+			n[CAMERA_Y] = (Mouse::GetY() + this->m_camera->GetPosition(CAMERA_Y)) / this->spriteSet->getYSize();
 			this->map->setSprite(n, 0);
 
 		}
@@ -74,7 +74,7 @@ void Scene::SetEvent(SDL_Event &p_event)
 void Scene::Initialize()
 {
 	this->m_camera = new Camera(new Vector2D(0, 0), 1024, 768, map, spriteSet);
-	this->t = new Texture(spriteSet, GamePlay::GetRenderer());
+	this->m_texture = new Texture(spriteSet, GamePlay::GetRenderer());
 }
 
 void Scene::Update()
@@ -94,7 +94,7 @@ void Scene::DrawOnCamera()
 		{
 			//vector recebe a posição menos o x e y da camera
 			Vector2D* v = new Vector2D((j*spriteSet->getXSize()) - m_camera->GetPosition(CAMERA_X), (i*spriteSet->getYSize() - m_camera->GetPosition(CAMERA_Y)));
-			t->Draw(GamePlay::GetRenderer(), v, spriteSet->getSprite(map->getSprite(j, i))[0], spriteSet->getSprite(map->getSprite(j, i))[1]);
+			m_texture->Draw(GamePlay::GetRenderer(), v, spriteSet->getSprite(map->getSprite(j, i))[0], spriteSet->getSprite(map->getSprite(j, i))[1]);
 			delete v;
 		}
 	}
@@ -102,12 +102,14 @@ void Scene::DrawOnCamera()
 
 void Scene::End()
 {
-	delete m_camera;
-	delete map;
-	delete t;
-	delete spriteSet;
-
-	m_camera = nullptr;
-	map = nullptr;
-	t = nullptr;
+	if (m_camera)
+	{
+		delete m_camera;
+		m_camera = nullptr;
+	}
+	if (m_texture)
+	{
+		delete m_texture;
+		m_texture = nullptr;
+	}
 }

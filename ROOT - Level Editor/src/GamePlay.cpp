@@ -138,7 +138,7 @@ void GamePlay::Draw()
 	SDL_SetRenderDrawColor(m_renderer, 0, 0, 0, 0);
 	SDL_RenderClear(m_renderer);
 
-	this->m_scene->DrawOnCamera();
+	this->m_scene->Draw();
 	m_mouse->Draw();
 }
 

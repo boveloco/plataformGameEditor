@@ -13,14 +13,14 @@ private:
 	bool m_quit;
 
 	SpriteSet* spriteSet;
-	Texture *t;
+	Texture *m_texture;
 	Map* map;
 	Camera *m_camera;
 	Mouse* mouse;
 
 public:
+	//Scene(SpriteSet*, Map*);
 	Scene(SpriteSet*, Map*);
-	Scene(SpriteSet*, Map*, Mouse*);
 	~Scene();
 
 	bool Quit();
