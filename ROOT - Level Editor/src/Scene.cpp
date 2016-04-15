@@ -6,6 +6,7 @@
 #include"Vector2D.h"
 #include"GamePlay.h"
 #include "Mouse.h"
+#include "Defines.h"
 
 
 //Scene::Scene(SpriteSet* spriteSet, Map* map) {
@@ -117,7 +118,7 @@ void Scene::Update()
 		n[CAMERA_Y] = (Mouse::GetY() + this->m_camera->GetPosition(CAMERA_Y)) / this->spriteSet->getYSize();
 		this->map->setSprite(n, img);
 
-		if (Mouse::GetX() > 1024 - Mouse::GetWidth())
+		if (Mouse::GetX() > SIZE_WINDOW_X - Mouse::GetWidth())
 		{
 			m_camera->UpDate(5, 0);
 		}
@@ -133,11 +134,11 @@ void Scene::Update()
 		n[CAMERA_Y] = (Mouse::GetY() + this->m_camera->GetPosition(CAMERA_Y)) / this->spriteSet->getYSize();
 		this->map->setSprite(n, img);
 
-		if (Mouse::GetX() > 1024 - Mouse::GetWidth())
+		if (Mouse::GetX() > SIZE_WINDOW_X - Mouse::GetWidth()*2)
 		{
 			m_camera->UpDate(5, 0);
 		}
-		else if ((Mouse::GetX() <= Mouse::GetWidth()))
+		else if ((Mouse::GetX() <= Mouse::GetWidth()*2))
 		{
 			m_camera->UpDate(-5, 0);
 		}
