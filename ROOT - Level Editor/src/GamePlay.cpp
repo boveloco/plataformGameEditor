@@ -112,16 +112,9 @@ void GamePlay::Initialize()
 
 	////////////////////
 	////////////////////
-	Map* map = new Map("map.dat");/*
-	int* n = new int(2);
-	n[1] = 9;
-	for (size_t i = 0; i < 30; i++)
-	{
-		n[0] = i;
-		m->setSprite(n, 5);
-	}*/
+	Map* map = new Map("map.dat");
 	m_mouse = new Mouse(new Texture("img/tileset.png", m_renderer, 64, 64), new Vector2D(0, 0));
-	this->m_scene = new Scene(new SpriteSet("img/tileset.png",512,512,64,64), map);
+	this->m_scene = new Scene(new SpriteSet("img/tileset.png",512,512,64,64), map, m_window);
 	this->m_scene->Initialize();
 }
 

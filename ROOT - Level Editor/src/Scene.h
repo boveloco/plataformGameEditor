@@ -17,6 +17,7 @@ private:
 	Map* map;
 	Camera *m_camera;
 	Mouse* mouse;
+	SDL_Window* m_window;
 
 	//posição x e y da imagem
 	//namatriz de sprite
@@ -28,8 +29,7 @@ private:
 	int img;
 
 public:
-	//Scene(SpriteSet*, Map*);
-	Scene(SpriteSet*, Map*);
+	Scene(SpriteSet*, Map*, SDL_Window*);
 	~Scene();
 
 	bool Quit();

@@ -18,7 +18,7 @@
 //	this->map = map;
 //}
 
-Scene::Scene(SpriteSet * spriteSet, Map* map)
+Scene::Scene(SpriteSet * spriteSet, Map* map, SDL_Window* p_window)
 {
 	m_index = new int[2];
 	m_quit = false;
@@ -27,6 +27,7 @@ Scene::Scene(SpriteSet * spriteSet, Map* map)
 	m_texture = nullptr;
 	this->spriteSet = spriteSet;
 	this->map = map;
+	this->m_window = p_window;
 }
 
 Scene::~Scene()
@@ -53,31 +54,42 @@ void Scene::SetEvent(SDL_Event &p_event)
 			break;
 			////
 		case SDLK_q:
-			m_index[0] = 0;
-			m_index[1] = 0;
-			img = 1;
+			img--;
+			if (img <= 0)
+				img = 1;
+			m_index = spriteSet->getSprite(img);
 			SDL_ShowCursor(SDL_DISABLE);
 			break;
 			////
 		case SDLK_w:
-			m_index[0] = Mouse::GetWidth() * 1;
-			m_index[1] = 0;
+			img++;
+			if (img > spriteSet->getCount())
+				img = spriteSet->getCount();
+			m_index = spriteSet->getSprite(img);
 			SDL_ShowCursor(SDL_DISABLE);
-			img = 2;
 			break;
-			////
-		case SDLK_u:
-			m_index[0] = Mouse::GetWidth() * 6;
-			m_index[1] = 0;
-			SDL_ShowCursor(SDL_DISABLE);
-			img = 7;
-			break;
-			////
-		case SDLK_LCTRL:
+		case SDLK_e:
 			SDL_ShowCursor(SDL_ENABLE);
 			m_index[0] = -100;
 			m_index[1] = -100;
 			img = 0;
+			break;
+		case SDLK_RETURN:
+			std::cout << "Salvou Mapa" << std::endl;
+			SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION,"Mapa Salvo", "Mapa foi devidamente Salvo", m_window);
+			this->map->writeMap("map.dat");
+			break;
+		case SDLK_BACKSPACE:
+			std::cout << "Salvou Mapa" << std::endl;
+			SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Mapa novo criado", "Novo mapa foi criado. Dimensoes: 100x, 10y", m_window);
+			this->map = new Map(100, 10);
+			m_camera->SetPosition(0, 0);
+			break;
+		case SDLK_RSHIFT:
+			std::cout << "Mapa Carregado" << std::endl;
+			SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Mapa carregado!", "map.dat deu load;", m_window);
+			this->map = map->readMap("map.dat");
+			m_camera->SetPosition(0, 0);
 			break;
 		default:
 			break;
@@ -116,6 +128,7 @@ void Scene::Update()
 		int* n = new int(2);
 		n[CAMERA_X] = (Mouse::GetX() + this->m_camera->GetPosition(CAMERA_X)) / this->spriteSet->getXSize();
 		n[CAMERA_Y] = (Mouse::GetY() + this->m_camera->GetPosition(CAMERA_Y)) / this->spriteSet->getYSize();
+
 		this->map->setSprite(n, img);
 
 		if (Mouse::GetX() > SIZE_WINDOW_X - Mouse::GetWidth())
@@ -149,7 +162,7 @@ void Scene::Draw()
 {
 	DrawOnCamera();
 
-	Mouse::Draw(m_index[0], m_index[1]);
+	Mouse::Draw(m_index[CAMERA_X], m_index[CAMERA_Y]);
 }
 
 void Scene::DrawOnCamera()
