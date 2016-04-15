@@ -57,7 +57,7 @@ void Scene::SetEvent(SDL_Event &p_event)
 			img--;
 			if (img <= 0)
 				img = 1;
-			m_index = spriteSet->getSprite(img);
+			memcpy(m_index, spriteSet->getSprite(img), sizeof(spriteSet->getSprite(img)));
 			SDL_ShowCursor(SDL_DISABLE);
 			break;
 			////
@@ -65,13 +65,13 @@ void Scene::SetEvent(SDL_Event &p_event)
 			img++;
 			if (img > spriteSet->getCount())
 				img = spriteSet->getCount();
-			m_index = spriteSet->getSprite(img);
+			memcpy(m_index, spriteSet->getSprite(img), sizeof(spriteSet->getSprite(img)));
 			SDL_ShowCursor(SDL_DISABLE);
 			break;
 		case SDLK_e:
 			SDL_ShowCursor(SDL_ENABLE);
-			m_index[0] = -100;
-			m_index[1] = -100;
+			m_index[0] = -spriteSet->getXSize();
+			m_index[1] = -spriteSet->getYSize();
 			img = 0;
 			break;
 		case SDLK_RETURN:
