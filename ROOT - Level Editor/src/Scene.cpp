@@ -112,7 +112,6 @@ void Scene::SetEvent(SDL_Event &p_event)
 			Mouse::SetButtonRight(false);
 		}
 	}
-
 }
 
 void Scene::Initialize()
