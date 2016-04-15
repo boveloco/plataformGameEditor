@@ -191,4 +191,9 @@ void Scene::End()
 		delete m_texture;
 		m_texture = nullptr;
 	}
+	if (m_index)
+	{
+		delete[] m_index;
+		m_index = nullptr;
+	}
 }
