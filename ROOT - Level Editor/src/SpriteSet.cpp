@@ -9,6 +9,7 @@ SpriteSet::SpriteSet(int x1, int y1, int x2, int y2)
 	this->loadSize(x1, y1, x2, y2);
 	this->loadSprites(x1, y1, x2, y2);
 }
+
 SpriteSet::SpriteSet(std::string address, int x1, int y1, int x2, int y2)
 {
 	this->src = address;
@@ -18,7 +19,6 @@ SpriteSet::SpriteSet(std::string address, int x1, int y1, int x2, int y2)
 	this->loadSize(x1, y1, x2, y2);
 	this->loadSprites(x1, y1, x2, y2);
 }
-
 
 SpriteSet::~SpriteSet()
 {

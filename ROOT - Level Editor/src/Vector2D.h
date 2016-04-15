@@ -24,6 +24,6 @@ public:
 	int GetY() const { return m_y; }
 	void SetX(int x) { m_x = x; }
 	void SetY(int y) { m_y = y; }
-	int* operator [](int index);
+	int operator [](int index);
 };
 

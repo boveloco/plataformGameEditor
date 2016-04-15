@@ -5,6 +5,8 @@
 
 Texture *Mouse::m_image = nullptr;
 Vector2D *Mouse::m_position = nullptr;
+bool Mouse::m_buttonLeft = false;
+bool Mouse::m_buttonRight = false;
 
 Mouse::Mouse(Texture *p_image, Vector2D *p_position)
 {
@@ -59,6 +61,16 @@ Texture *Mouse::GetImage()
 	return m_image;
 }
 
+bool Mouse::GetButtonLeft()
+{
+	return m_buttonLeft;
+}
+
+bool Mouse::GetButtonRight()
+{
+	return m_buttonRight;
+}
+
 void Mouse::SetPosition(int p_x, int p_y)
 {
 	m_position->SetX(p_x);
@@ -87,7 +99,23 @@ void Mouse::SetImage(Texture *p_image)
 	m_image = p_image;
 }
 
-void Mouse::Draw()
+void Mouse::SetImage(std::string p_address, int p_width, int p_height)
 {
-	m_image->Draw(GamePlay::GetRenderer(), m_position, 0, 0);
+	m_image->UploadImage(p_address, GamePlay::GetRenderer(), p_width, p_height);
+}
+
+void Mouse::SetButtonLeft(bool p_left)
+{
+	m_buttonLeft = p_left;
+}
+
+void Mouse::SetButtonRight(bool p_right)
+{
+	m_buttonRight = p_right;
+}
+
+void Mouse::Draw(int p_indexX, int p_indexY)
+{
+	m_image->Draw(GamePlay::GetRenderer(), m_position, p_indexX, p_indexY,
+		          m_image->GetWidth() / 2, m_image->GetHeight() / 2);
 }

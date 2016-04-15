@@ -33,7 +33,7 @@ public:
 	
 	std::string getSrc();
 
-	bool UploadImage(std::string, SDL_Renderer *);
+	bool UploadImage(std::string, SDL_Renderer *, int, int);
 	void Destroy();
 
 	bool loadSpriteSet(std::string, int, int, int, int);
@@ -41,6 +41,7 @@ public:
 	void Draw(SDL_Renderer *, Vector2D *);
 	//         renderer, posição na tela, x matriz e y matriz
 	void Draw(SDL_Renderer *, Vector2D *, int, int);
+	void Draw(SDL_Renderer *, Vector2D *, int, int, int, int);
 	void Draw(SDL_Renderer *, int, int);
 	void DrawRotation(SDL_Renderer *, Vector2D *, double);
 	void DrawRotation(SDL_Renderer *, Vector2D *, double, int, int);

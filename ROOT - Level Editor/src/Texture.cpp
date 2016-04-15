@@ -6,13 +6,10 @@
 Texture::Texture()
 {}
 
-
-
-
 Texture::Texture(std::string p_address, SDL_Renderer *p_renderer, int width,int  height)
 {
 	this->m_src = p_address;
-	this->UploadImage(p_address, p_renderer);
+	this->UploadImage(p_address, p_renderer, width, height);
 	this->m_width	= width;
 	this->m_height	= height;
 }
@@ -20,14 +17,15 @@ Texture::Texture(std::string p_address, SDL_Renderer *p_renderer, int width,int 
 Texture::Texture(std::string p_address, SDL_Renderer *p_renderer)
 {
 	this->m_src = p_address;
-	UploadImage(p_address, p_renderer);
+	UploadImage(p_address, p_renderer, 0, 0);
 }
+
 Texture::Texture(SpriteSet* p_sSet, SDL_Renderer *p_renderer)
 {
 	this->m_height	= p_sSet->getYSize();
 	this->m_width	= p_sSet->getXSize();
 	this->m_src		= p_sSet->getSrc();
-	UploadImage(m_src, p_renderer);
+	UploadImage(m_src, p_renderer, 0, 0);
 }
 
 
@@ -61,7 +59,7 @@ std::string Texture::getSrc()
 	return this->m_src;
 }
 
-bool Texture::UploadImage(std::string p_address, SDL_Renderer *p_renderer)
+bool Texture::UploadImage(std::string p_address, SDL_Renderer *p_renderer, int width, int  height)
 {
 	SDL_Surface *newSurface = IMG_Load(p_address.c_str());
 
@@ -130,6 +128,23 @@ void Texture::Draw(SDL_Renderer *p_renderer, Vector2D *p_position,
 	//(POSICAO NA TELA VECTOR2D[posx, posy, width, height]) 
 	//USAR ESSE COM SPITESET
 	
+	SDL_RenderCopy(p_renderer, m_texture, &newRect, &m_rect);
+}
+
+void Texture::Draw(SDL_Renderer *p_renderer, Vector2D *p_position, 
+	               int p_xIMG, int p_yIMG, int p_width, int p_height)
+{
+	SDL_Rect newRect = { p_xIMG, p_yIMG, m_width, m_height };
+
+	m_rect.x = p_position->GetX();
+	m_rect.y = p_position->GetY();
+	m_rect.w = p_width;
+	m_rect.h = p_height;
+
+	//renderer, SDL_Texture, (OFFSET EM UM VECTOR2D[posx, posty, widht, heigth]),
+	//(POSICAO NA TELA VECTOR2D[posx, posy, width, height]) 
+	//USAR ESSE COM SPITESET
+
 	SDL_RenderCopy(p_renderer, m_texture, &newRect, &m_rect);
 }
 

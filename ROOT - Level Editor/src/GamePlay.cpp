@@ -110,7 +110,6 @@ void GamePlay::Initialize()
 		return;
 	}
 
-	SDL_ShowCursor(SDL_DISABLE);
 	////////////////////
 	////////////////////
 	Map* map = new Map("map.dat");/*
@@ -121,7 +120,7 @@ void GamePlay::Initialize()
 		n[0] = i;
 		m->setSprite(n, 5);
 	}*/
-	m_mouse = new Mouse(new Texture("img/cursores.png", m_renderer, 26, 26), new Vector2D(0, 0));
+	m_mouse = new Mouse(new Texture("img/tileset.png", m_renderer, 64, 64), new Vector2D(0, 0));
 	this->m_scene = new Scene(new SpriteSet("img/tileset.png",512,512,64,64), map);
 	this->m_scene->Initialize();
 }
@@ -139,7 +138,7 @@ void GamePlay::Draw()
 	SDL_RenderClear(m_renderer);
 
 	this->m_scene->Draw();
-	m_mouse->Draw();
+	//m_mouse->Draw(0, 0);
 }
 
 void GamePlay::End()
@@ -179,6 +178,8 @@ void GamePlay::Run()
 			Draw();
 
 			SDL_RenderPresent(m_renderer);
+
+			SDL_Delay(10);
 		}
 
 		End();

@@ -15,6 +15,7 @@ Map::Map(int x, int y)
 	this->ySize = y;
 	this->createMatriz(x, y);
 }
+
 int** Map::createMatriz(int x, int y) {
 	this->matriz = (int**)calloc(y, sizeof(int)*y);
 	for (size_t i = 0; i < x; i++)

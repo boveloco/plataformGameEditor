@@ -19,8 +19,9 @@
 
 Scene::Scene(SpriteSet * spriteSet, Map* map)
 {
+	m_index = new int[2];
 	m_quit = false;
-
+	img = 0;
 	m_camera = nullptr;
 	m_texture = nullptr;
 	this->spriteSet = spriteSet;
@@ -49,23 +50,53 @@ void Scene::SetEvent(SDL_Event &p_event)
 		case SDLK_RIGHT:
 			m_camera->UpDate(m_texture->GetWidth(), 0);
 			break;
+			////
+		case SDLK_q:
+			m_index[0] = 0;
+			m_index[1] = 0;
+			img = 1;
+			SDL_ShowCursor(SDL_DISABLE);
+			break;
+			////
+		case SDLK_w:
+			m_index[0] = Mouse::GetWidth() * 1;
+			m_index[1] = 0;
+			SDL_ShowCursor(SDL_DISABLE);
+			img = 2;
+			break;
+			////
+		case SDLK_u:
+			m_index[0] = Mouse::GetWidth() * 6;
+			m_index[1] = 0;
+			SDL_ShowCursor(SDL_DISABLE);
+			img = 7;
+			break;
+			////
+		case SDLK_LCTRL:
+			SDL_ShowCursor(SDL_ENABLE);
+			m_index[0] = -100;
+			m_index[1] = -100;
+			img = 0;
+			break;
 		default:
 			break;
 		}
 	}
 	if (p_event.type == SDL_MOUSEBUTTONDOWN) {
 		if (p_event.button.button == SDL_BUTTON_LEFT) {
-			int* n = new int(2);
-			n[CAMERA_X] = (Mouse::GetX() + this->m_camera->GetPosition(CAMERA_X)) / this->spriteSet->getXSize();
-			n[CAMERA_Y] = (Mouse::GetY() + this->m_camera->GetPosition(CAMERA_Y)) / this->spriteSet->getYSize();
-			this->map->setSprite(n, 3);
+			Mouse::SetButtonLeft(true);
 		}
-		if (p_event.button.button == SDL_BUTTON_RIGHT) {
-			int* n = new int(2);
-			n[CAMERA_X] = (Mouse::GetX() + this->m_camera->GetPosition(CAMERA_X)) / this->spriteSet->getXSize();
-			n[CAMERA_Y] = (Mouse::GetY() + this->m_camera->GetPosition(CAMERA_Y)) / this->spriteSet->getYSize();
-			this->map->setSprite(n, 0);
-
+		else if (p_event.button.button == SDL_BUTTON_RIGHT) {
+			Mouse::SetButtonRight(true);
+		}
+	}
+	else if (p_event.type == SDL_MOUSEBUTTONUP)
+	{
+		if (p_event.button.button == SDL_BUTTON_LEFT) {
+			Mouse::SetButtonLeft(false);
+		}
+		else if (p_event.button.button == SDL_BUTTON_RIGHT) {
+			Mouse::SetButtonRight(false);
 		}
 	}
 
@@ -79,11 +110,45 @@ void Scene::Initialize()
 
 void Scene::Update()
 {
+	if (Mouse::GetButtonLeft())
+	{
+		int* n = new int(2);
+		n[CAMERA_X] = (Mouse::GetX() + this->m_camera->GetPosition(CAMERA_X)) / this->spriteSet->getXSize();
+		n[CAMERA_Y] = (Mouse::GetY() + this->m_camera->GetPosition(CAMERA_Y)) / this->spriteSet->getYSize();
+		this->map->setSprite(n, img);
+
+		if (Mouse::GetX() > 1024 - Mouse::GetWidth())
+		{
+			m_camera->UpDate(5, 0);
+		}
+		else if ((Mouse::GetX() <= Mouse::GetWidth()))
+		{
+			m_camera->UpDate(-5, 0);
+		}
+	}
+	else if (Mouse::GetButtonRight())
+	{
+		int* n = new int(2);
+		n[CAMERA_X] = (Mouse::GetX() + this->m_camera->GetPosition(CAMERA_X)) / this->spriteSet->getXSize();
+		n[CAMERA_Y] = (Mouse::GetY() + this->m_camera->GetPosition(CAMERA_Y)) / this->spriteSet->getYSize();
+		this->map->setSprite(n, img);
+
+		if (Mouse::GetX() > 1024 - Mouse::GetWidth())
+		{
+			m_camera->UpDate(5, 0);
+		}
+		else if ((Mouse::GetX() <= Mouse::GetWidth()))
+		{
+			m_camera->UpDate(-5, 0);
+		}
+	}
 }
 
 void Scene::Draw()
 {
 	DrawOnCamera();
+
+	Mouse::Draw(m_index[0], m_index[1]);
 }
 
 void Scene::DrawOnCamera()

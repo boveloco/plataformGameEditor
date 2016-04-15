@@ -18,6 +18,15 @@ private:
 	Camera *m_camera;
 	Mouse* mouse;
 
+	//posição x e y da imagem
+	//namatriz de sprite
+	//para passar para o mause
+	int *m_index;
+
+	// id imagem que sera
+	//gravada na matriz
+	int img;
+
 public:
 	//Scene(SpriteSet*, Map*);
 	Scene(SpriteSet*, Map*);
