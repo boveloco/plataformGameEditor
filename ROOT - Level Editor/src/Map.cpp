@@ -17,10 +17,10 @@ Map::Map(int x, int y)
 }
 
 int** Map::createMatriz(int x, int y) {
-	this->matriz = (int**)calloc(y, sizeof(int)*y);
+	this->matriz = (int**)calloc(x, sizeof(int)*x);
 	for (size_t i = 0; i < x; i++)
 	{
-		this->matriz[i] = (int*)calloc(x, sizeof(int)*x);
+		this->matriz[i] = (int*)calloc(y, sizeof(int)*y);
 	}
 	return this->matriz;
 }
@@ -117,9 +117,9 @@ Map * Map::readMap(char * path)
 }
 
 void Map::print() {
-	for (size_t i = 0; i < this->xSize; i++)
+	for (size_t i = 0; i < this->ySize; i++)
 	{
-		for (size_t j = 0; j < this->ySize; j++)
+		for (size_t j = 0; j < this->xSize; j++)
 		{
 			std::cout << this->matriz[i][j] << " | ";
 		}
