@@ -112,7 +112,7 @@ void GamePlay::Initialize()
 
 	////////////////////
 	////////////////////
-	Map* map = new Map("map.dat");
+	Map* map = new Map(100,10);
 	m_mouse = new Mouse(new Texture("img/tileset.png", m_renderer, 64, 64), new Vector2D(0, 0));
 	this->m_scene = new Scene(new SpriteSet("img/tileset.png",512,512,64,64), map, m_window);
 	this->m_scene->Initialize();
