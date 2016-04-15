@@ -82,7 +82,7 @@ void Scene::SetEvent(SDL_Event &p_event)
 		case SDLK_BACKSPACE:
 			std::cout << "Salvou Mapa" << std::endl;
 			SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Mapa novo criado", "Novo mapa foi criado. Dimensoes: 100x, 10y", m_window);
-			this->map = new Map(10, 100);
+			this->map = new Map(100, 10);
 			m_camera->SetPosition(0, 0);
 			break;
 		case SDLK_RSHIFT:
