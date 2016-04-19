@@ -14,6 +14,7 @@ private:
 
 	SpriteSet* spriteSet;
 	Texture *m_texture;
+	Texture* hints;
 	Map* map;
 	Camera *m_camera;
 	Mouse* mouse;

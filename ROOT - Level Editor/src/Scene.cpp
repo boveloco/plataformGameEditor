@@ -28,6 +28,7 @@ Scene::Scene(SpriteSet * spriteSet, Map* map, SDL_Window* p_window)
 	this->spriteSet = spriteSet;
 	this->map = map;
 	this->m_window = p_window;
+	this->hints = nullptr;
 }
 
 Scene::~Scene()
@@ -116,6 +117,7 @@ void Scene::SetEvent(SDL_Event &p_event)
 
 void Scene::Initialize()
 {
+	this->hints = new Texture("img/hints.png", GamePlay::GetRenderer(),100,300);
 	this->m_camera = new Camera(new Vector2D(0, 0), 1024, 768, map, spriteSet);
 	this->m_texture = new Texture(spriteSet, GamePlay::GetRenderer());
 }
@@ -160,7 +162,7 @@ void Scene::Update()
 void Scene::Draw()
 {
 	DrawOnCamera();
-
+	this->hints->Draw(GamePlay::GetRenderer(), new Vector2D(0, 0));
 	Mouse::Draw(m_index[CAMERA_X], m_index[CAMERA_Y]);
 }
 
