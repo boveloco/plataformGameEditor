@@ -78,7 +78,7 @@ void Scene::SetEvent(SDL_Event &p_event)
 		case SDLK_RETURN:
 			std::cout << "Salvou Mapa" << std::endl;
 			SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION,"Mapa Salvo", "Mapa foi devidamente Salvo", m_window);
-			this->map->writeMap("map.dat");
+			this->map->writeMap(mapa);
 			break;
 		case SDLK_BACKSPACE:
 			std::cout << "Salvou Mapa" << std::endl;
@@ -88,9 +88,29 @@ void Scene::SetEvent(SDL_Event &p_event)
 			break;
 		case SDLK_RSHIFT:
 			std::cout << "Mapa Carregado" << std::endl;
-			SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Mapa carregado!", "map.dat deu load;", m_window);
-			this->map = map->readMap("map.dat");
+			SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Mapa carregado!",  mapa  , m_window);
+			this->map = map->readMap(mapa);
 			m_camera->SetPosition(0, 0);
+			break;
+		case SDLK_1:
+			this->mapa = "map1.dat";
+			SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Mapa selecionado!", "Mapa 1 selecionado!" , m_window);
+			break;
+		case SDLK_2:
+			this->mapa = "map2.dat";
+			SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Mapa selecionado!", "Mapa 2 selecionado!", m_window);
+			break;
+		case SDLK_3:
+			this->mapa = "map3.dat";
+			SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Mapa selecionado!", "Mapa 3 selecionado!", m_window);
+			break;
+		case SDLK_4:
+			this->mapa = "map4.dat";
+			SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Mapa selecionado!", "Mapa 4 selecionado!", m_window);
+			break;
+		case SDLK_5:
+			this->mapa = "map5.dat";
+			SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Mapa selecionado!", "Mapa 5 selecionado!", m_window);
 			break;
 		default:
 			break;

@@ -76,7 +76,7 @@ void GamePlay::Initialize()
 		return;
 	}
 
-	m_window = SDL_CreateWindow("ROOT", SDL_WINDOWPOS_UNDEFINED,
+	m_window = SDL_CreateWindow("ROOT -- Map Editor", SDL_WINDOWPOS_UNDEFINED,
 			   SDL_WINDOWPOS_UNDEFINED, SIZE_WINDOW_X, SIZE_WINDOW_Y, SDL_WINDOW_SHOWN);
 
 	if (!m_window)

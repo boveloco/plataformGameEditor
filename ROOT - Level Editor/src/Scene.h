@@ -1,6 +1,5 @@
 #pragma once
 #include<SDL.h>
-
 class SpriteSet;
 class Texture;
 class Map;
@@ -11,6 +10,7 @@ class Scene
 {
 private:
 	bool m_quit;
+	char* mapa = "map1.dat";
 
 	SpriteSet* spriteSet;
 	Texture *m_texture;
@@ -29,7 +29,7 @@ private:
 	//gravada na matriz
 	int img;
 
-public:
+public:	
 	Scene(SpriteSet*, Map*, SDL_Window*);
 	~Scene();
 
