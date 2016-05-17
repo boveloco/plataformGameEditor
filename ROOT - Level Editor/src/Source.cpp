@@ -9,6 +9,6 @@ int main(int argc, char** argv)
 	GamePlay game;
 	game.Run();
 
-	system("PAUSE");
+	//system("PAUSE");
 	return 0;
 }

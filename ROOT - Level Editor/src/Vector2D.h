@@ -3,12 +3,12 @@
 class Vector2D
 {
 private:
-	int m_x;
-	int m_y;
+	float m_x;
+	float m_y;
 
 public:
 
-	Vector2D(int x, int y)
+	Vector2D(float x, float y)
 	{
 		m_x = x;
 		m_y = y;
@@ -20,10 +20,23 @@ public:
 	~Vector2D()
 	{}
 
-	int GetX() const { return m_x; }
-	int GetY() const { return m_y; }
-	void SetX(int x) { m_x = x; }
-	void SetY(int y) { m_y = y; }
-	int operator [](int index);
+	float GetX() const { return m_x; }
+	float GetY() const { return m_y; }
+	void SetX(float x) { m_x = x; }
+	void SetY(float y) { m_y = y; }
+	float operator [](int index);
+
+	Vector2D &operator+=(Vector2D &);
+	Vector2D &operator+=(float);
+	Vector2D operator+(Vector2D &);
+	Vector2D operator+(float);
+	Vector2D &operator-=(Vector2D &);
+	Vector2D &operator-=(float);
+	Vector2D operator-(Vector2D &);
+	Vector2D operator-(float);
+	Vector2D &operator*=(Vector2D &);
+	Vector2D &operator*=(float);
+	Vector2D operator*(Vector2D &);
+	Vector2D operator*(float);
 };
 
