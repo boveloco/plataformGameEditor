@@ -1,14 +1,10 @@
 #include "Text.h"
 
-Text::Text()
-{
-	m_texture = nullptr;
-	m_font = nullptr;
-}
+Text::Text() : m_texture(nullptr), m_font(nullptr)
+{}
 
 Text::~Text()
-{
-}
+{}
 
 void Text::LoadText(std::string p_address, int p_size)
 {

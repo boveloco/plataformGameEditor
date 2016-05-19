@@ -1,21 +1,15 @@
 #include <iostream>
 #include "SpriteSet.h"
 
-SpriteSet::SpriteSet(int x1, int y1, int x2, int y2)
+SpriteSet::SpriteSet(int x1, int y1, int x2, int y2) : xSize(x2), ySize(y2), countAllSprites(0)
 {
-	this->xSize = x2;
-	this->ySize = y2;
-	this->countAllSprites = 0;
 	this->loadSize(x1, y1, x2, y2);
 	this->loadSprites(x1, y1, x2, y2);
 }
 
-SpriteSet::SpriteSet(std::string address, int x1, int y1, int x2, int y2)
+SpriteSet::SpriteSet(std::string address, int x1, int y1, int x2, int y2) 
+		  : xSize(x2), ySize(y2), countAllSprites(0), src(address)
 {
-	this->src = address;
-	this->xSize = x2;
-	this->ySize = y2;
-	this->countAllSprites = 0;
 	this->loadSize(x1, y1, x2, y2);
 	this->loadSprites(x1, y1, x2, y2);
 }

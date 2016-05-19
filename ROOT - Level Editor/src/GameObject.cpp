@@ -6,11 +6,10 @@ GameObject::GameObject()
 {
 }
 
-GameObject::GameObject(Texture *p_image, Vector2D *p_position)
-{
-	m_image = p_image;
-	m_position = p_position;
-}
+GameObject::GameObject(Texture *p_image, Vector2D *p_position) :
+			m_image(p_image), m_position(p_position)
+
+{}
 
 GameObject::~GameObject()
 {

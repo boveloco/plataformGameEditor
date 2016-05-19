@@ -4,14 +4,9 @@
 #include "SpriteSet.h"
 #include "Defines.h"
 
-Camera::Camera(Vector2D *p_position, int p_width, int p_height, Map* map, SpriteSet* spriteSet)
-{
-	this->spriteSet = spriteSet;
-	this->map = map;
-	m_position = p_position;
-	m_width = p_width;
-	m_height = p_height;
-}
+Camera::Camera(Vector2D *p_position, int p_width, int p_height, Map* map, SpriteSet* spriteSet) :
+	spriteSet(spriteSet), map(map), m_position(p_position), m_width(p_width), m_height(p_height)
+{}
 
 Camera::Camera()
 {

@@ -7,16 +7,14 @@ Texture::Texture()
 {}
 
 Texture::Texture(std::string p_address, SDL_Renderer *p_renderer, int width,int  height)
+		: m_src(p_address), m_width(width), m_height(height)
 {
-	this->m_src = p_address;
 	this->UploadImage(p_address, p_renderer, width, height);
-	this->m_width	= width;
-	this->m_height	= height;
 }
 
 Texture::Texture(std::string p_address, SDL_Renderer *p_renderer)
+		: m_src(p_address)
 {
-	this->m_src = p_address;
 	UploadImage(p_address, p_renderer, 0, 0);
 }
 

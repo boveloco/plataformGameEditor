@@ -18,18 +18,10 @@
 //	this->map = map;
 //}
 
-Scene::Scene(SpriteSet * spriteSet, Map* map, SDL_Window* p_window)
-{
-	m_index = new int[2];
-	m_quit = false;
-	img = 0;
-	m_camera = nullptr;
-	m_texture = nullptr;
-	this->spriteSet = spriteSet;
-	this->map = map;
-	this->m_window = p_window;
-	this->hints = nullptr;
-}
+Scene::Scene(SpriteSet * spriteSet, Map* map, SDL_Window* p_window) :
+	m_index(new int[2]), m_quit(false), img(0), m_camera(nullptr), m_texture(nullptr),
+	spriteSet(spriteSet), map(map), m_window(p_window), hints(nullptr)
+{}
 
 Scene::~Scene()
 {

@@ -9,10 +9,8 @@ Map::Map(char* path)
 	this->readMap(path);
 }
 
-Map::Map(int x, int y)
+Map::Map(int x, int y): xSize(x), ySize(y)
 {
-	this->xSize = x;
-	this->ySize = y;
 	this->createMatriz(x, y);
 }
 

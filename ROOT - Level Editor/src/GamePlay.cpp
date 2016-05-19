@@ -14,10 +14,8 @@ SDL_Window *GamePlay::m_window = nullptr;
 SDL_Renderer *GamePlay::m_renderer = nullptr;
 bool GamePlay::m_quit = false;
 
-GamePlay::GamePlay()
-{
-	this->m_scene = nullptr;
-}
+GamePlay::GamePlay() : m_scene(nullptr)
+{}
 
 GamePlay::~GamePlay()
 {
