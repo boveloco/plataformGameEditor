@@ -1,4 +1,4 @@
-#include "Scene.h"
+#include "Editor.h"
 #include"Camera.h"
 #include"Map.h"
 #include"Texture.h"
@@ -18,22 +18,22 @@
 //	this->map = map;
 //}
 
-Scene::Scene(SpriteSet * spriteSet, Map* map, SDL_Window* p_window) :
+Editor::Editor(SpriteSet * spriteSet, Map* map, SDL_Window* p_window) :
 	m_index(new int[2]), m_quit(false), img(0), m_camera(nullptr), m_texture(nullptr),
 	spriteSet(spriteSet), map(map), m_window(p_window), hints(nullptr)
 {}
 
-Scene::~Scene()
+Editor::~Editor()
 {
 	//this->End();
 }
 
-bool Scene::Quit()
+bool Editor::Quit()
 {
 	return m_quit;
 }
 
-void Scene::SetEvent(SDL_Event &p_event)
+void Editor::SetEvent(SDL_Event &p_event)
 {
 	if (p_event.type == SDL_KEYDOWN)
 	{
@@ -127,14 +127,14 @@ void Scene::SetEvent(SDL_Event &p_event)
 	}
 }
 
-void Scene::Initialize()
+void Editor::Initialize()
 {
 	this->hints = new Texture("img/hints.png", GamePlay::GetRenderer(),100,300);
 	this->m_camera = new Camera(new Vector2D(0, 0), 1024, 768, map, spriteSet);
 	this->m_texture = new Texture(spriteSet, GamePlay::GetRenderer());
 }
 
-void Scene::Update()
+void Editor::UpDate()
 {
 	if (Mouse::GetButtonLeft())
 	{
@@ -171,14 +171,14 @@ void Scene::Update()
 	}
 }
 
-void Scene::Draw()
+void Editor::Draw()
 {
 	DrawOnCamera();
 	this->hints->Draw(GamePlay::GetRenderer(), new Vector2D(0, 0));
 	Mouse::Draw(m_index[CAMERA_X], m_index[CAMERA_Y]);
 }
 
-void Scene::DrawOnCamera()
+void Editor::DrawOnCamera()
 {
 	for (size_t i = 0; i < map->getYSize(); i++)
 	{
@@ -192,7 +192,7 @@ void Scene::DrawOnCamera()
 	}
 }
 
-void Scene::End()
+void Editor::End()
 {
 	if (m_camera)
 	{

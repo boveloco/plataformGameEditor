@@ -22,8 +22,8 @@ public:
 	~Mouse();
 
 	static Vector2D *GetPosition();
-	static int GetX();
-	static int GetY();
+	static float GetX();
+	static float GetY();
 	static int GetWidth();
 	static int GetHeight();
 	static Texture *GetImage();

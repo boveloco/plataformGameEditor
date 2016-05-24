@@ -1,7 +1,7 @@
 #include "Box.h"
 
 Box::Box(Vector2D *p_position, int p_width, int p_height) :
-	GeometricShape(p_position), m_width(p_width), m_height(p_height)
+	GeometricShape(p_position, BOX), m_width(p_width), m_height(p_height)
 {}
 
 Box::~Box()

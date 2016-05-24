@@ -1,7 +1,7 @@
 #include "Circle.h"
 
 Circle::Circle(Vector2D *p_position, float p_radius) :
-	GeometricShape(p_position), m_radius(p_radius)
+	GeometricShape(p_position, CIRCLE), m_radius(p_radius)
 {}
 
 Circle::~Circle()

@@ -35,5 +35,6 @@ public:
 	Vector2D &operator*=(float);
 	Vector2D operator*(Vector2D &);
 	Vector2D operator*(float);
+	Vector2D &operator=(Vector2D &);
 };
 

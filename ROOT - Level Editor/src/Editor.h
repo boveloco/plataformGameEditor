@@ -28,9 +28,9 @@ private:
 
 	// id imagem que sera
 	//gravada na matriz
-	int img;;
+	int img;
 
-public:
+public:	
 	Editor(SpriteSet*, Map*, SDL_Window*);
 	~Editor();
 

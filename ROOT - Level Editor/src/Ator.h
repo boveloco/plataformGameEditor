@@ -32,9 +32,4 @@ public:
 	void SetImage(Texture *);
 	void SetWidth(int);
 	void SetHeight(int);
-
-	virtual void Initialize() = 0;
-	virtual void UpDate() = 0;
-	virtual void Draw() = 0;
-	virtual void End() = 0;
 };

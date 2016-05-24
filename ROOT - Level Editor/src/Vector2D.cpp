@@ -98,3 +98,14 @@ Vector2D Vector2D::operator*(float p_value)
 	return Vector2D(m_x * p_value,
 		m_y * p_value);
 }
+
+Vector2D &Vector2D::operator=(Vector2D &p_vector)
+{
+	if (this != &p_vector)
+	{
+		m_x = p_vector.GetX();
+		m_y = p_vector.GetY();
+	}
+
+	return *this;
+}

@@ -6,7 +6,7 @@
 #include"SpriteSet.h"
 #include"Map.h"
 #include"Camera.h"
-#include"Scene.h"
+#include"Editor.h"
 #include"Mouse.h"
 #include "Defines.h"
 
@@ -34,6 +34,12 @@ SDL_Renderer *GamePlay::GetRenderer()
 bool GamePlay::Quit()
 {
 	return m_quit;
+}
+
+void GamePlay::AddScenes(Scene *p_scene)
+{
+	p_scene->Initialize();
+	m_scenes.push_back(p_scene);
 }
 
 void GamePlay::SetEvent()
@@ -112,7 +118,7 @@ void GamePlay::Initialize()
 	////////////////////
 	Map* map = new Map(100,10);
 	m_mouse = new Mouse(new Texture("img/tileset.png", m_renderer, 64, 64), new Vector2D(0, 0));
-	this->m_scene = new Scene(new SpriteSet("img/tileset.png",512,512,64,64), map, m_window);
+	this->m_scene = new Editor(new SpriteSet("img/tileset.png",512,512,64,64), map, m_window);
 	this->m_scene->Initialize();
 }
 
@@ -120,7 +126,7 @@ void GamePlay::Update()
 {
 	SetEvent();
 
-	this->m_scene->Update();
+	this->m_scene->UpDate();
 }
 
 void GamePlay::Draw()
@@ -143,6 +149,19 @@ void GamePlay::End()
 	{
 		SDL_DestroyRenderer(m_renderer);
 		m_renderer = nullptr;
+	}
+
+	//limpa a lista de cenas
+	//se for usa-la
+	if (m_scenes.size() > 0)
+	{
+		for (Scene *scene : m_scenes)
+		{
+			delete scene;
+			scene = nullptr;
+		}
+
+		m_scenes.clear();
 	}
 
 	IMG_Quit();

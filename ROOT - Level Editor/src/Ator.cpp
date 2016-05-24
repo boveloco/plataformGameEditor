@@ -1,17 +1,17 @@
-#include"GameObject.h"
+#include"Ator.h"
 #include"Texture.h"
 #include"Vector2D.h"
 
-GameObject::GameObject()
+Ator::Ator()
 {
 }
 
-GameObject::GameObject(Texture *p_image, Vector2D *p_position) :
+Ator::Ator(Texture *p_image, Vector2D *p_position) :
 			m_image(p_image), m_position(p_position)
 
 {}
 
-GameObject::~GameObject()
+Ator::~Ator()
 {
 	if (m_image)
 	{

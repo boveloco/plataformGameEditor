@@ -36,12 +36,12 @@ Vector2D *Mouse::GetPosition()
 	return m_position;
 }
 
-int Mouse::GetX()
+float Mouse::GetX()
 {
 	return m_position->GetX();
 }
 
-int Mouse::GetY()
+float Mouse::GetY()
 {
 	return m_position->GetY();
 }

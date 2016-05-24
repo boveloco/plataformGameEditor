@@ -1,10 +1,12 @@
 #pragma once
 #include<SDL.h>
 #include<SDL_image.h>
+#include<vector>
 
 class Camera;
-class Scene;
+class Editor;
 class Mouse;
+class Scene;
 
 class GamePlay
 {
@@ -15,8 +17,10 @@ private:
 	static bool m_quit;
 
 	//Camera2 *m_camera;
-	Scene *m_scene;
+	Editor *m_scene;
 	Mouse *m_mouse;
+
+	std::vector<Scene *> m_scenes;
 
 public:
 	GamePlay();
@@ -26,6 +30,7 @@ public:
 	static SDL_Renderer *GetRenderer();
 	static bool Quit();
 
+	void AddScenes(Scene *);
 	void SetEvent();
 
 	void Initialize();
