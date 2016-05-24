@@ -147,6 +147,7 @@
     <ClInclude Include="src\Camera.h" />
     <ClInclude Include="src\Circle.h" />
     <ClInclude Include="src\Defines.h" />
+    <ClInclude Include="src\Editor.h" />
     <ClInclude Include="src\GameObject.h" />
     <ClInclude Include="src\GamePlay.h" />
     <ClInclude Include="src\GeometricShape.h" />
