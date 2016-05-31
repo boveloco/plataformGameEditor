@@ -136,22 +136,26 @@ void Editor::Initialize()
 
 void Editor::UpDate()
 {
+
+	if (Mouse::GetX() > SIZE_WINDOW_X - Mouse::GetWidth())
+	{
+		m_camera->UpDate(5, 0);
+	}
+	else if ((Mouse::GetX() <= Mouse::GetWidth()))
+	{
+		m_camera->UpDate(-5, 0);
+	}
+
 	if (Mouse::GetButtonLeft())
 	{
 		int* n = new int(2);
-		n[CAMERA_X] = (Mouse::GetX() + this->m_camera->GetPosition(CAMERA_X)) / this->spriteSet->getXSize();
+		n[CAMERA_X] = ((Mouse::GetX() - (spriteSet->getXSize() * 4)) + this->m_camera->GetPosition(CAMERA_X)) / this->spriteSet->getXSize();
+		if (n[CAMERA_X] < 0)
+			n[CAMERA_X] = 0;
 		n[CAMERA_Y] = (Mouse::GetY() + this->m_camera->GetPosition(CAMERA_Y)) / this->spriteSet->getYSize();
 
 		this->map->setSprite(n, img);
 
-		if (Mouse::GetX() > SIZE_WINDOW_X - Mouse::GetWidth())
-		{
-			m_camera->UpDate(5, 0);
-		}
-		else if ((Mouse::GetX() <= Mouse::GetWidth()))
-		{
-			m_camera->UpDate(-5, 0);
-		}
 	}
 	else if (Mouse::GetButtonRight())
 	{
@@ -160,14 +164,6 @@ void Editor::UpDate()
 		n[CAMERA_Y] = (Mouse::GetY() + this->m_camera->GetPosition(CAMERA_Y)) / this->spriteSet->getYSize();
 		this->map->setSprite(n, img);
 
-		if (Mouse::GetX() > SIZE_WINDOW_X - Mouse::GetWidth()*2)
-		{
-			m_camera->UpDate(5, 0);
-		}
-		else if ((Mouse::GetX() <= Mouse::GetWidth()*2))
-		{
-			m_camera->UpDate(-5, 0);
-		}
 	}
 }
 
@@ -185,8 +181,8 @@ void Editor::DrawOnCamera()
 		for (size_t j = 0; j < map->getXSize(); j++)
 		{
 			//vector recebe a posição menos o x e y da camera
-			Vector2D* v = new Vector2D((j*spriteSet->getXSize()) - m_camera->GetPosition(CAMERA_X), (i*spriteSet->getYSize() - m_camera->GetPosition(CAMERA_Y)));
-			m_texture->Draw(GamePlay::GetRenderer(), v, spriteSet->getSprite(map->getSprite(j, i))[0], spriteSet->getSprite(map->getSprite(j, i))[1]);
+			Vector2D* v = new Vector2D((j*spriteSet->getXSize()) - m_camera->GetPosition(CAMERA_X) + (spriteSet->getXSize() * 4), (i*spriteSet->getYSize() - m_camera->GetPosition(CAMERA_Y)));
+			m_texture->Draw(GamePlay::GetRenderer(), v , spriteSet->getSprite(map->getSprite(j, i))[0], spriteSet->getSprite(map->getSprite(j, i))[1]);
 			delete v;
 		}
 	}

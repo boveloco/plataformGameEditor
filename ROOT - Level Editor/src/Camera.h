@@ -13,11 +13,12 @@ enum Indice
 class Camera
 {
 private:
+	SpriteSet* spriteSet;
+	int limit = 0;
 	Vector2D *m_position;
 	int m_width;
 	int m_height;
 	Map* map;
-	SpriteSet* spriteSet;
 public:
 	//seta a posição, largura e altura
 	Camera(Vector2D *, int, int, Map*, SpriteSet*);
