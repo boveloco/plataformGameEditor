@@ -182,7 +182,8 @@ void Editor::DrawOnCamera()
 		{
 			//vector recebe a posição menos o x e y da camera
 			Vector2D* v = new Vector2D((j*spriteSet->getXSize()) - m_camera->GetPosition(CAMERA_X) + (spriteSet->getXSize() * 4), (i*spriteSet->getYSize() - m_camera->GetPosition(CAMERA_Y)));
-			m_texture->Draw(GamePlay::GetRenderer(), v , spriteSet->getSprite(map->getSprite(j, i))[0], spriteSet->getSprite(map->getSprite(j, i))[1]);
+			if(v->GetX() >= (spriteSet->getXSize() * 4))
+				m_texture->Draw(GamePlay::GetRenderer(), v , spriteSet->getSprite(map->getSprite(j, i))[0], spriteSet->getSprite(map->getSprite(j, i))[1]);
 			delete v;
 		}
 	}
