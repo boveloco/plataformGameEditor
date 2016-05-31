@@ -28,7 +28,7 @@ Menu *Menu::AddButtons()
 
 	for (Button *button : m_buttons)
 	{
-		
+		button->Initialize();
 	}
 
 	return this;

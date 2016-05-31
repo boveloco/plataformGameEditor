@@ -14,7 +14,8 @@ SDL_Window *GamePlay::m_window = nullptr;
 SDL_Renderer *GamePlay::m_renderer = nullptr;
 bool GamePlay::m_quit = false;
 
-GamePlay::GamePlay() : m_scene(nullptr)
+GamePlay::GamePlay() : 
+		  m_index(0)
 {}
 
 GamePlay::~GamePlay()
@@ -67,7 +68,8 @@ void GamePlay::SetEvent()
 			SDL_MouseIsHaptic();
 		}
 
-		this->m_scene->SetEvent(m_event);
+		m_scenes[m_index]->SetEvent(m_event);
+		//this->m_scene->SetEvent(m_event);
 	}
 }
 
@@ -118,15 +120,18 @@ void GamePlay::Initialize()
 	////////////////////
 	Map* map = new Map(100,10);
 	m_mouse = new Mouse(new Texture("img/tileset.png", m_renderer, 64, 64), new Vector2D(0, 0));
-	this->m_scene = new Editor(new SpriteSet("img/tileset.png",512,512,64,64), map, m_window);
-	this->m_scene->Initialize();
+	AddScenes(new Editor(new SpriteSet("img/tileset.png", 512, 512, 64, 64), map, m_window));
+	
+	//this->m_scene = new Editor(new SpriteSet("img/tileset.png",512,512,64,64), map, m_window);
+	//this->m_scene->Initialize();
 }
 
 void GamePlay::Update()
 {
 	SetEvent();
 
-	this->m_scene->UpDate();
+	//this->m_scene->UpDate();
+	m_scenes[m_index]->UpDate();
 }
 
 void GamePlay::Draw()
@@ -134,7 +139,8 @@ void GamePlay::Draw()
 	SDL_SetRenderDrawColor(m_renderer, 0, 0, 0, 0);
 	SDL_RenderClear(m_renderer);
 
-	this->m_scene->Draw();
+	m_scenes[m_index]->Draw();
+	//this->m_scene->Draw();
 	//m_mouse->Draw(0, 0);
 }
 
@@ -150,6 +156,8 @@ void GamePlay::End()
 		SDL_DestroyRenderer(m_renderer);
 		m_renderer = nullptr;
 	}
+
+	m_scenes[m_index]->End();
 
 	//limpa a lista de cenas
 	//se for usa-la
@@ -167,10 +175,10 @@ void GamePlay::End()
 	IMG_Quit();
 	SDL_Quit();
 
-	this->m_scene->End();
+	//this->m_scene->End();
 
-	delete this->m_scene;
-	this->m_scene = nullptr;
+	//delete this->m_scene;
+	//this->m_scene = nullptr;
 
 	delete m_mouse;
 	m_mouse = nullptr;

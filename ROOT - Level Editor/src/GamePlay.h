@@ -17,11 +17,11 @@ private:
 	static bool m_quit;
 
 	//Camera2 *m_camera;
-	Editor *m_scene;
+	//Editor *m_scene;
 	Mouse *m_mouse;
 
 	std::vector<Scene *> m_scenes;
-
+	int m_index;
 public:
 	GamePlay();
 	~GamePlay();
