@@ -20,8 +20,8 @@ private:
 	//Editor *m_scene;
 	Mouse *m_mouse;
 
-	std::vector<Scene *> m_scenes;
-	int m_index;
+	static std::vector<Scene *> m_scenes;
+	static int m_index;
 public:
 	GamePlay();
 	~GamePlay();
@@ -30,14 +30,16 @@ public:
 	static SDL_Renderer *GetRenderer();
 	static bool Quit();
 
-	void AddScenes(Scene *);
+	static void AddScenes(Scene *);
 	void SetEvent();
+	static void SetQuit(bool);
+	static void SetIndex(int);
 
 	void Initialize();
 	void Update();
 	void Draw();
 	//Desenha apenas o que a camera
-	//está vendo
+	//estï¿½ vendo
 	void End();
 
 	void Run();
