@@ -12,12 +12,14 @@ private:
 	std::vector<Button *> m_buttons;
 	Texture *m_image;
 	Vector2D *m_position;
+	int m_index;
 
 public:
 	Menu(Texture *, Vector2D *);
 	Menu();
 	~Menu();
 	Menu *AddButtons();
+	Button *GetButton();
 	virtual void Initialize();
 	virtual void UpDate();
 	virtual void Draw();

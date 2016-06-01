@@ -4,9 +4,12 @@
 #include"Texture.h"
 #include"GamePlay.h"
 #include"Mouse.h"
+#include"Defines.h"
+#include"Physic.h"
+#include"Editor.h"
 
 Menu::Menu(Texture *p_image, Vector2D *p_position) :
-	  m_image(p_image), m_position(p_position)
+	  m_image(p_image), m_position(p_position), m_index(0)
 {}
 
 Menu::Menu() :
@@ -16,15 +19,37 @@ Menu::Menu() :
 
 Menu::~Menu()
 {
-	End();
+	//End();
 }
 
 Menu *Menu::AddButtons()
 {
-	m_buttons.push_back(new Button(nullptr, nullptr));
-	m_buttons.push_back(new Button(nullptr, nullptr));
-	m_buttons.push_back(new Button(nullptr, nullptr));
-	m_buttons.push_back(new Button(nullptr, nullptr));
+	m_buttons.push_back(new Button(new Texture("img/EDITOR1.png",  
+												GamePlay::GetRenderer(), 
+												202, 43), 
+								   new Vector2D((SIZE_WINDOW_X / 2) - 71, 
+												 SIZE_WINDOW_Y / 2 + 10),
+								   _EDITOR));
+
+	m_buttons.push_back(new Button(new Texture("img/GAME1.png",
+												GamePlay::GetRenderer(),
+												202, 43),
+								   new Vector2D((SIZE_WINDOW_X / 2) - 71, 
+											    m_buttons[0]->GetY() + 50),
+								   _GAME));
+
+	/*m_buttons.push_back(new Button(new Texture("img/CREDITS1.png",
+												GamePlay::GetRenderer(),
+												202, 43),
+								  new Vector2D((SIZE_WINDOW_X / 2) - 71, 
+											   m_buttons[1]->GetY() + 50)));*/
+
+	m_buttons.push_back(new Button(new Texture("img/QUIT1.png",
+												GamePlay::GetRenderer(),
+												202, 43),
+								   new Vector2D((SIZE_WINDOW_X / 2) - 71, 
+									            m_buttons[1]->GetY() + 50),
+								   _QUIT));
 
 	for (Button *button : m_buttons)
 	{
@@ -32,6 +57,11 @@ Menu *Menu::AddButtons()
 	}
 
 	return this;
+}
+
+Button *Menu::GetButton()
+{
+	return m_buttons[m_index];
 }
 
 void Menu::Initialize()
@@ -42,20 +72,46 @@ void Menu::Initialize()
 
 void Menu::UpDate()
 {
+	if (Mouse::GetButtonLeft())
+	{
+		m_index = 0;
+
+		for (Button *button : m_buttons)
+		{
+			if (Physic::PointBoxColisionCheck(Mouse::GetPosition(), 
+									   button->GetGeometricShape()))
+			{
+				button->SetPress(true);
+				break;
+			}
+			m_index++;
+		}
+
+		Mouse::SetButtonLeft(false);
+	}
 }
 
 void Menu::Draw()
 {
+	m_image->Draw(GamePlay::GetRenderer(), m_position);
+
 	for (Button *button : m_buttons)
 	{
-		button->GetImage()->Draw(GamePlay::GetRenderer(), m_position);
+		button->Draw();
 	}
+
 }
 
 void Menu::End()
 {
 	if (m_buttons.size() > 0)
 	{
+		/*for (int i = 0; i < m_buttons.size(); i++)
+		{
+			delete m_buttons[i];
+			m_buttons[i] = nullptr;
+		}*/
+
 		for (Button *button : m_buttons)
 		{
 			delete button;
