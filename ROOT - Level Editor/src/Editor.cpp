@@ -39,6 +39,9 @@ void Editor::SetEvent(SDL_Event &p_event)
 	{
 		switch (p_event.key.keysym.sym)
 		{
+		case SDLK_ESCAPE:
+			GamePlay::SetIndex(0);
+			break;
 		case SDLK_LEFT:
 			m_camera->UpDate(-m_texture->GetWidth(), 0);
 			break;
@@ -180,7 +183,7 @@ void Editor::DrawOnCamera()
 	{
 		for (size_t j = 0; j < map->getXSize(); j++)
 		{
-			//vector recebe a posição menos o x e y da camera
+			//vector recebe a posiï¿½ï¿½o menos o x e y da camera
 			Vector2D* v = new Vector2D((j*spriteSet->getXSize()) - m_camera->GetPosition(CAMERA_X) + (spriteSet->getXSize() * 4), (i*spriteSet->getYSize() - m_camera->GetPosition(CAMERA_Y)));
 			if(v->GetX() >= (spriteSet->getXSize() * 4))
 				m_texture->Draw(GamePlay::GetRenderer(), v , spriteSet->getSprite(map->getSprite(j, i))[0], spriteSet->getSprite(map->getSprite(j, i))[1]);
