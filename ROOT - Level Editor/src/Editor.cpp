@@ -35,11 +35,12 @@ bool Editor::Quit()
 
 void Editor::SetEvent(SDL_Event &p_event)
 {
-	if (p_event.type == SDL_KEYDOWN)
+	if (p_event.type == SDL_KEYUP)
 	{
 		switch (p_event.key.keysym.sym)
 		{
 		case SDLK_ESCAPE:
+			GamePlay::setLastIndex(1);
 			GamePlay::SetIndex(0);
 			break;
 		case SDLK_LEFT:

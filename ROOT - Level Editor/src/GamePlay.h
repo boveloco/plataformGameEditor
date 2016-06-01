@@ -20,12 +20,22 @@ private:
 	//Editor *m_scene;
 	Mouse *m_mouse;
 
+	static int lastIndex;
 	static std::vector<Scene *> m_scenes;
 	static int m_index;
 public:
 	GamePlay();
 	~GamePlay();
 
+	static int getIndex() { return m_index; }
+	static int getLastIndex() {
+		if (lastIndex == NULL)
+			return 0;
+		else
+			return lastIndex; }
+	static void setLastIndex(int p_lastIndex) {
+		lastIndex = p_lastIndex;
+	}
 	static SDL_Window *GetWindow();
 	static SDL_Renderer *GetRenderer();
 	static bool Quit();

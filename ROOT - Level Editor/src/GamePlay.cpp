@@ -17,6 +17,7 @@ SDL_Renderer *GamePlay::m_renderer = nullptr;
 bool GamePlay::m_quit = false;
 int GamePlay::m_index = 0;
 std::vector<Scene *> GamePlay::m_scenes;
+int GamePlay::lastIndex = 0;
 
 GamePlay::GamePlay()
 {}
@@ -131,10 +132,10 @@ void GamePlay::Initialize()
 
 	////////////////////
 	////////////////////
-	/*Map* map = new Map(100,10);*/
+	Map* map = new Map(100,10);
 	m_mouse = new Mouse(new Texture("img/tileset.png", m_renderer, 64, 64), new Vector2D(0, 0));
-	//AddScenes(new Editor(new SpriteSet("img/tileset.png", 512, 512, 64, 64), map, m_window));
 	AddScenes(new Menu(new Texture("img/Menu.png", m_renderer, 1024, 768), new Vector2D(0, 0)));
+	AddScenes(new Editor(new SpriteSet("img/tileset.png", 512, 512, 64, 64), map, m_window));
 	//this->m_scene = new Editor(new SpriteSet("img/tileset.png",512,512,64,64), map, m_window);
 	//this->m_scene->Initialize();
 }
@@ -150,7 +151,7 @@ void GamePlay::Update()
 	{
 		//Menu *menu = dynamic_cast<Menu *>(m_scenes[0]);
 	
-		if (m_scenes.size() > 1)
+		/*if (m_scenes.size() > 1)
 		{
 			for (int i = 1; i < m_scenes.size(); i++)
 			{
@@ -159,14 +160,13 @@ void GamePlay::Update()
 				m_scenes.erase(m_scenes.begin() + i);
 			}
 			SDL_ShowCursor(SDL_ENABLE);
-		}
+		}*/
 		if (menu->GetButton()->GetPress())
 		{
 			if (menu->GetButton()->GetType() == _EDITOR)
 			{
-				Map* map = new Map(100, 10);
-				AddScenes(new Editor(new SpriteSet("img/tileset.png", 512, 512, 64, 64), map, m_window));
-				m_index++;
+				
+				GamePlay::SetIndex(1);
 			}
 			else if (menu->GetButton()->GetType() == _QUIT)
 			{

@@ -157,4 +157,7 @@ void Menu::SetEvent(SDL_Event &p_event)
 			Mouse::SetButtonRight(false);
 		}
 	}
+	if (p_event.type == SDL_KEYUP && p_event.key.keysym.sym == SDLK_ESCAPE)
+		if(GamePlay::getIndex() == 0)
+			GamePlay::SetIndex(GamePlay::getLastIndex());
 }
