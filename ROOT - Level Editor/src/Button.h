@@ -1,6 +1,14 @@
 #pragma once
 #include<string>
 
+enum TypeButton
+{
+	_EDITOR,
+	_GAME,
+	_CREDITS,
+	_QUIT
+};
+
 class Texture;
 class Vector2D;
 class GeometricShape;
@@ -10,22 +18,23 @@ class Button
 {
 private:
 	Texture *m_image;
-	//Vector2D *m_position;
-	//GeometricShape *m_collider;
-	RigidBody2D *m_transform;
+	Vector2D *m_position;
+	GeometricShape *m_collider;
 	bool m_press;
-
+	TypeButton m_type;
 public:
-	Button(Texture *, RigidBody2D *);
+	Button(Texture *, Vector2D *, TypeButton);
 	~Button();
 	Texture *GetImage() const;
-	RigidBody2D *GetTransform() const;
 	Vector2D *GetPosition() const;
+	float GetX() const;
+	float GetY() const;
 	bool GetPress() const;
+	TypeButton GetType() const;
 	Button *SetTexture(Texture *);
 	Button *SetTexture(std::string, int, int);
-	Button *SetTransform(RigidBody2D *);
 	Button *SetPress(bool);
+	GeometricShape *GetGeometricShape() const;
 
 	virtual void Initialize();
 	virtual void Draw();
