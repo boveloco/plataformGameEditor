@@ -2,9 +2,14 @@
 #include"Box.h"
 #include"Circle.h"
 #include"RigidBody2D.h"
+#include"Vector2D.h"
 
-Physic::Physic(Vector2D *p_gravity) : m_gravity(p_gravity)
-{}
+Vector2D *Physic::m_gravity = nullptr;
+
+Physic::Physic(Vector2D *p_gravity)
+{
+	m_gravity = p_gravity;
+}
 
 Physic::~Physic()
 {
@@ -15,17 +20,15 @@ Physic::~Physic()
 	}
 }
 
-Physic *Physic::SetGravity(Vector2D *p_gravity)
+void Physic::SetGravity(Vector2D *p_gravity)
 {
 	if (!m_gravity)
 	{
 		m_gravity = p_gravity;
 	}
-
-	return this;
 }
 
-Vector2D *Physic::GetGravity() const
+Vector2D *Physic::GetGravity()
 {
 	return m_gravity;
 }
@@ -151,6 +154,27 @@ bool Physic::RectCollisionCheck(SDL_Rect *p_rect, SDL_Rect *p_other)
 			(-offx > p_other->w) ||
 			(offy >= 0) && (offy > p_rect->h) ||
 			(-offy > p_other->h))? false : true;
+}
+
+bool Physic::PointBoxColisionCheck(Vector2D *p_point, GeometricShape *p_other)
+{
+	Box *other = dynamic_cast<Box *>(p_other);
+
+	if (!other)
+	{
+		return false;
+	}
+	if (p_point->GetX() >= other->GetX() &&
+		p_point->GetX() <= other->GetX() + other->GetWidth())
+	{
+		if (p_point->GetY() >= other->GetY() &&
+			p_point->GetY() <= other->GetY() + other->GetHeight())
+		{
+			return true;
+		}
+	}
+
+	return false;
 }
 
 float Physic::GetDistance(float p_x1, float p_y1, float p_x2, float p_y2)

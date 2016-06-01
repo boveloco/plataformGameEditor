@@ -10,21 +10,22 @@ class GeometricShape;
 class Physic
 {
 private:
-	Vector2D *m_gravity;
+	static Vector2D *m_gravity;
 
 public:
 	Physic(Vector2D *);
 	~Physic();
 
-	Physic *SetGravity(Vector2D *);
-	Vector2D *GetGravity() const;
+	static void SetGravity(Vector2D *);
+	static Vector2D *GetGravity();
 
-	bool Collision(RigidBody2D *, RigidBody2D *);
-	bool Collision(GeometricShape *, GeometricShape *);
-	bool BoxCollisionCheck(Box *, Box *);
-	bool CircleCollisionCheck(Circle *, Circle *);
-	bool CircleBoxCollisionCheck(Circle *, Box *);
-	bool RectCollisionCheck(SDL_Rect *, SDL_Rect *);
-	float GetDistance(float, float, float, float);
-	Vector2D *Overlap();
+	static bool Collision(RigidBody2D *, RigidBody2D *);
+	static bool Collision(GeometricShape *, GeometricShape *);
+	static bool BoxCollisionCheck(Box *, Box *);
+	static bool CircleCollisionCheck(Circle *, Circle *);
+	static bool CircleBoxCollisionCheck(Circle *, Box *);
+	static bool RectCollisionCheck(SDL_Rect *, SDL_Rect *);
+	static bool PointBoxColisionCheck(Vector2D *, GeometricShape *);
+	static float GetDistance(float, float, float, float);
+	//Vector2D *Overlap();
 };
