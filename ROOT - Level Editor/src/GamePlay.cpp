@@ -163,10 +163,11 @@ void GamePlay::Update()
 		}*/
 		if (menu->GetButton()->GetPress())
 		{
+			std::cout << menu->GetButton()->GetPress();
 			if (menu->GetButton()->GetType() == _EDITOR)
 			{
 				
-				GamePlay::SetIndex(1);
+				GamePlay::SetIndex(TypeButton::_EDITOR);
 			}
 			else if (menu->GetButton()->GetType() == _QUIT)
 			{

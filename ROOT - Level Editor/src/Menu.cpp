@@ -74,7 +74,7 @@ void Menu::UpDate()
 {
 	if (Mouse::GetButtonLeft())
 	{
-		m_index = 0;
+		//m_index = 0;
 
 		for (Button *button : m_buttons)
 		{
@@ -82,13 +82,16 @@ void Menu::UpDate()
 									   button->GetGeometricShape()))
 			{
 				button->SetPress(true);
+				//m_index == button->GetType();
 				break;
 			}
-			m_index++;
+			//m_index++;
 		}
 
 		Mouse::SetButtonLeft(false);
 	}
+	if (m_index == TypeButton::_MENU)
+		SDL_ShowCursor(SDL_ENABLE);
 }
 
 void Menu::Draw()

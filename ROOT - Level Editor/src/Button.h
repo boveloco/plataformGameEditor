@@ -3,10 +3,11 @@
 
 enum TypeButton
 {
+	_MENU = 0,
 	_EDITOR,
 	_GAME,
-	_CREDITS,
-	_QUIT
+	_QUIT,
+	_CREDITS
 };
 
 class Texture;
