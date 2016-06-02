@@ -134,8 +134,5 @@
     <ClInclude Include="src\RigidBody2D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\FaseTeste.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>

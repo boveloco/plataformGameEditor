@@ -1,10 +1,13 @@
-#include "Camera.h"
+ #include "Camera.h"
 #include "Map.h"
 #include "Vector2D.h"
 #include "SpriteSet.h"
 #include "Defines.h"
 #include "GamePlay.h"
 #include "Texture.h"
+
+void setMap(Map*);
+
 
 Camera::Camera(Vector2D *p_position, int p_width, int p_height, Map* map, SpriteSet* spriteSet) :
 	spriteSet(spriteSet), map(map), m_position(p_position), m_width(p_width), m_height(p_height)
@@ -55,8 +58,8 @@ int Camera::GetPosition(int indice)
 		int ySpriteSize = spriteSet->getYSize();
 		if (y < 0)
 			return 0;
-		if (y > yMapSize*ySpriteSize - SIZE_WINDOW_Y)
-			return yMapSize*ySpriteSize - SIZE_WINDOW_Y;
+		/*if (y > yMapSize*ySpriteSize - SIZE_WINDOW_Y)
+			return yMapSize*ySpriteSize - SIZE_WINDOW_Y;*/
 		return y;
 	}
 }
@@ -125,33 +128,33 @@ void Camera::SetyPosition(int p_y)
 
 Camera *Camera::draw(Texture* texture)
 {
-	for (size_t i = 0; i < map->getYSize(); i++)
+	int x = this->spriteSet->getXSize();
+	int y = this->spriteSet->getYSize();
+	int j = this->GetPosition(CAMERA_Y);
+	int i = this->GetPosition(CAMERA_X);
+	int mxsize = map->getXSize();
+	int mysize = map->getYSize();
+	
+	for (j ; j < j + m_height ; j += y)
 	{
-		for (size_t j = 0; j < map->getXSize(); j++)
+		for (i; i < i + m_width; i += x)
 		{
-			//vector recebe a posicao menos o x e y da camera
-			Vector2D* v = new Vector2D(
-									   j*this->spriteSet->getXSize() - this->GetPosition(CAMERA_X), 
-									   i*this->spriteSet->getYSize() - this->GetPosition(CAMERA_Y));
-			/*if (this->GetHeight() < j*this->spriteSet->getXSize() - this->GetPosition(CAMERA_X))
-				v->SetX(j*this->spriteSet->getXSize() - this->GetPosition(CAMERA_X));
-			else {
-				delete v;
-				break;
-			}
-			if (this->GetWidth() < i*this->spriteSet->getYSize() - this->GetPosition(CAMERA_Y))
-				v->SetX(i*this->spriteSet->getYSize() - this->GetPosition(CAMERA_Y));
-			else {
-				delete v;
-				break;
-			}*/
+			int ix = i / x;
+			int jy = j / y;
+			if (ix < mxsize * x && jy < mysize * y) {
+				Vector2D* v = new Vector2D(
+					i - this->GetPosition(CAMERA_X),
+					j - this->GetPosition(CAMERA_Y));
 
-			texture->Draw(GamePlay::GetRenderer()
-						  , v
-						  , this->spriteSet->getSprite(map->getSprite(j, i))[0]
-						  , this->spriteSet->getSprite(map->getSprite(j, i))[1]);
-			delete v;
+
+				texture->Draw(GamePlay::GetRenderer()
+					, v
+					, this->spriteSet->getSprite(map->getSprite(ix, jy))[0]
+					, this->spriteSet->getSprite(map->getSprite(ix, jy))[1]);
+				delete v;
+			}
 		}
+
 	}
 
 	return this;

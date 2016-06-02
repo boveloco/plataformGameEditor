@@ -47,4 +47,6 @@ public:
 	//está vendo
 	void DrawOnCamera();
 	virtual void End();
+
+	Editor * setMap(Map*);
 };

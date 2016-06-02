@@ -76,9 +76,9 @@ void Editor::SetEvent(SDL_Event &p_event)
 			this->mapCameraEditor->writeMap(mapa);
 			break;
 		case SDLK_BACKSPACE:
-			std::cout << "Salvou Mapa" << std::endl;
+			std::cout << "Criou novo mapa" << std::endl;
 			SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Mapa novo criado", "Novo mapa foi criado. Dimensoes: 100x, 10y", m_window);
-			this->mapCameraEditor = new Map(100, 10);
+			this->setMap(new Map(100, 10));
 			m_camera_editor->SetPosition(0, 0);
 			break;
 		case SDLK_RSHIFT:
@@ -134,16 +134,20 @@ void Editor::Initialize()
 {
 	this->hints = new Texture("img/hints.png", GamePlay::GetRenderer(),100,300);
 	this->m_camera_editor = new Camera(
-								new Vector2D(SIZE_WINDOW_X - (spriteSet->getXSize() * 4), 0)
+								new Vector2D(0, 0)
 							  , SIZE_WINDOW_X - (spriteSet->getXSize() * 4)
 							  , SIZE_WINDOW_Y
 							  , mapCameraEditor
 							  , spriteSet);
 
 	Map* ma = new Map(4,spriteSet->getCount() / 4);
-	std::cout << spriteSet->getCount() << std::endl;
 	ma->setSpritePallete();
-	this->m_camera_spriteSet = new Camera(new Vector2D(0, 0), spriteSet->getXSize() * 4, spriteSet->getCount() / 4 * spriteSet->getYSize(), ma->setSpritePallete(), spriteSet);
+	this->m_camera_spriteSet = new Camera(new Vector2D(0, 0)
+										  , spriteSet->getXSize() * 4
+										  , spriteSet->getCount() / 4 * spriteSet->getYSize()
+										  , ma
+										  , spriteSet);
+
 	this->m_texture = new Texture(spriteSet, GamePlay::GetRenderer());
 }
 
@@ -183,8 +187,8 @@ void Editor::UpDate()
 void Editor::Draw()
 {
 	//CAMERAS
-	m_camera_spriteSet->draw(m_texture);
-	m_camera_editor->draw(m_texture);
+	this->m_camera_editor->draw(m_texture);
+	//this->m_camera_spriteSet->draw(m_texture);
 	//DICAS
 	this->hints->Draw(GamePlay::GetRenderer(), new Vector2D(0, 0));
 	//MOUSE
@@ -222,4 +226,14 @@ void Editor::End()
 		delete[] m_index;
 		m_index = nullptr;
 	}*/
+}
+
+Editor * Editor::setMap(Map * map)
+{
+	this->mapCameraEditor = map;
+	if(m_camera_editor)
+		this->m_camera_editor->setMap(map);
+	
+	return this;
+
 }
