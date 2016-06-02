@@ -32,6 +32,9 @@ public:
 	//cria a matriz
 	int** createMatriz(int, int);
 
+	//seta o mapa para mostrar o spriteset como pallete;
+	Map* setSpritePallete();
+
 private:
 	int ** matriz;
 	int xSize;

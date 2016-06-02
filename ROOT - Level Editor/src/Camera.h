@@ -3,6 +3,7 @@
 class Vector2D;
 class Map;
 class SpriteSet;
+class Texture;
 
 enum Indice
 {
@@ -47,6 +48,7 @@ public:
 	void SetxPosition(int);
 	void SetyPosition(int);
 
+	Camera * draw(Texture*);
 	void UpDate(int, int);
 	void End();
 };

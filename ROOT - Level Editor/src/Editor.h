@@ -16,8 +16,10 @@ private:
 	SpriteSet* spriteSet;
 	Texture *m_texture;
 	Texture* hints;
-	Map* map;
-	Camera *m_camera;
+	Map* mapCameraEditor;
+	Map* mapCameraSpriteSet;
+	Camera *m_camera_editor;
+	Camera *m_camera_spriteSet;
 	Mouse* mouse;
 	SDL_Window* m_window;
 

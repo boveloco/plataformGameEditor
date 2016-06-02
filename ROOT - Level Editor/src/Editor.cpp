@@ -19,8 +19,8 @@
 //}
 
 Editor::Editor(SpriteSet * spriteSet, Map* map, SDL_Window* p_window) :
-	m_index(new int[2]), m_quit(false), img(0), m_camera(nullptr), m_texture(nullptr),
-	spriteSet(spriteSet), map(map), m_window(p_window), hints(nullptr)
+	m_index(new int[2]), m_quit(false), img(0), m_camera_editor(nullptr), m_texture(nullptr),
+	spriteSet(spriteSet), mapCameraEditor(map), m_window(p_window), hints(nullptr)
 {}
 
 Editor::~Editor()
@@ -44,10 +44,10 @@ void Editor::SetEvent(SDL_Event &p_event)
 			GamePlay::SetIndex(0);
 			break;
 		case SDLK_LEFT:
-			m_camera->UpDate(-m_texture->GetWidth(), 0);
+			m_camera_editor->UpDate(-m_texture->GetWidth(), 0);
 			break;
 		case SDLK_RIGHT:
-			m_camera->UpDate(m_texture->GetWidth(), 0);
+			m_camera_editor->UpDate(m_texture->GetWidth(), 0);
 			break;
 			////
 		case SDLK_q:
@@ -73,19 +73,19 @@ void Editor::SetEvent(SDL_Event &p_event)
 		case SDLK_RETURN:
 			std::cout << "Salvou Mapa" << std::endl;
 			SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION,"Mapa Salvo", "Mapa foi devidamente Salvo", m_window);
-			this->map->writeMap(mapa);
+			this->mapCameraEditor->writeMap(mapa);
 			break;
 		case SDLK_BACKSPACE:
 			std::cout << "Salvou Mapa" << std::endl;
 			SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Mapa novo criado", "Novo mapa foi criado. Dimensoes: 100x, 10y", m_window);
-			this->map = new Map(100, 10);
-			m_camera->SetPosition(0, 0);
+			this->mapCameraEditor = new Map(100, 10);
+			m_camera_editor->SetPosition(0, 0);
 			break;
 		case SDLK_RSHIFT:
 			std::cout << "Mapa Carregado" << std::endl;
 			SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Mapa carregado!",  mapa  , m_window);
-			this->map = map->readMap(mapa);
-			m_camera->SetPosition(0, 0);
+			this->mapCameraEditor = mapCameraEditor->readMap(mapa);
+			m_camera_editor->SetPosition(0, 0);
 			break;
 		case SDLK_1:
 			this->mapa = "map1.dat";
@@ -133,7 +133,17 @@ void Editor::SetEvent(SDL_Event &p_event)
 void Editor::Initialize()
 {
 	this->hints = new Texture("img/hints.png", GamePlay::GetRenderer(),100,300);
-	this->m_camera = new Camera(new Vector2D(0, 0), SIZE_WINDOW_X, SIZE_WINDOW_Y, map, spriteSet);
+	this->m_camera_editor = new Camera(
+								new Vector2D(SIZE_WINDOW_X - (spriteSet->getXSize() * 4), 0)
+							  , SIZE_WINDOW_X - (spriteSet->getXSize() * 4)
+							  , SIZE_WINDOW_Y
+							  , mapCameraEditor
+							  , spriteSet);
+
+	Map* ma = new Map(4,spriteSet->getCount() / 4);
+	std::cout << spriteSet->getCount() << std::endl;
+	ma->setSpritePallete();
+	this->m_camera_spriteSet = new Camera(new Vector2D(0, 0), spriteSet->getXSize() * 4, spriteSet->getCount() / 4 * spriteSet->getYSize(), ma->setSpritePallete(), spriteSet);
 	this->m_texture = new Texture(spriteSet, GamePlay::GetRenderer());
 }
 
@@ -142,51 +152,54 @@ void Editor::UpDate()
 
 	if (Mouse::GetX() > SIZE_WINDOW_X - Mouse::GetWidth())
 	{
-		m_camera->UpDate(5, 0);
+		m_camera_editor->UpDate(5, 0);
 	}
 	else if ((Mouse::GetX() <= Mouse::GetWidth()))
 	{
-		m_camera->UpDate(-5, 0);
+		m_camera_editor->UpDate(-5, 0);
 	}
 
 	if (Mouse::GetButtonLeft())
 	{
 		int* n = new int(2);
-		n[CAMERA_X] = ((Mouse::GetX() - (spriteSet->getXSize() * 4)) + this->m_camera->GetPosition(CAMERA_X)) / this->spriteSet->getXSize();
+		n[CAMERA_X] = ((Mouse::GetX() - (spriteSet->getXSize() * 4)) + this->m_camera_editor->GetPosition(CAMERA_X)) / this->spriteSet->getXSize();
 		if (n[CAMERA_X] < 0)
 			n[CAMERA_X] = 0;
-		n[CAMERA_Y] = (Mouse::GetY() + this->m_camera->GetPosition(CAMERA_Y)) / this->spriteSet->getYSize();
+		n[CAMERA_Y] = (Mouse::GetY() + this->m_camera_editor->GetPosition(CAMERA_Y)) / this->spriteSet->getYSize();
 
-		this->map->setSprite(n, img);
+		this->mapCameraEditor->setSprite(n, img);
 
 	}
 	else if (Mouse::GetButtonRight())
 	{
 		int* n = new int(2);
-		n[CAMERA_X] = (Mouse::GetX() + this->m_camera->GetPosition(CAMERA_X)) / this->spriteSet->getXSize();
-		n[CAMERA_Y] = (Mouse::GetY() + this->m_camera->GetPosition(CAMERA_Y)) / this->spriteSet->getYSize();
-		this->map->setSprite(n, img);
+		n[CAMERA_X] = (Mouse::GetX() + this->m_camera_editor->GetPosition(CAMERA_X)) / this->spriteSet->getXSize();
+		n[CAMERA_Y] = (Mouse::GetY() + this->m_camera_editor->GetPosition(CAMERA_Y)) / this->spriteSet->getYSize();
+		this->mapCameraEditor->setSprite(n, img);
 
 	}
 }
 
 void Editor::Draw()
 {
-	DrawOnCamera();
+	//CAMERAS
+	m_camera_spriteSet->draw(m_texture);
+	m_camera_editor->draw(m_texture);
+	//DICAS
 	this->hints->Draw(GamePlay::GetRenderer(), new Vector2D(0, 0));
+	//MOUSE
 	Mouse::Draw(m_index[CAMERA_X], m_index[CAMERA_Y]);
 }
 
-void Editor::DrawOnCamera()
+void Editor::DrawOnCamera() //DEPRECATED!
 {
-	for (size_t i = 0; i < map->getYSize(); i++)
+	for (size_t i = 0; i < mapCameraEditor->getYSize(); i++)
 	{
-		for (size_t j = 0; j < map->getXSize(); j++)
+		for (size_t j = 0; j < mapCameraEditor->getXSize(); j++)
 		{
-			//vector recebe a posi��o menos o x e y da camera
-			Vector2D* v = new Vector2D((j*spriteSet->getXSize()) - m_camera->GetPosition(CAMERA_X) + (spriteSet->getXSize() * 4), (i*spriteSet->getYSize() - m_camera->GetPosition(CAMERA_Y)));
-			if(v->GetX() >= (spriteSet->getXSize() * 4))
-				m_texture->Draw(GamePlay::GetRenderer(), v , spriteSet->getSprite(map->getSprite(j, i))[0], spriteSet->getSprite(map->getSprite(j, i))[1]);
+			//vector recebe a posicao menos o x e y da camera
+			Vector2D* v = new Vector2D((j*spriteSet->getXSize()) - m_camera_editor->GetPosition(CAMERA_X) + (spriteSet->getXSize() * 4), (i*spriteSet->getYSize() - m_camera_editor->GetPosition(CAMERA_Y)));
+			m_texture->Draw(GamePlay::GetRenderer(), v , spriteSet->getSprite(mapCameraEditor->getSprite(j, i))[0], spriteSet->getSprite(mapCameraEditor->getSprite(j, i))[1]);
 			delete v;
 		}
 	}
@@ -194,10 +207,10 @@ void Editor::DrawOnCamera()
 
 void Editor::End()
 {
-	if (m_camera)
+	if (m_camera_editor)
 	{
-		delete m_camera;
-		m_camera = nullptr;
+		delete m_camera_editor;
+		m_camera_editor = nullptr;
 	}
 	if (m_texture)
 	{
