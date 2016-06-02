@@ -147,35 +147,34 @@ void GamePlay::Update()
 	//this->m_scene->UpDate();
 	m_scenes[m_index]->UpDate();
 
-	if(Menu *menu = dynamic_cast<Menu *>(m_scenes[m_index]))
-	{
-		//Menu *menu = dynamic_cast<Menu *>(m_scenes[0]);
-	
-		/*if (m_scenes.size() > 1)
-		{
-			for (int i = 1; i < m_scenes.size(); i++)
-			{
-				delete m_scenes[i];
-				m_scenes[i] = nullptr;
-				m_scenes.erase(m_scenes.begin() + i);
-			}
-			SDL_ShowCursor(SDL_ENABLE);
-		}*/
-		if (menu->GetButton()->GetPress())
-		{
-			std::cout << menu->GetButton()->GetPress();
-			if (menu->GetButton()->GetType() == _EDITOR)
-			{
-				
-				GamePlay::SetIndex(TypeButton::_EDITOR);
-			}
-			else if (menu->GetButton()->GetType() == _QUIT)
-			{
-				m_quit = true;
-			}
-			menu->GetButton()->SetPress(false);
-		}
-	}
+	//if(Menu *menu = dynamic_cast<Menu *>(m_scenes[m_index]))
+	//{
+	//	Menu *menu = dynamic_cast<Menu *>(m_scenes[0]);
+	//
+	//	/*if (m_scenes.size() > 1)
+	//	{
+	//		for (int i = 1; i < m_scenes.size(); i++)
+	//		{
+	//			delete m_scenes[i];
+	//			m_scenes[i] = nullptr;
+	//			m_scenes.erase(m_scenes.begin() + i);
+	//		}
+	//		SDL_ShowCursor(SDL_ENABLE);
+	//	}*/
+	//	if (menu->GetButton()->GetPress())
+	//	{
+	//		if (menu->GetButton()->GetType() == _EDITOR)
+	//		{
+	//			
+	//			GamePlay::SetIndex(TypeButton::_EDITOR);
+	//		}
+	//		else if (menu->GetButton()->GetType() == _QUIT)
+	//		{
+	//			m_quit = true;
+	//		}
+	//		menu->GetButton()->SetPress(false);
+	//	}
+	//}
 }
 
 void GamePlay::Draw()

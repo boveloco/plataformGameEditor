@@ -57,7 +57,6 @@ void Editor::SetEvent(SDL_Event &p_event)
 			memcpy(m_index, spriteSet->getSprite(img), sizeof(spriteSet->getSprite(img)));
 			SDL_ShowCursor(SDL_DISABLE);
 			break;
-			////
 		case SDLK_w:
 			img++;
 			if (img > spriteSet->getCount())
@@ -134,7 +133,7 @@ void Editor::SetEvent(SDL_Event &p_event)
 void Editor::Initialize()
 {
 	this->hints = new Texture("img/hints.png", GamePlay::GetRenderer(),100,300);
-	this->m_camera = new Camera(new Vector2D(0, 0), 1024, 768, map, spriteSet);
+	this->m_camera = new Camera(new Vector2D(0, 0), SIZE_WINDOW_X, SIZE_WINDOW_Y, map, spriteSet);
 	this->m_texture = new Texture(spriteSet, GamePlay::GetRenderer());
 }
 

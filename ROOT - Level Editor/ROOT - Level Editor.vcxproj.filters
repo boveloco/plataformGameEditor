@@ -16,6 +16,9 @@
     <Filter Include="Source Files\Physics">
       <UniqueIdentifier>{a6412f64-bcd9-42b7-a38b-f290f502c9fd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Scenes">
+      <UniqueIdentifier>{9ad3e9d3-37c1-44bf-9d6d-fa71d329417c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\GamePlay.cpp">
@@ -63,14 +66,14 @@
     <ClCompile Include="src\Button.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Editor.cpp">
+    <ClCompile Include="src\RigidBody2D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Menu.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="src\RigidBody2D.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\Editor.cpp">
+      <Filter>Source Files\Scenes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

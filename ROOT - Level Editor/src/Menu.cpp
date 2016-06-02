@@ -82,7 +82,10 @@ void Menu::UpDate()
 									   button->GetGeometricShape()))
 			{
 				button->SetPress(true);
-				//m_index == button->GetType();
+				if (button->GetType() == _QUIT)
+					GamePlay::SetQuit(true);
+				if (button->GetType() == _EDITOR)
+					GamePlay::SetIndex(TypeButton::_EDITOR);
 				break;
 			}
 			//m_index++;
@@ -93,6 +96,7 @@ void Menu::UpDate()
 	if (m_index == TypeButton::_MENU)
 		SDL_ShowCursor(SDL_ENABLE);
 }
+
 
 void Menu::Draw()
 {
