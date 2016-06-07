@@ -53,8 +53,8 @@ int Camera::GetPosition(int indice)
 		int ySpriteSize = spriteSet->getYSize();
 		if (y < 0)
 			return 0;
-		if (y > yMapSize*ySpriteSize - SIZE_WINDOW_Y)
-			return yMapSize*ySpriteSize - SIZE_WINDOW_Y;
+		/*if (y > yMapSize*ySpriteSize - SIZE_WINDOW_Y)
+			return yMapSize*ySpriteSize - SIZE_WINDOW_Y;*/
 		return y;
 	}
 }
