@@ -23,21 +23,6 @@ int** Map::createMatriz(int x, int y) {
 	return this->matriz;
 }
 
-Map * Map::setSpritePallete()
-{
-	int n = 0;
-	for (int i = 0; i < ySize; i++)
-	{
-		for (int j = 0; j < xSize; j++)
-		{
-			n++;
-			this->matriz[j][i] = n;
-		}
-	}
-
-	return this;
-}
-
 int Map::getSprite(int x, int y)
 {
 	return this->matriz[x][y];
@@ -134,7 +119,7 @@ void Map::print() {
 	{
 		for (size_t j = 0; j < this->xSize; j++)
 		{
-			std::cout << this->matriz[j][i] << " | ";
+			std::cout << this->matriz[i][j] << " | ";
 		}
 		std::cout << std::endl;
 	}

@@ -1,6 +1,14 @@
 #pragma once
 #include<SDL.h>
 
+enum TypeScene
+{
+	S_MENU,
+	S_EDITOR,
+	S_GAME
+
+};
+
 class Scene
 {
 public:
