@@ -16,11 +16,21 @@ SpriteSet::SpriteSet(std::string address, int x1, int y1, int x2, int y2)
 
 SpriteSet::~SpriteSet()
 {
-	for (size_t i = 0; i < this->spriteSet.size(); i++)
+	if (this->spriteSet.size() > 0)
+	{
+		for (int *s : spriteSet)
+		{
+			delete []s;
+			s = nullptr;
+		}
+
+		spriteSet.clear();
+	}
+	/*for (size_t i = 0; i < this->spriteSet.size(); i++)
 	{
 		delete this->spriteSet[i];
 		this->spriteSet.erase(spriteSet.begin());
-	}
+	}*/
 }
 
 void SpriteSet::addSprite(int* x)
@@ -99,7 +109,7 @@ bool SpriteSet::loadSprites(int x1, int y1, int x2, int y2)
 	return true;
 }
 
-int * SpriteSet::getSprite(int n)
+int *SpriteSet::getSprite(int n)
 {
 	int m = -1;
 	if (n > this->getCount())

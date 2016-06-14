@@ -7,7 +7,7 @@
 #include"GamePlay.h"
 #include "Mouse.h"
 #include "Defines.h"
-#include"MiniTile.h"
+#include"Tile.h"
 #include"Box.h"
 #include"Physic.h"
 #include"Button.h"
@@ -21,7 +21,7 @@
 //	this->map = map;
 //}
 
-Editor::Editor(SpriteSet * spriteSet, Map* map, SDL_Window* p_window) :
+Editor::Editor(SpriteSet * spriteSet, Map* map, SDL_Window* p_window) : Scene(S_EDITOR),
 	m_index(new int[2]), m_quit(false), img(0), m_camera(nullptr), m_texture(nullptr),
 	spriteSet(spriteSet), map(map), m_window(p_window), hints(nullptr)
 {}
@@ -107,11 +107,11 @@ void Editor::AddTiles()
 			y += spriteSet->getYSize() / 2 + 10;
 		}
 
-		m_tiles.push_back(new MiniTile(m_texture, new Vector2D(x * sizeX - 20, y), i[0], i[1]));
+		m_tiles.push_back(new Tile(m_texture, new Vector2D(x * sizeX - 20, y), i[0], i[1]));
 		x += 2;
 	}
 
-	for (MiniTile *m : m_tiles)
+	for (Tile *m : m_tiles)
 	{
 		m->Initialize();
 	}
@@ -124,10 +124,10 @@ void Editor::SetEvent(SDL_Event &p_event)
 		switch (p_event.key.keysym.sym)
 		{
 		case SDLK_LEFT:
-			m_camera->UpDate(-m_texture->GetWidth(), 0);
+			m_camera->UpDate(this, -m_texture->GetWidth(), 0);
 			break;
 		case SDLK_RIGHT:
-			m_camera->UpDate(m_texture->GetWidth(), 0);
+			m_camera->UpDate(this, m_texture->GetWidth(), 0);
 			break;
 		}
 	}
@@ -197,6 +197,26 @@ void Editor::SetEvent(SDL_Event &p_event)
 			this->mapa = "map5.dat";
 			SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Mapa selecionado!", "Mapa 5 selecionado!", m_window);
 			break;
+		case SDLK_6:
+			this->mapa = "map6.dat";
+			SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Mapa selecionado!", "Mapa 6 selecionado!", m_window);
+			break;
+		case SDLK_7:
+			this->mapa = "map7.dat";
+			SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Mapa selecionado!", "Mapa 7 selecionado!", m_window);
+			break;
+		case SDLK_8:
+			this->mapa = "map8.dat";
+			SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Mapa selecionado!", "Mapa 8 selecionado!", m_window);
+			break;
+		case SDLK_9:
+			this->mapa = "map9.dat";
+			SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Mapa selecionado!", "Mapa 9 selecionado!", m_window);
+			break;
+		case SDLK_0:
+			this->mapa = "map0.dat";
+			SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Mapa selecionado!", "Mapa 0 selecionado!", m_window);
+			break;
 		default:
 			break;
 		}
@@ -236,11 +256,11 @@ void Editor::UpDate()
 	{
 		if (Mouse::GetX() > SIZE_WINDOW_X - Mouse::GetWidth())
 		{
-			m_camera->UpDate(5, 0);
+			m_camera->UpDate(this, 8, 0);
 		}
 		else if ((Mouse::GetX() <= spriteSet->getXSize() * 4 + Mouse::GetWidth()))
 		{
-			m_camera->UpDate(-5, 0);
+			m_camera->UpDate(this, -8, 0);
 		}
 
 		if (Mouse::GetButtonLeft())
@@ -305,8 +325,8 @@ void Editor::UpDate()
 					else if (button->GetType() == B_NEW)
 					{
 						delete map;
-						SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Mapa novo criado", "Novo mapa foi criado. Dimensoes: 100x, 10y", m_window);
-						this->map = new Map(100, 10);
+						SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Mapa novo criado", "Novo mapa foi criado. Dimensoes: 100x 12y", m_window);
+						this->map = new Map(100, 12);
 						m_camera->SetPosition(0, 0);
 						break;
 					}
@@ -318,9 +338,17 @@ void Editor::UpDate()
 					}
 					else if (button->GetType() == B_LOAD)
 					{
-						SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Mapa carregado!", mapa, m_window);
-						this->map = map->readMap(mapa);
+						Map *m = map;
+
+						if (!(this->map = map->readMap(mapa)))
+						{
+							SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Erro ao Carregar o Mapa", "ERRO. O Mapa nao existe\n.", m_window);
+							map = m;
+							break;
+						}
+
 						m_camera->SetPosition(0, 0);
+						SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Mapa carregado!", mapa, m_window);
 						break;
 					}
 					break;
@@ -369,7 +397,7 @@ void Editor::DrawOnCamera()
 	{
 		for (size_t j = 0; j < map->getXSize(); j++)
 		{
-			//vector recebe a posi��o menos o x e y da camera
+			//vector recebe a posição menos o x e y da camera
 			Vector2D* v = new Vector2D((j*spriteSet->getXSize()) - m_camera->GetPosition(CAMERA_X) + (spriteSet->getXSize() * 4), 
 										(i*spriteSet->getYSize() - m_camera->GetPosition(CAMERA_Y)));
 			if (v->GetX() >= (spriteSet->getXSize() * 4) && v->GetX() <= m_camera->GetWidth())
@@ -397,7 +425,7 @@ void Editor::End()
 	}
 	if (m_tiles.size() > 0)
 	{
-		for (MiniTile *tile : m_tiles)
+		for (Tile *tile : m_tiles)
 		{
 			delete tile;
 			tile = nullptr;
@@ -419,5 +447,10 @@ void Editor::End()
 	{
 		delete[] m_index;
 		m_index = nullptr;
+	}
+	if (spriteSet)
+	{
+		delete spriteSet;
+		spriteSet = nullptr;
 	}
 }

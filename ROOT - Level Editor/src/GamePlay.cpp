@@ -11,6 +11,7 @@
 #include "Defines.h"
 #include"Menu.h"
 #include"Button.h"
+#include"FaseTeste.h"
 
 SDL_Window *GamePlay::m_window = nullptr;
 SDL_Renderer *GamePlay::m_renderer = nullptr;
@@ -135,10 +136,11 @@ void GamePlay::Initialize()
 
 	////////////////////
 	////////////////////
-	Map* map = new Map(100,10);
+	Map* map = new Map(100,12 );
 	m_mouse = new Mouse(new Texture("img/tileset.png", m_renderer, 64, 64), new Vector2D(0, 0));
 	AddScenes(new Menu(new Texture("img/Menu.png", m_renderer, 1024, 768), new Vector2D(0, 0)));
 	AddScenes(new Editor(new SpriteSet("img/tileset.png", 512, 512, 64, 64), map, m_window));
+	AddScenes(new FaseTeste(new SpriteSet("img/tileset.png", 512, 512, 64, 64)));
 	//this->m_scene = new Editor(new SpriteSet("img/tileset.png",512,512,64,64), map, m_window);
 	//this->m_scene->Initialize();
 }
@@ -175,6 +177,11 @@ void GamePlay::Update()
 			{
 				m_quit = true;
 			}
+			else if (menu->GetButton()->GetType() == B_GAME)
+			{
+				SetIndex(S_GAME);
+			}
+
 			menu->GetButton()->SetPress(false);
 		}
 	}

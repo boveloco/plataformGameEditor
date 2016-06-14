@@ -131,12 +131,14 @@
     <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\Circle.cpp" />
     <ClCompile Include="src\Editor.cpp" />
+    <ClCompile Include="src\FaseTeste.cpp" />
     <ClCompile Include="src\GameObject.cpp" />
     <ClCompile Include="src\GamePlay.cpp" />
     <ClCompile Include="src\GeometricShape.cpp" />
+    <ClCompile Include="src\Hero.cpp" />
     <ClCompile Include="src\Map.cpp" />
     <ClCompile Include="src\Menu.cpp" />
-    <ClCompile Include="src\MiniTile.cpp" />
+    <ClCompile Include="src\Tile.cpp" />
     <ClCompile Include="src\Mouse.cpp" />
     <ClCompile Include="src\Physic.cpp" />
     <ClCompile Include="src\RigidBody2D.cpp" />
@@ -157,9 +159,10 @@
     <ClInclude Include="src\GameObject.h" />
     <ClInclude Include="src\GamePlay.h" />
     <ClInclude Include="src\GeometricShape.h" />
+    <ClInclude Include="src\Hero.h" />
     <ClInclude Include="src\Map.h" />
     <ClInclude Include="src\Menu.h" />
-    <ClInclude Include="src\MiniTile.h" />
+    <ClInclude Include="src\Tile.h" />
     <ClInclude Include="src\Mouse.h" />
     <ClInclude Include="src\Physic.h" />
     <ClInclude Include="src\RigidBody2D.h" />

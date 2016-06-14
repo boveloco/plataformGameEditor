@@ -9,10 +9,11 @@
 #include"Editor.h"
 
 Menu::Menu(Texture *p_image, Vector2D *p_position) :
-	  m_image(p_image), m_position(p_position), m_index(0)
+	  Scene(S_MENU), m_image(p_image), m_position(p_position), m_index(0)
 {}
 
 Menu::Menu() :
+	  Scene(S_MENU),
 	  m_image(nullptr), 
 	  m_position(nullptr)
 {}
@@ -89,6 +90,7 @@ void Menu::UpDate()
 				break;
 			}
 			m_index++;
+			m_index = (m_index >= m_buttons.size()) ? m_index - 1 : m_index;
 		}
 
 		Mouse::SetButtonLeft(false);

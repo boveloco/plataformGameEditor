@@ -8,7 +8,7 @@ class Map;
 class Camera;
 class Mouse;
 class Button;
-class MiniTile;
+class Tile;
 class Box;
 
 class Editor : public Scene
@@ -34,7 +34,7 @@ private:
 	//gravada na matriz
 	int img;
 
-	std::vector<MiniTile *> m_tiles;
+	std::vector<Tile *> m_tiles;
 	std::vector<Button *> m_buttons;
 
 public:	
