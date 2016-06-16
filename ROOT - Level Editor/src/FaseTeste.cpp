@@ -1,21 +1,31 @@
-#include "FaseTeste.h"
+#define _CRT_SECURE_NO_WARNINGS
+
+#include"Defines.h"
+#include"FaseTeste.h"
 #include"Box.h"
 #include"Texture.h"
 #include"SpriteSet.h"
 #include"Map.h"
 #include"Physic.h"
 #include"GamePlay.h"
-#include"Defines.h"
 #include"Vector2D.h"
 #include"Camera.h"
 #include"Tile.h"
 #include"Hero.h"
 #include"RigidBody2D.h"
 
+
+
 FaseTeste::FaseTeste(SpriteSet *p_spriteSet) : Scene(S_GAME),
 		   m_spriteSet(p_spriteSet), m_map(new Map(100,12)), 
 		   m_image(nullptr), m_mapa(MAP01), m_camera(nullptr)
-{}
+{
+	for (int i = 0; i < 5; i++)
+	{
+		fases[i] = new char[9];
+		sprintf(fases[i], "map%d.dat", i+1);
+	}
+}
 
 FaseTeste::~FaseTeste()
 {
@@ -68,7 +78,7 @@ void FaseTeste::Initialize()
 	m_map = m_map->readMap(m_mapa);
 	AddTiles();
 	m_camera = new Camera(new Vector2D(0, 0), SIZE_WINDOW_X, SIZE_WINDOW_Y, m_map, m_spriteSet);
-	m_hero = new Hero(new Texture("img/player.png", GamePlay::GetRenderer(), 41, 44),
+	m_hero = new Hero(new Texture(PLAYER_IMAGE, GamePlay::GetRenderer(), 41, 44),
 								  new Vector2D(20, 20), nullptr, m_camera);
 	m_hero->Initialize();
 }
@@ -79,10 +89,13 @@ void FaseTeste::UpDate()
 
 	for (Tile *t : m_tiles)
 	{
-		if (Physic::Collision(m_hero->GetTransform()->GetCollider(), t->GetCollider()))
+		if (t->GetX() - m_camera->GetxPosition() >= 0 &&
+			t->GetX() - m_camera->GetxPosition() <= SIZE_WINDOW_X)
 		{
-			m_hero->CollideTile(t);
-			break;
+			if (Physic::Collision(m_hero->GetTransform()->GetCollider(), t->GetCollider()))
+			{
+				m_hero->CollideTile(t);
+			}
 		}
 	}
 
@@ -103,10 +116,15 @@ void FaseTeste::UpDate()
 			m_camera->SetxPosition((m_map->getXSize() * m_spriteSet->getXSize()) - SIZE_WINDOW_X);
 		}
 	}
-	if (m_hero->GetYPosition() > SIZE_WINDOW_Y) {
-		m_hero->SetPosition(new Vector2D(0, 0));
+	if (m_hero->GetYPosition() > SIZE_WINDOW_Y)
+		m_hero->SetPosition(0, 0);
+	if (m_hero->GetXPosition() > m_map->getXSize()*m_spriteSet->getXSize() - m_spriteSet->getXSize())
+	{
+		contFase++;
+		delete m_map;
+		m_map = new Map(getFases(contFase));
+		m_hero->SetPosition(0, 0);
 	}
-
 }
 
 void FaseTeste::Draw()
@@ -214,7 +232,7 @@ void FaseTeste::SetEvent(SDL_Event &p_event)
 		{
 			m_hero->SetLeft(false);
 		}
-		if (p_event.key.keysym.sym == SDLK_SPACE || p_event.key.keysym.sym == SDLK_UP)
+		if (p_event.key.keysym.sym == SDLK_SPACE)
 		{
 			m_hero->SetJump(true);
 		}

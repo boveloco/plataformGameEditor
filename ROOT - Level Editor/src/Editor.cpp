@@ -55,7 +55,7 @@ void Editor::AddButtons()
 			y += sizeY + 10;
 		}
 
-		m_buttons.push_back(new Button(new Texture("img/tileset.png",
+		m_buttons.push_back(new Button(new Texture(TILESET_PATH,
 												   GamePlay::GetRenderer(),
 												   spriteSet->getXSize(), 
 												   spriteSet->getYSize()),
@@ -66,15 +66,15 @@ void Editor::AddButtons()
 	float auxX = 10, auxY = 15;
 	int sizeX1 = 64, sizeY1 = 30;
 
-	m_buttons.push_back(new Button(new Texture("img/Botoes/NEW.png",
+	m_buttons.push_back(new Button(new Texture(EDITOR_NEW_BUTTON,
 												GamePlay::GetRenderer(), sizeX1, sizeY1),
 								  new Vector2D(auxX, auxY), B_NEW));
 
-	m_buttons.push_back(new Button(new Texture("img/Botoes/SAVE.png",
+	m_buttons.push_back(new Button(new Texture(EDITOR_SAVE_BUTTON,
 												GamePlay::GetRenderer(), sizeX1, sizeY1),
 								   new Vector2D(auxX + sizeX1 + 15, auxY), B_SAVE));
 
-	m_buttons.push_back(new Button(new Texture("img/Botoes/LOAD.png",
+	m_buttons.push_back(new Button(new Texture(EDITOR_LOAD_BUTTON,
 												GamePlay::GetRenderer(), sizeX1, sizeY1),
 								   new Vector2D(auxX + (sizeX1 * 2) + 30, auxY), B_LOAD));
 
@@ -124,10 +124,10 @@ void Editor::SetEvent(SDL_Event &p_event)
 		switch (p_event.key.keysym.sym)
 		{
 		case SDLK_LEFT:
-			m_camera->UpDate(this, -m_texture->GetWidth(), 0);
+			m_camera->UpDate(-m_texture->GetWidth(), 0);
 			break;
 		case SDLK_RIGHT:
-			m_camera->UpDate(this, m_texture->GetWidth(), 0);
+			m_camera->UpDate(m_texture->GetWidth(), 0);
 			break;
 		}
 	}
@@ -178,44 +178,24 @@ void Editor::SetEvent(SDL_Event &p_event)
 			m_camera->SetPosition(0, 0);
 			break;*/
 		case SDLK_1:
-			this->mapa = "map1.dat";
+			this->mapa = MAP01;
 			SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Mapa selecionado!", "Mapa 1 selecionado!" , m_window);
 			break;
 		case SDLK_2:
-			this->mapa = "map2.dat";
+			this->mapa = MAP02;
 			SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Mapa selecionado!", "Mapa 2 selecionado!", m_window);
 			break;
 		case SDLK_3:
-			this->mapa = "map3.dat";
+			this->mapa = MAP03;
 			SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Mapa selecionado!", "Mapa 3 selecionado!", m_window);
 			break;
 		case SDLK_4:
-			this->mapa = "map4.dat";
+			this->mapa = MAP04;
 			SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Mapa selecionado!", "Mapa 4 selecionado!", m_window);
 			break;
 		case SDLK_5:
-			this->mapa = "map5.dat";
+			this->mapa = MAP05;
 			SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Mapa selecionado!", "Mapa 5 selecionado!", m_window);
-			break;
-		case SDLK_6:
-			this->mapa = "map6.dat";
-			SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Mapa selecionado!", "Mapa 6 selecionado!", m_window);
-			break;
-		case SDLK_7:
-			this->mapa = "map7.dat";
-			SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Mapa selecionado!", "Mapa 7 selecionado!", m_window);
-			break;
-		case SDLK_8:
-			this->mapa = "map8.dat";
-			SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Mapa selecionado!", "Mapa 8 selecionado!", m_window);
-			break;
-		case SDLK_9:
-			this->mapa = "map9.dat";
-			SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Mapa selecionado!", "Mapa 9 selecionado!", m_window);
-			break;
-		case SDLK_0:
-			this->mapa = "map0.dat";
-			SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Mapa selecionado!", "Mapa 0 selecionado!", m_window);
 			break;
 		default:
 			break;
@@ -242,7 +222,7 @@ void Editor::SetEvent(SDL_Event &p_event)
 
 void Editor::Initialize()
 {
-	this->hints = new Texture("img/MenuBotoes.png", GamePlay::GetRenderer(),256,768);
+	this->hints = new Texture(EDITOR_MENU_BG_BUTTONS, GamePlay::GetRenderer(),256,768);
 	this->m_camera = new Camera(new Vector2D(0, 0), SIZE_WINDOW_X, SIZE_WINDOW_Y, map, spriteSet);
 	this->m_texture = new Texture(spriteSet, GamePlay::GetRenderer());
 
@@ -256,11 +236,11 @@ void Editor::UpDate()
 	{
 		if (Mouse::GetX() > SIZE_WINDOW_X - Mouse::GetWidth())
 		{
-			m_camera->UpDate(this, 8, 0);
+			m_camera->UpDate(4, 0);
 		}
 		else if ((Mouse::GetX() <= spriteSet->getXSize() * 4 + Mouse::GetWidth()))
 		{
-			m_camera->UpDate(this, -8, 0);
+			m_camera->UpDate(-4, 0);
 		}
 
 		if (Mouse::GetButtonLeft())

@@ -12,8 +12,7 @@ private:
 	bool m_jump;
 	int m_count;
 	Camera *m_camera;
-	float m_xSpeed;
-	float m_ySpeed;
+
 public:
 	Hero(Texture *, Vector2D *, GeometricShape *, Camera *);
 	~Hero();

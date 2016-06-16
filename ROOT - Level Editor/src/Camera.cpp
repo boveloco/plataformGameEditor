@@ -45,8 +45,8 @@ int Camera::GetPosition(int indice)
 		int xSpriteSize = spriteSet->getXSize();
 		if (x < 0)
 			return 0;
-		if (x  > xMapSize*xSpriteSize-SIZE_WINDOW_X)
-			return x = xMapSize*xSpriteSize -SIZE_WINDOW_X;
+		if (x  > xMapSize*xSpriteSize+(xSpriteSize*4)-SIZE_WINDOW_X)
+			return x = xMapSize*xSpriteSize + (xSpriteSize * 4) -SIZE_WINDOW_X;
 		return x;
 	}
 	if (indice == CAMERA_Y) {
@@ -123,18 +123,10 @@ void Camera::SetyPosition(int p_y)
 	m_position->SetY(p_y);
 }
 
-void Camera::UpDate(Scene *p_scene, int p_x, int p_y)
+void Camera::UpDate(int p_x, int p_y)
 {
-	if (p_scene->GetType() == S_EDITOR)
-	{
-		SetPositionEditor(CAMERA_X, GetPositionEditor(CAMERA_X) + p_x);
-		SetPositionEditor(CAMERA_Y, GetPositionEditor(CAMERA_Y) + p_y);
-	}
-	else if (p_scene->GetType() == S_GAME)
-	{
-		this->SetPosition(CAMERA_X, this->GetPosition(CAMERA_X) + p_x);
-		this->SetPosition(CAMERA_Y, this->GetPosition(CAMERA_Y) + p_y);
-	}
+	this->SetPosition(CAMERA_X, this->GetPosition(CAMERA_X) + p_x);
+	this->SetPosition(CAMERA_Y, this->GetPosition(CAMERA_Y) + p_y);
 }
 
 void Camera::End()
@@ -177,13 +169,11 @@ int Camera::GetPositionEditor(int p_index) const
 		int xSpriteSize = spriteSet->getXSize();
 		if (x < 0)
 			return 0;
-		if (x + SIZE_WINDOW_X >= (xMapSize*xSpriteSize) + (xSpriteSize * 4))
-			return x = ((xMapSize*xSpriteSize) + (xSpriteSize * 4) - SIZE_WINDOW_X);
-
-		std::cout << x << std::endl;
+		if (x  > xMapSize*xSpriteSize + (xSpriteSize * 4) - SIZE_WINDOW_X)
+			return x = xMapSize*xSpriteSize + (xSpriteSize * 4) - SIZE_WINDOW_X;
 		return x;
 	}
-	else if (p_index == CAMERA_Y) {
+	if (p_index == CAMERA_Y) {
 		int y = this->m_position->GetY();
 		int yMapSize = map->getYSize();
 		int ySpriteSize = spriteSet->getYSize();

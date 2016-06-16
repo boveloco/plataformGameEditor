@@ -21,7 +21,18 @@ private:
 	//std::vector<Box *> m_tiles;
 	std::vector<Tile *> m_tiles;
 	char *m_mapa;
+	char** fases = new char*[5];
 public:
+	int contFase = 0;
+	char* getFases(int &n) {
+		if (n > 5)
+			n = 0;
+		if (n < 0)
+			n = 0;
+
+		return fases[n];
+	}
+
 	FaseTeste(SpriteSet *);
 	~FaseTeste();
 	void AddTiles();

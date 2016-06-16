@@ -1,20 +1,15 @@
-#define _CRT_SECURE_NO_WARNINGS
-
-#include<iostream>
+#include <iostream>
 #include "GamePlay.h"
 #include "SpriteSet.h"
 #include "Map.h"
 #include "Camera.h"
 #include "Vector2D.h"
 
-
-
 int main(int argc, char** argv) 
 {
-
 	GamePlay game;
 	game.Run();
 
-	system("PAUSE");
+	//system("PAUSE");
 	return 0;
 }

@@ -51,7 +51,7 @@ public:
 	void SetxPosition(int);
 	void SetyPosition(int);
 
-	void UpDate(Scene *, int, int);
+	void UpDate(int, int);
 	void End();
 };
 

@@ -25,14 +25,14 @@ Menu::~Menu()
 
 Menu *Menu::AddButtons()
 {
-	m_buttons.push_back(new Button(new Texture("img/Botoes/EDITOR1.png",  
+	m_buttons.push_back(new Button(new Texture(MENU_GAME_IMAGE,  
 												GamePlay::GetRenderer(), 
 												202, 43), 
 								   new Vector2D((SIZE_WINDOW_X / 2) - 71, 
 												 SIZE_WINDOW_Y / 2 + 10),
 								   B_EDITOR));
 
-	m_buttons.push_back(new Button(new Texture("img/Botoes/GAME1.png",
+	m_buttons.push_back(new Button(new Texture(MENU_GAME_IMAGE,
 												GamePlay::GetRenderer(),
 												202, 43),
 								   new Vector2D((SIZE_WINDOW_X / 2) - 71, 
@@ -45,7 +45,7 @@ Menu *Menu::AddButtons()
 								  new Vector2D((SIZE_WINDOW_X / 2) - 71, 
 											   m_buttons[1]->GetY() + 50)));*/
 
-	m_buttons.push_back(new Button(new Texture("img/Botoes/QUIT1.png",
+	m_buttons.push_back(new Button(new Texture(MENU_QUIT_IMAGE,
 												GamePlay::GetRenderer(),
 												202, 43),
 								   new Vector2D((SIZE_WINDOW_X / 2) - 71, 
