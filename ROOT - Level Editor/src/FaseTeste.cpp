@@ -18,13 +18,15 @@
 
 FaseTeste::FaseTeste(SpriteSet *p_spriteSet) : Scene(S_GAME),
 		   m_spriteSet(p_spriteSet), m_map(new Map(100,12)), 
-		   m_image(nullptr), m_mapa(MAP01), m_camera(nullptr)
+		   m_image(nullptr), m_mapa(nullptr), m_camera(nullptr)
 {
 	for (int i = 0; i < 5; i++)
 	{
 		fases[i] = new char[9];
 		sprintf(fases[i], "map%d.dat", i+1);
 	}
+
+	m_mapa = fases[0];
 }
 
 FaseTeste::~FaseTeste()
@@ -34,23 +36,6 @@ FaseTeste::~FaseTeste()
 
 void FaseTeste::AddTiles()
 {
-	//for (size_t i = 0; i < m_map->getYSize(); i++)
-	//{
-	//	for (size_t j = 0; j < m_map->getXSize(); j++)
-	//	{
-	//		if (m_spriteSet->getSprite(m_map->getSprite(j, i))[0] < 0 ||
-	//			m_spriteSet->getSprite(m_map->getSprite(j, i))[1] < 0)
-	//		{
-	//			continue;
-	//		}
-	//		//vector recebe a posição menos o x e y da camera
-	//		Vector2D* v = new Vector2D(j*m_spriteSet->getXSize(),
-	//								   i*m_spriteSet->getYSize());
-	//		
-	//		m_tiles.push_back(new Box(v, m_spriteSet->getXSize(), m_spriteSet->getYSize()));
-	//	}
-	//}
-
 	for (size_t i = 0; i < m_map->getYSize(); i++)
 	{
 		for (size_t j = 0; j < m_map->getXSize(); j++)
@@ -70,6 +55,16 @@ void FaseTeste::AddTiles()
 			m_tiles.push_back(tile);
 		}
 	}
+}
+
+void FaseTeste::DestroyTile()
+{
+	for (Tile *t : m_tiles)
+	{
+		delete t;
+	}
+
+	m_tiles.clear();
 }
 
 void FaseTeste::Initialize()
@@ -121,8 +116,14 @@ void FaseTeste::UpDate()
 	if (m_hero->GetXPosition() > m_map->getXSize()*m_spriteSet->getXSize() - m_spriteSet->getXSize())
 	{
 		contFase++;
-		delete m_map;
-		m_map = new Map(getFases(contFase));
+		//delete m_map;
+		//m_map = new Map(getFases(contFase));
+		std::cout << m_mapa << std::endl;
+		m_mapa = getFases(contFase);
+		std::cout << m_mapa << std::endl;
+		m_map = m_map->readMap(m_mapa);
+		DestroyTile();
+		AddTiles();
 		m_hero->SetPosition(0, 0);
 	}
 }

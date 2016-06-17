@@ -36,6 +36,7 @@ public:
 	FaseTeste(SpriteSet *);
 	~FaseTeste();
 	void AddTiles();
+	void DestroyTile();
 	virtual void Initialize();
 	virtual void UpDate();
 	virtual void Draw();

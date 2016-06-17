@@ -50,6 +50,7 @@ void Hero::CollideTile(Tile *p_tile)
 	{
 		if (catY > 0)//por cima do objeto controlado
 		{
+			m_transform->GetVelocity()->SetY(0);
 			GetPosition()->SetY(GetYPosition() + overlapy);
 		}
 		else // por baixo

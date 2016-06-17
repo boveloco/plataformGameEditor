@@ -25,7 +25,7 @@ Menu::~Menu()
 
 Menu *Menu::AddButtons()
 {
-	m_buttons.push_back(new Button(new Texture(MENU_GAME_IMAGE,  
+	m_buttons.push_back(new Button(new Texture(MENU_EDITOR_IMAGE,  
 												GamePlay::GetRenderer(), 
 												202, 43), 
 								   new Vector2D((SIZE_WINDOW_X / 2) - 71, 
