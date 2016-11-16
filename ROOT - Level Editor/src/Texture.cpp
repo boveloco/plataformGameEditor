@@ -82,6 +82,8 @@ bool Texture::UploadImage(std::string p_address, SDL_Renderer *p_renderer, int w
 	m_height = newSurface->h;
 	m_width = newSurface->w;
 	}*/
+	//m_width = width;
+	//m_height = height;
 
 	SDL_FreeSurface(newSurface);
 	newSurface = nullptr;
@@ -142,6 +144,18 @@ void Texture::Draw(SDL_Renderer *p_renderer, Vector2D *p_position,
 	//renderer, SDL_Texture, (OFFSET EM UM VECTOR2D[posx, posty, widht, heigth]),
 	//(POSICAO NA TELA VECTOR2D[posx, posy, width, height]) 
 	//USAR ESSE COM SPITESET
+
+	SDL_RenderCopy(p_renderer, m_texture, &newRect, &m_rect);
+}
+
+void Texture::Draw(SDL_Renderer *p_renderer, int p_x, int p_y, int p_xIMG, int p_yIMG)
+{
+	SDL_Rect newRect = { p_xIMG, p_yIMG, m_width, m_height };
+
+	m_rect.x = p_x;
+	m_rect.y = p_y;
+	m_rect.w = m_width;
+	m_rect.h = m_height;
 
 	SDL_RenderCopy(p_renderer, m_texture, &newRect, &m_rect);
 }

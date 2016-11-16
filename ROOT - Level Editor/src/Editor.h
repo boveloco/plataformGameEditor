@@ -1,11 +1,15 @@
 #pragma once
 #include"Scene.h"
+#include<vector>
 
 class SpriteSet;
 class Texture;
 class Map;
 class Camera;
 class Mouse;
+class Button;
+class Tile;
+class Box;
 
 class Editor : public Scene
 {
@@ -16,10 +20,8 @@ private:
 	SpriteSet* spriteSet;
 	Texture *m_texture;
 	Texture* hints;
-	Map* mapCameraEditor;
-	Map* mapCameraSpriteSet;
-	Camera *m_camera_editor;
-	Camera *m_camera_spriteSet;
+	Map* map;
+	Camera *m_camera;
 	Mouse* mouse;
 	SDL_Window* m_window;
 
@@ -32,12 +34,17 @@ private:
 	//gravada na matriz
 	int img;
 
+	std::vector<Tile *> m_tiles;
+	std::vector<Button *> m_buttons;
+
 public:	
 	Editor(SpriteSet*, Map*, SDL_Window*);
 	~Editor();
 
 	bool Quit();
-
+	SpriteSet *GetSpriteSet() const;
+	void AddButtons();
+	void AddTiles();
 	virtual void SetEvent(SDL_Event &);
 
 	virtual void Initialize();
@@ -47,6 +54,4 @@ public:
 	//está vendo
 	void DrawOnCamera();
 	virtual void End();
-
-	Editor * setMap(Map*);
 };

@@ -4,6 +4,7 @@
 #include "Map.h"
 #include "Camera.h"
 #include "Vector2D.h"
+
 int main(int argc, char** argv) 
 {
 	GamePlay game;

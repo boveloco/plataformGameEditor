@@ -9,10 +9,11 @@
 #include"Editor.h"
 
 Menu::Menu(Texture *p_image, Vector2D *p_position) :
-	  m_image(p_image), m_position(p_position), m_index(0)
+	  Scene(S_MENU), m_image(p_image), m_position(p_position), m_index(0)
 {}
 
 Menu::Menu() :
+	  Scene(S_MENU),
 	  m_image(nullptr), 
 	  m_position(nullptr)
 {}
@@ -24,19 +25,19 @@ Menu::~Menu()
 
 Menu *Menu::AddButtons()
 {
-	m_buttons.push_back(new Button(new Texture("img/EDITOR1.png",  
+	m_buttons.push_back(new Button(new Texture(MENU_EDITOR_IMAGE,  
 												GamePlay::GetRenderer(), 
 												202, 43), 
 								   new Vector2D((SIZE_WINDOW_X / 2) - 71, 
 												 SIZE_WINDOW_Y / 2 + 10),
-								   _EDITOR));
+								   B_EDITOR));
 
-	m_buttons.push_back(new Button(new Texture("img/GAME1.png",
+	m_buttons.push_back(new Button(new Texture(MENU_GAME_IMAGE,
 												GamePlay::GetRenderer(),
 												202, 43),
 								   new Vector2D((SIZE_WINDOW_X / 2) - 71, 
 											    m_buttons[0]->GetY() + 50),
-								   _GAME));
+								   B_GAME));
 
 	/*m_buttons.push_back(new Button(new Texture("img/CREDITS1.png",
 												GamePlay::GetRenderer(),
@@ -44,12 +45,12 @@ Menu *Menu::AddButtons()
 								  new Vector2D((SIZE_WINDOW_X / 2) - 71, 
 											   m_buttons[1]->GetY() + 50)));*/
 
-	m_buttons.push_back(new Button(new Texture("img/QUIT1.png",
+	m_buttons.push_back(new Button(new Texture(MENU_QUIT_IMAGE,
 												GamePlay::GetRenderer(),
 												202, 43),
 								   new Vector2D((SIZE_WINDOW_X / 2) - 71, 
 									            m_buttons[1]->GetY() + 50),
-								   _QUIT));
+								   B_QUIT));
 
 	for (Button *button : m_buttons)
 	{
@@ -74,7 +75,7 @@ void Menu::UpDate()
 {
 	if (Mouse::GetButtonLeft())
 	{
-		//m_index = 0;
+		m_index = 0;
 
 		for (Button *button : m_buttons)
 		{
@@ -82,19 +83,18 @@ void Menu::UpDate()
 									   button->GetGeometricShape()))
 			{
 				button->SetPress(true);
-				if (button->GetType() == _QUIT)
-					GamePlay::SetQuit(true);
-				if (button->GetType() == _EDITOR)
-					GamePlay::SetIndex(TypeButton::_EDITOR);
+				/*if (button->GetType() == B_QUIT)
+					GamePlay::SetQuit(true);*/
+				/*if (button->GetType() == _EDITOR)
+					GamePlay::SetIndex(TypeButton::_EDITOR);*/
 				break;
 			}
-			//m_index++;
+			m_index++;
+			m_index = (m_index >= m_buttons.size()) ? m_index - 1 : m_index;
 		}
 
 		Mouse::SetButtonLeft(false);
 	}
-	if (m_index == TypeButton::_MENU)
-		SDL_ShowCursor(SDL_ENABLE);
 }
 
 
@@ -113,12 +113,6 @@ void Menu::End()
 {
 	if (m_buttons.size() > 0)
 	{
-		/*for (int i = 0; i < m_buttons.size(); i++)
-		{
-			delete m_buttons[i];
-			m_buttons[i] = nullptr;
-		}*/
-
 		for (Button *button : m_buttons)
 		{
 			delete button;
@@ -164,7 +158,7 @@ void Menu::SetEvent(SDL_Event &p_event)
 			Mouse::SetButtonRight(false);
 		}
 	}
-	if (p_event.type == SDL_KEYUP && p_event.key.keysym.sym == SDLK_ESCAPE)
+	/*if (p_event.type == SDL_KEYUP && p_event.key.keysym.sym == SDLK_ESCAPE)
 		if(GamePlay::getIndex() == 0)
-			GamePlay::SetIndex(GamePlay::getLastIndex());
+			GamePlay::SetIndex(GamePlay::getLastIndex());*/
 }

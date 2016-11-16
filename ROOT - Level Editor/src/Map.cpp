@@ -23,21 +23,6 @@ int** Map::createMatriz(int x, int y) {
 	return this->matriz;
 }
 
-Map * Map::setSpritePallete()
-{
-	int n = 0;
-	for (int i = 0; i < ySize; i++)
-	{
-		for (int j = 0; j < xSize; j++)
-		{
-			n++;
-			this->matriz[j][i] = n;
-		}
-	}
-
-	return this;
-}
-
 int Map::getSprite(int x, int y)
 {
 	return this->matriz[x][y];
@@ -52,9 +37,9 @@ Map::~Map()
 {
 	for (size_t i = 0; i < this->xSize; i++)
 	{
-			delete this->matriz[i];
+		delete this->matriz[i];
 	}
-	delete matriz;
+	delete []matriz;
 }
 
 int Map::getXSize()
@@ -100,33 +85,47 @@ Map * Map::readMap(char * path)
 {
 	std::string line;
 	int count = 0;
-	std::ifstream map(path, std::ifstream::binary);
-	std::string::size_type sz;
-	//faz a leitura das primeiras duas linha (tamanho em x e em y respectivamente)
-	while (std::getline(map, line))
+	try
 	{
-		std::cout << line << std::endl;
-		if (count == 0)
-			this->xSize = std::stoi(line, &sz);
-		if (count == 1) {
-			this->ySize = std::stoi(line, &sz);
-			break;
+		std::ifstream map(path, std::ifstream::binary);
+		std::string::size_type sz;
+		//faz a leitura das primeiras duas linha (tamanho em x e em y respectivamente)
+		while (std::getline(map, line))
+		{
+			std::cout << line << std::endl;
+			if (count == 0)
+				this->xSize = std::stoi(line, &sz);
+			if (count == 1) {
+				this->ySize = std::stoi(line, &sz);
+				break;
+			}
+			count++;
 		}
-		count++;
-	}
-	
-	//cria a matriz
-	this->createMatriz(this->xSize, this->ySize);	
-
-	//pega os valores da matriz
-	int x, y;
-	for (x = 0; x < this->xSize; x++) {
-		for (y = 0; y < this->ySize; y++) {
-			 map >> this->matriz[x][y];
+		
+		//retorna nulo caso mapa nao exista
+		if (count == 0) {
+			throw std::exception("MAPA nao existe.");
+			//return nullptr;
 		}
+		//cria a matriz
+		this->createMatriz(this->xSize, this->ySize);	
+		
+		//pega os valores da matriz
+		int x, y;
+		for (x = 0; x < this->xSize; x++) {
+			for (y = 0; y < this->ySize; y++) {
+				 map >> this->matriz[x][y];
+			}
+		}
+		map.close();
+		return this;
 	}
-	map.close();
-	return this;
+	catch (const std::exception &e)
+	{
+		std::cout << e.what() << std::endl;
+		return nullptr;
+	}
+	return nullptr;
 }
 
 void Map::print() {
@@ -134,7 +133,7 @@ void Map::print() {
 	{
 		for (size_t j = 0; j < this->xSize; j++)
 		{
-			std::cout << this->matriz[j][i] << " | ";
+			std::cout << this->matriz[i][j] << " | ";
 		}
 		std::cout << std::endl;
 	}

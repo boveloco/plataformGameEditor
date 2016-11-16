@@ -53,6 +53,11 @@ Vector2D *RigidBody2D::GetVelocity() const
 	return m_velocity;
 }
 
+Vector2D *RigidBody2D::GetUp() const
+{
+	return m_up;
+}
+
 float RigidBody2D::GetX() const
 {
 	return m_collider->GetX();

@@ -11,6 +11,7 @@
 #include "Defines.h"
 #include"Menu.h"
 #include"Button.h"
+#include"FaseTeste.h"
 
 SDL_Window *GamePlay::m_window = nullptr;
 SDL_Renderer *GamePlay::m_renderer = nullptr;
@@ -55,19 +56,22 @@ void GamePlay::SetEvent()
 		{
 			m_quit = true;
 		}
-		/*if (m_event.type == SDL_KEYDOWN)
-		{
-			switch (m_event.key.keysym.sym)
-			{
-			case SDLK_ESCAPE:
-				m_quit = true;
-				break;
-			default:
-				break;
-			}
-		}*/
 		if (m_event.type == SDL_MOUSEMOTION)
 		{
+			/*if (Editor *editor = dynamic_cast<Editor *>(m_scenes[S_EDITOR]))
+			{
+				if (m_event.motion.x > editor->GetSpriteSet()->getXSize() * 4)
+				{
+					m_mouse->SetPosition(m_event.motion.x, m_event.motion.y);
+				}
+				else
+					SDL_ShowCursor(SDL_ENABLE);
+				SDL_MouseIsHaptic();
+			}
+			else
+			{
+				m_mouse->SetPosition(m_event.motion.x, m_event.motion.y);
+			}*/
 			m_mouse->SetPosition(m_event.motion.x, m_event.motion.y);
 			SDL_MouseIsHaptic();
 		}
@@ -96,7 +100,7 @@ void GamePlay::Initialize()
 		return;
 	}
 
-	m_window = SDL_CreateWindow("ROOT -- Map Editor", SDL_WINDOWPOS_UNDEFINED,
+	m_window = SDL_CreateWindow(GAME_WINDOW_NAME, SDL_WINDOWPOS_UNDEFINED,
 			   SDL_WINDOWPOS_UNDEFINED, SIZE_WINDOW_X, SIZE_WINDOW_Y, SDL_WINDOW_SHOWN);
 
 	if (!m_window)
@@ -132,10 +136,11 @@ void GamePlay::Initialize()
 
 	////////////////////
 	////////////////////
-	Map* map = new Map(100,10);
-	m_mouse = new Mouse(new Texture("img/tileset.png", m_renderer, 64, 64), new Vector2D(0, 0));
-	AddScenes(new Menu(new Texture("img/Menu.png", m_renderer, 1024, 768), new Vector2D(0, 0)));
-	AddScenes(new Editor(new SpriteSet("img/tileset.png", 512, 512, 64, 64), map, m_window));
+	Map* map = new Map(100,12 );
+	m_mouse = new Mouse(new Texture(TILESET_PATH, m_renderer, 64, 64), new Vector2D(0, 0));
+	AddScenes(new Menu(new Texture(MENU_BG_IMAGE, m_renderer, 1024, 768), new Vector2D(0, 0)));
+	AddScenes(new Editor(new SpriteSet(TILESET_PATH, 512, 512, 64, 64), map, m_window));
+	AddScenes(new FaseTeste(new SpriteSet(TILESET_PATH, 512, 512, 64, 64)));
 	//this->m_scene = new Editor(new SpriteSet("img/tileset.png",512,512,64,64), map, m_window);
 	//this->m_scene->Initialize();
 }
@@ -147,34 +152,39 @@ void GamePlay::Update()
 	//this->m_scene->UpDate();
 	m_scenes[m_index]->UpDate();
 
-	//if(Menu *menu = dynamic_cast<Menu *>(m_scenes[m_index]))
-	//{
-	//	Menu *menu = dynamic_cast<Menu *>(m_scenes[0]);
-	//
-	//	/*if (m_scenes.size() > 1)
-	//	{
-	//		for (int i = 1; i < m_scenes.size(); i++)
-	//		{
-	//			delete m_scenes[i];
-	//			m_scenes[i] = nullptr;
-	//			m_scenes.erase(m_scenes.begin() + i);
-	//		}
-	//		SDL_ShowCursor(SDL_ENABLE);
-	//	}*/
-	//	if (menu->GetButton()->GetPress())
-	//	{
-	//		if (menu->GetButton()->GetType() == _EDITOR)
-	//		{
-	//			
-	//			GamePlay::SetIndex(TypeButton::_EDITOR);
-	//		}
-	//		else if (menu->GetButton()->GetType() == _QUIT)
-	//		{
-	//			m_quit = true;
-	//		}
-	//		menu->GetButton()->SetPress(false);
-	//	}
-	//}
+	if(Menu *menu = dynamic_cast<Menu *>(m_scenes[m_index]))
+	{
+		//Menu *menu = dynamic_cast<Menu *>(m_scenes[0]);
+	
+		/*if (m_scenes.size() > 1)
+		{
+			for (int i = 1; i < m_scenes.size(); i++)
+			{
+				delete m_scenes[i];
+				m_scenes[i] = nullptr;
+				m_scenes.erase(m_scenes.begin() + i);
+			}
+			SDL_ShowCursor(SDL_ENABLE);
+		}*/
+		SDL_ShowCursor(SDL_ENABLE);
+		if (menu->GetButton()->GetPress())
+		{
+			if (menu->GetButton()->GetType() == B_EDITOR)
+			{
+				SetIndex(S_EDITOR);
+			}
+			else if (menu->GetButton()->GetType() == B_QUIT)
+			{
+				m_quit = true;
+			}
+			else if (menu->GetButton()->GetType() == B_GAME)
+			{
+				SetIndex(S_GAME);
+			}
+
+			menu->GetButton()->SetPress(false);
+		}
+	}
 }
 
 void GamePlay::Draw()

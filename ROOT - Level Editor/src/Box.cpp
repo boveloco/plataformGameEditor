@@ -6,11 +6,11 @@ Box::Box(Vector2D *p_position, int p_width, int p_height) :
 
 Box::~Box()
 {
-	if (m_position)
+	/*if (m_position)
 	{
 		delete m_position;
 		m_position = nullptr;
-	}
+	}*/
 }
 
 int Box::GetHeight() const

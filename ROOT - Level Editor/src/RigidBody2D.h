@@ -19,6 +19,7 @@ public:
 	Vector2D *GetPosition() const;
 	Vector2D *GetDirection() const;
 	Vector2D *GetVelocity() const;
+	Vector2D *GetUp() const;
 	float GetX() const;
 	float GetY() const;
 	GeometricShape *GetCollider() const;

@@ -4,7 +4,7 @@
 #include"RigidBody2D.h"
 #include"Vector2D.h"
 
-Vector2D *Physic::m_gravity = nullptr;
+Vector2D *Physic::m_gravity = new Vector2D(0.0, 0.8);
 
 Physic::Physic(Vector2D *p_gravity)
 {

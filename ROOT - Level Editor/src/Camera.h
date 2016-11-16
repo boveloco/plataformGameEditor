@@ -3,7 +3,7 @@
 class Vector2D;
 class Map;
 class SpriteSet;
-class Texture;
+class Scene;
 
 enum Indice
 {
@@ -20,6 +20,9 @@ private:
 	int m_width;
 	int m_height;
 	Map* map;
+
+	void SetPositionEditor(int, int);
+	int GetPositionEditor(int) const;
 public:
 	//seta a posição, largura e altura
 	Camera(Vector2D *, int, int, Map*, SpriteSet*);
@@ -36,10 +39,10 @@ public:
 	//seta o limete em que o personagem
 	//pode se mover sem atualizar a 
 	//camera
-	int GetLimitLeft() const;
+	/*int GetLimitLeft() const;
 	int GetLimitRight() const;
 	int GetUpperLimit() const;
-	int GetInferiorLimit() const;
+	int GetInferiorLimit() const;*/
 
 	void SetWidth(int);
 	void SetHeight(int);
@@ -48,10 +51,6 @@ public:
 	void SetxPosition(int);
 	void SetyPosition(int);
 
-	void setMap(Map* map) {
-		this->map = map;
-	}
-	Camera * draw(Texture*);
 	void UpDate(int, int);
 	void End();
 };
